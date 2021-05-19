@@ -17,7 +17,7 @@ This program allows the management (create, change information and delete) users
 ## Documentation
 
 
-The functional requirements,  description and mock ups can be found in the next folder: link.
+The functional requirements,  description and mock ups can be found in the next folder: [link](https://github.com/Diego-Hidalgo/academic-schedule/tree/master/docs "link").
 
 
 
