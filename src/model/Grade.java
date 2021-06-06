@@ -1,15 +1,19 @@
 package model;
 
-public class Grade {
+public class Grade implements Comparable<Grade> {
 
 	private double grade;
 	private double percentage;
 	private String description;
-
+	private Grade parent;
+	private Grade rigth;
+	private Grade left;
+	
 	public Grade() {
-		// TODO - implement Grade.Grade
-		throw new UnsupportedOperationException();
-	}
+		grade = 0;
+		percentage = 0;
+		description = new String();
+	}//End Grade constructor
 
 	/**
 	 * 
@@ -18,9 +22,10 @@ public class Grade {
 	 * @param description
 	 */
 	public Grade(double grade, double percentage, String description) {
-		// TODO - implement Grade.Grade
-		throw new UnsupportedOperationException();
-	}
+		this.grade = grade;
+		this.percentage = percentage;
+		this.description = description;
+	}//End Grade constructor
 
 	/**
 	 * 
@@ -45,7 +50,11 @@ public class Grade {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	
+	public String getDescription() {
+		return description;
+	}
+	
 	public double getGrade() {
 		return this.grade;
 	}
@@ -54,14 +63,42 @@ public class Grade {
 		return this.percentage;
 	}
 
-	public double getDescription() {
-		// TODO - implement Grade.getDescription
-		throw new UnsupportedOperationException();
-	}
-
 	public double getAverageGrade() {
-		// TODO - implement Grade.getAverageGrade
-		throw new UnsupportedOperationException();
+		return (grade*percentage)/100;
+	}//End 
+
+	public Grade getRigth() {
+		return rigth;
 	}
 
-}
+	public void setRigth(Grade rigth) {
+		this.rigth = rigth;
+	}
+
+	public Grade getLeft() {
+		return left;
+	}
+
+	public void setLeft(Grade left) {
+		this.left = left;
+	}
+
+	public Grade getParent() {
+		return parent;
+	}
+
+	public void setParent(Grade parent) {
+		this.parent = parent;
+	}
+
+	@Override
+	public int compareTo(Grade o) {
+		int result = 0;
+		if(o.grade > grade)
+			result = 1;
+		else if(o.grade < grade)
+			result = -1;
+		return result;
+	}//End compareTo
+
+}//End Grade

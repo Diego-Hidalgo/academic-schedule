@@ -1,16 +1,25 @@
 package model;
 
 import java.util.Date;
+import java.util.ArrayList;
 
 public class Course {
 
 	private String name;
 	private int credits;
-
+	private Status status;
+	private Grade gradesRoot;
+	private Course prev;
+	private Course next;
+	private ArrayList<Day> days;
+	
 	public Course() {
-		// TODO - implement Course.Course
-		throw new UnsupportedOperationException();
-	}
+		name = new String();
+		credits = 0;
+		status = Status.MATRICULADO;
+		gradesRoot = new Grade();
+		days = new ArrayList<Day>();
+	}//End Course constructor
 
 	/**
 	 * 
@@ -18,10 +27,12 @@ public class Course {
 	 * @param credit
 	 * @param day
 	 */
-	public Course(String name, int credit, Day day) {
-		// TODO - implement Course.Course
-		throw new UnsupportedOperationException();
-	}
+	public Course(String name, int credit, ArrayList<Day> days) {
+		this.name = name;
+		this.credits = credit;
+		status = Status.MATRICULADO;
+		this.days = days;
+	}//End Course constructor
 
 	/**
 	 * 
@@ -29,24 +40,22 @@ public class Course {
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
+	}//End setName
 
 	public String getName() {
 		return this.name;
-	}
-
+	}//End getName
 	/**
 	 * 
 	 * @param credit
 	 */
 	public void setCredit(int credit) {
-		// TODO - implement Course.setCredit
-		throw new UnsupportedOperationException();
-	}
+		credits = credit;
+	}//End setCredit
 
 	public int getCredits() {
 		return this.credits;
-	}
+	}//End getCredit
 
 	/**
 	 * 
@@ -54,10 +63,9 @@ public class Course {
 	 * @param initialHour
 	 * @param finishHour
 	 */
-	public void addDays(Day day, Date initialHour, Date finishHour) {
-		// TODO - implement Course.addDays
-		throw new UnsupportedOperationException();
-	}
+	public void addDays(Days day, Date initialHour, Date finishHour) {
+		days.add(new Day(day,initialHour,finishHour));
+	}//End addDays
 
 	/**
 	 * 
@@ -66,19 +74,19 @@ public class Course {
 	 * @param initialHour
 	 * @param finishHour
 	 */
-	public void editDay(Day dayToEdit, Day day, Date initialHour, Date finishHour) {
-		// TODO - implement Course.editDay
-		throw new UnsupportedOperationException();
-	}
+	public void editDay(Day dayToEdit, Days day, Date initialHour, Date finishHour) {
+		dayToEdit.setDay(day);
+		dayToEdit.setInitialHour(initialHour);
+		dayToEdit.setFinishHour(finishHour);
+	}//End editDay
 
 	/**
 	 * 
 	 * @param dayToDelete
 	 */
 	public void deleteDay(Day dayToDelete) {
-		// TODO - implement Course.deleteDay
-		throw new UnsupportedOperationException();
-	}
+		days.remove(dayToDelete);
+	}//End deleteDay
 
 	/**
 	 * 
@@ -87,10 +95,29 @@ public class Course {
 	 * @param description
 	 */
 	public void addGrade(double grade, double percentage, String description) {
-		// TODO - implement Course.addGrade
-		throw new UnsupportedOperationException();
-	}
-
+		Grade toAdd = new Grade(grade,percentage,description);
+		if(gradesRoot == null)
+			gradesRoot = toAdd;
+		else
+			addGrade(gradesRoot,toAdd);
+	}//End addGrade
+	
+	private void addGrade(Grade current, Grade toAdd){
+		if(current.compareTo(toAdd) >= 0){
+			if(current.getRigth() == null){
+				current.setRigth(toAdd);
+				current.getRigth().setParent(current);
+			}else
+				addGrade(current.getRigth(),toAdd);
+		}else{
+			if(current.getLeft() == null){
+				current.setLeft(toAdd);
+				current.getLeft().setParent(current);
+			}else
+				addGrade(current.getLeft(),toAdd);
+		}//End else
+	}//End addGrade
+	
 	/**
 	 * 
 	 * @param gradeToEdit
@@ -99,41 +126,71 @@ public class Course {
 	 * @param newDescription
 	 */
 	public void editGrade(Grade gradeToEdit, double newGrade, double newPercentage, String newDescription) {
-		// TODO - implement Course.editGrade
-		throw new UnsupportedOperationException();
-	}
+		gradeToEdit.setGrade(newGrade);
+		gradeToEdit.setPercentage(newPercentage);
+		gradeToEdit.setDescription(newDescription);
+	}//End editGrade
 
 	/**
 	 * 
 	 * @param gradeToDelete
 	 */
 	public void deleteGrade(Grade gradeToDelete) {
-		// TODO - implement Course.deleteGrade
-		throw new UnsupportedOperationException();
-	}
+		
+	}//End deleteGrade
 
-	/**
-	 * 
-	 * @param day
-	 */
-	public Day getDay(Day day) {
-		// TODO - implement Course.getDay
-		throw new UnsupportedOperationException();
-	}
-
-	public Grade[] getGrades() {
-		// TODO - implement Course.getGrades
-		throw new UnsupportedOperationException();
-	}
+	public Grade getGradeRoot() {
+		return gradesRoot;
+	}//End getGrades
 
 	/**
 	 * 
 	 * @param oldGrade
 	 * @param newGrade
 	 */
-	public void editGrade(Grade oldGrade, Grade newGrade) {
-		// TODO - implement Course.editGrade
-		throw new UnsupportedOperationException();
+
+	public Status getStatus() {
+		return status;
 	}
 
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public Grade getGradesRoot() {
+		return gradesRoot;
+	}
+
+	public void setGradesRoot(Grade gradesRoot) {
+		this.gradesRoot = gradesRoot;
+	}
+
+	public Course getPrev() {
+		return prev;
+	}
+
+	public void setPrev(Course prev) {
+		this.prev = prev;
+	}
+
+	public Course getNext() {
+		return next;
+	}
+
+	public void setNext(Course next) {
+		this.next = next;
+	}
+
+	public void setCredits(int credits) {
+		this.credits = credits;
+	}
+
+	public ArrayList<Day> getDays() {
+		return days;
+	}
+
+	public void setDays(ArrayList<Day> days) {
+		this.days = days;
+	}
+	
 }

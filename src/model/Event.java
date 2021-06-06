@@ -7,9 +7,9 @@ public class Event extends Plan {
 	private Date date;
 
 	public Event() {
-		// TODO - implement Event.Event
-		throw new UnsupportedOperationException();
-	}
+		super();
+		date = new Date();
+	}//End Event constructor
 
 	/**
 	 * 
@@ -18,14 +18,14 @@ public class Event extends Plan {
 	 * @param title
 	 * @param day
 	 */
-	public Event(Date date, String description, String title, Day day) {
-		// TODO - implement Event.Event
-		throw new UnsupportedOperationException();
-	}
+	public Event(Date date, String description, String title, Day day,Course course) {
+		super(title,description,day,course);
+		this.date = date;
+	}//End Event constructor
 
 	public Date getDate() {
 		return this.date;
-	}
+	}//End getDate constructor
 
 	/**
 	 * 
@@ -33,6 +33,6 @@ public class Event extends Plan {
 	 */
 	public void setDate(Date date) {
 		this.date = date;
-	}
+	}//End setDate
 
 }
