@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class AcademyScheduleUsersManager {
 
@@ -16,7 +17,6 @@ public class AcademyScheduleUsersManager {
 
 	/**
 	 *
-	 * @return
 	 */
 	public User getCurrentUser() {
 		return this.currentUser;
@@ -29,6 +29,21 @@ public class AcademyScheduleUsersManager {
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
+
+	/**
+	 *
+	 */
+	public ArrayList<User> getUsers() {
+		return users;
+	}//End getUsers
+
+	/**
+	 *
+	 * @param users
+	 */
+	public void setUsers(ArrayList<User> users) {
+		this.users = users;
+	}//End setUsers
 
 	/**
 	 * 
@@ -80,8 +95,18 @@ public class AcademyScheduleUsersManager {
 		return userIndex;
 	}//End searchUser
 
-	public ArrayList<User> getUsers() {
-		return users;
-	}//End getUsers
+	public void addUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) {
+		User newUser = new User(name, lastName, userName, passWord, profilePhotoPath);
+		if(users.isEmpty()) {
+			users.add(newUser);
+		} else {
+			Comparator<User> userNameComparator = new UserNameComparator();
+			int i = 0;
+			while(i < users.size() && userNameComparator.compare(newUser, users.get(i)) < 0) {
+				i ++;
+			}//End while
+			users.add(i, newUser);
+		}//End if/else
+	}//End addUser
 
-}
+}//End AcademyScheduleManager
