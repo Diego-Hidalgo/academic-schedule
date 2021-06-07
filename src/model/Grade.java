@@ -1,6 +1,10 @@
 package model;
 
-public class Grade implements Comparable<Grade> {
+import java.io.Serializable;
+
+public class Grade implements Comparable<Grade>, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private double grade;
 	private double percentage;

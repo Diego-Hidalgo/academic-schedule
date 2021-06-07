@@ -1,8 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Notify implements Comparable<Notify>{
+public class Notify implements Comparable<Notify>, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Date toSendAtHour;
 	private Event event;

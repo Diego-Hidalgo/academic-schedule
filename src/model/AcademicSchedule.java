@@ -1,9 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
 
-public class AcademicSchedule {
+public class AcademicSchedule implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Course firstCourse;
 	private ArrayList<StudyPlan> studyPlans;
@@ -59,7 +62,6 @@ public class AcademicSchedule {
 
 	/**
 	 * 
-	 * @param course
 	 */
 	public void deleteCourse(Course toDelete) {
 		toDelete.getNext().setPrev(toDelete.getPrev());

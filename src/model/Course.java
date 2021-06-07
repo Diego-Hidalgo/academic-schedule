@@ -1,9 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
 
-public class Course {
+public class Course implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String name;
 	private int credits;
@@ -21,12 +24,6 @@ public class Course {
 		days = new ArrayList<Day>();
 	}//End Course constructor
 
-	/**
-	 * 
-	 * @param name
-	 * @param credit
-	 * @param day
-	 */
 	public Course(String name, int credit, ArrayList<Day> days) {
 		this.name = name;
 		this.credits = credit;
@@ -142,12 +139,6 @@ public class Course {
 	public Grade getGradeRoot() {
 		return gradesRoot;
 	}//End getGrades
-
-	/**
-	 * 
-	 * @param oldGrade
-	 * @param newGrade
-	 */
 
 	public Status getStatus() {
 		return status;
