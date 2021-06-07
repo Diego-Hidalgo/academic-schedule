@@ -1,5 +1,6 @@
 package ui;
 
+import model.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,9 +10,11 @@ import javafx.stage.Stage;
 public class Main extends Application{
 	
 	private MainWindowsController mwc;
+	private AcademyScheduleUsersManager as;
 	
 	public Main() {
-		mwc = new MainWindowsController();
+		as = new AcademyScheduleUsersManager();
+		mwc = new MainWindowsController(as);
 	}
 	
 	public static void main(String[] args){

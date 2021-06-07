@@ -22,7 +22,7 @@ public class AcademyScheduleUsersManager {
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
-
+	
 	/**
 	 * 
 	 * @param userName
