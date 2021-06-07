@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.InvalidCredentialsException;
 import exceptions.UserNameAlreadyInUseException;
 
 import java.io.*;
@@ -67,16 +68,16 @@ public class AcademyScheduleUsersManager implements Serializable {
 	 * @param userName
 	 * @param password
 	 */
-	public boolean login(String userName, String password) {
-		boolean log = false;
+	public void login(String userName, String password) throws InvalidCredentialsException {
 		int userIndex = searchUser(userName);
-		if(userIndex >= 0) {
-			if(users.get(userIndex).getPassword().equals(password)){
-				setCurrentUser(users.get(userIndex));
-				log = true;
-			}//End if
+		if(userIndex == -1) {
+			throw new InvalidCredentialsException();
 		}//End if
-		return log;
+		if(users.get(userIndex).getPassword().equals(password)){
+				setCurrentUser(users.get(userIndex));
+		} else {
+			throw new InvalidCredentialsException();
+		}//End if/else
 	}//End login
 
 	/**
