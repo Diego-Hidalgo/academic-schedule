@@ -1,9 +1,14 @@
 package model;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class AcademyScheduleUsersManager {
+public class AcademyScheduleUsersManager implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private static final String SAVE_PATH = "save-file.dm";
 
 	private User currentUser;
 	private ArrayList<User> users;
@@ -44,6 +49,16 @@ public class AcademyScheduleUsersManager {
 	public void setUsers(ArrayList<User> users) {
 		this.users = users;
 	}//End setUsers
+
+	public synchronized void saveAllData() throws IOException {
+		File f = new File(SAVE_PATH);
+		if(!f.exists()) {
+			f.createNewFile();
+		}//End if
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
+		oos.writeObject(this);
+		oos.close();
+	}//End saveAllData
 
 	/**
 	 * 
@@ -95,18 +110,19 @@ public class AcademyScheduleUsersManager {
 		return userIndex;
 	}//End searchUser
 
-	public void addUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) {
+	public void addUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException {
 		User newUser = new User(name, lastName, userName, passWord, profilePhotoPath);
 		if(users.isEmpty()) {
 			users.add(newUser);
 		} else {
 			Comparator<User> userNameComparator = new UserNameComparator();
 			int i = 0;
-			while(i < users.size() && userNameComparator.compare(newUser, users.get(i)) < 0) {
+			while(i < users.size() && userNameComparator.compare(newUser, users.get(i)) > 0) {
 				i ++;
 			}//End while
 			users.add(i, newUser);
 		}//End if/else
+		saveAllData();
 	}//End addUser
 
 }//End AcademyScheduleManager
