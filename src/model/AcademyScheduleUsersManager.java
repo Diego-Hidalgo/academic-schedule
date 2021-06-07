@@ -131,4 +131,31 @@ public class AcademyScheduleUsersManager implements Serializable {
 		saveAllData();
 	}//End addUser
 
+	public void changeUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException {
+		User userToChange = users.get(searchUser(userName));
+		String prevUserName = userToChange.getUserName();
+		userToChange.setName(name);
+		userToChange.setLastName(lastName);
+		userToChange.setUserName(userName);
+		userToChange.setPassword(passWord);
+		userToChange.setProfilePhoto(profilePhotoPath);
+		if(!prevUserName.equals(userName)) {
+			sortUsersList();
+		}//End if
+		saveAllData();
+	}//End changeUser
+
+	public void sortUsersList() {
+		Comparator<User> userNameComparator = new UserNameComparator();
+		for(int i = 0; i < users.size(); i ++) {
+			for(int j = 0; j < users.size() - 1; j ++) {
+				if(userNameComparator.compare(users.get(j), users.get(j + 1)) > 0) {
+					User temp = users.get(j);
+					users.set(j, users.get(j + 1));
+					users.set(j + 1, temp);
+				}//End if
+			}//End for
+		}//End for
+	}//End sortUsersList
+
 }//End AcademyScheduleManager
