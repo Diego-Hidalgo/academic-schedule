@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.UserNameAlreadyInUseException;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -68,7 +70,7 @@ public class AcademyScheduleUsersManager implements Serializable {
 	public boolean login(String userName, String password) {
 		boolean log = false;
 		int userIndex = searchUser(userName);
-		if(userIndex >= 0){
+		if(userIndex >= 0) {
 			if(users.get(userIndex).getPassword().equals(password)){
 				setCurrentUser(users.get(userIndex));
 				log = true;
@@ -110,7 +112,10 @@ public class AcademyScheduleUsersManager implements Serializable {
 		return userIndex;
 	}//End searchUser
 
-	public void addUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException {
+	public void addUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException, UserNameAlreadyInUseException {
+		if(searchUser(userName) != -1) {
+			throw new UserNameAlreadyInUseException(userName);
+		}
 		User newUser = new User(name, lastName, userName, passWord, profilePhotoPath);
 		if(users.isEmpty()) {
 			users.add(newUser);
