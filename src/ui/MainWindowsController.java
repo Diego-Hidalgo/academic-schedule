@@ -24,6 +24,8 @@ import model.AcademyScheduleUsersManager;
 
 public class MainWindowsController {
 	
+	
+	final private String DEFAULTPROFILEIMG = "file:/fxml/profile.png";
 	final private String FOLDER = "fxml/";
 	@FXML private BorderPane mainPane;
 	@FXML private MenuBar menuBar;
@@ -38,10 +40,10 @@ public class MainWindowsController {
 	
 	
 	//************ Academic schedule *******
-	private AcademyScheduleUsersManager as;
+	private AcademyScheduleUsersManager academicSchedule;
 	
 	public MainWindowsController(AcademyScheduleUsersManager as){
-		this.as = as;
+		this.academicSchedule = as;
 	}//End MainWindowsController constructor
 	
 	
@@ -73,6 +75,7 @@ public class MainWindowsController {
 	
 	@FXML
 	public void showRegisterUser() throws IOException {
+		imgPath = DEFAULTPROFILEIMG;
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindow.fxml"));
 		fxml.setController(this);
 		Parent registerUser = fxml.load();
@@ -108,12 +111,32 @@ public class MainWindowsController {
 	
 	@FXML
 	public void registerUser(){
-		//if(){
-			
-		//}
+		if(!nameTxt.getText().isEmpty() && !lastNameTxt.getText().isEmpty() &&
+		   !userNameTxt.getText().isEmpty() && !passwordTxt.getText().isEmpty() && !imgPath.equals(DEFAULTPROFILEIMG)){
+			academicSchedule.addUser(nameTxt.getText(),lastNameTxt.getText(),
+			userNameTxt.getText(),nameTxt.getText(),imgPath);
+			showInformationAlert("registro","El usuario se ha registrado con exito",null);
+			nameTxt.setText("");
+			lastNameTxt.setText("");
+			userNameTxt.setText("");
+			passwordTxt.setText("");
+			imgPath = DEFAULTPROFILEIMG;
+			ProfileImg.setImage(new Image(imgPath));
+		}else
+			showInformationAlert("registro","Llena por completo los campos",null);
 	}//End registUser
 	
-	
+	@FXML
+	public void loginUser(Event e) throws IOException{
+		if(!userNameTxt.getText().isEmpty() && !passwordTxt.getText().isEmpty()){
+					if(!academicSchedule.login(userNameTxt.getText(),passwordTxt.getText())){
+						showInformationAlert("registro","Haz ingresado con exito",null);
+						switchToSecondaryPane(e);
+					}else
+						showInformationAlert("registro","Credenciales incorrectas",null);
+				}else
+					showInformationAlert("registro","Llena por completo los campos",null);
+	}//End loginUser
 	
 	//********************** Events listeners *******************************************
 	

@@ -16,9 +16,9 @@
          <children>
             <VBox alignment="CENTER_LEFT" prefHeight="127.0" prefWidth="222.0">
                <children>
-                  <TextField fx:id="logInName" prefHeight="25.0" prefWidth="189.0" promptText="Nombre" />
+                  <TextField fx:id="userNameTxt" prefHeight="25.0" prefWidth="189.0" promptText="Nombre" />
                   <Pane prefHeight="35.0" prefWidth="171.0" />
-                  <PasswordField fx:id="logInPassword" promptText="Contraseña" />
+                  <PasswordField fx:id="passwordTxt" promptText="Contraseña" />
                </children>
             </VBox>
          </children>
@@ -44,7 +44,7 @@
    <bottom>
       <VBox alignment="CENTER" prefHeight="121.0" prefWidth="415.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#switchToSecondaryPane" text="Iniciar sesión">
+            <Button mnemonicParsing="false" onAction="#loginUser" text="Iniciar sesión">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

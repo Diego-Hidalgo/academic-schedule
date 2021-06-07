@@ -14,7 +14,13 @@ public class AcademyScheduleUsersManager {
 	public User getCurrentUser() {
 		return this.currentUser;
 	}
-
+	
+	public boolean addUser(String name, String lastName, String userName, String password, String profilePhoto){
+		boolean added = true;
+		users.add(new User(name,lastName,userName,password,profilePhoto));
+		return added;
+	}//End addUser
+	
 	/**
 	 * 
 	 * @param currentUser
