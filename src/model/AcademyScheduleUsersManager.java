@@ -158,4 +158,10 @@ public class AcademyScheduleUsersManager implements Serializable {
 		}//End for
 	}//End sortUsersList
 
+	public void removeUser(String userName) throws IOException {
+		User user = users.get(searchUser(userName));
+		users.remove(user);
+		saveAllData();
+	}//End removeUser
+
 }//End AcademyScheduleManager
