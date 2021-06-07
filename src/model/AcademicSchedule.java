@@ -59,7 +59,6 @@ public class AcademicSchedule {
 
 	/**
 	 * 
-	 * @param course
 	 */
 	public void deleteCourse(Course toDelete) {
 		toDelete.getNext().setPrev(toDelete.getPrev());

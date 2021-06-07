@@ -1,23 +1,22 @@
 package model;
 
-public class User {
+public class User extends Person {
 
-	private String name;
-	private String lastName;
 	private String userName;
 	private String password;
 	private String profilePhoto;
 	private AcademicSchedule academicSchedule;
-	
+
+	/**
+	 *
+	 */
 	public User() {
-		name = new String();
-		lastName = new String();
+		super();
 		userName = new String();
 		password = new String();
 		profilePhoto = new String();
 		academicSchedule = new AcademicSchedule();
-				
-	}//End User constructor
+	}//End Constructor1
 
 	/**
 	 * 
@@ -28,38 +27,17 @@ public class User {
 	 * @param profilePhoto
 	 */
 	public User(String name, String lastName, String userName, String password, String profilePhoto) {
-		this.name = name;
-		this.lastName = lastName;
+		super(name, lastName);
 		this.userName = userName;
 		this.password = password;
 		this.profilePhoto = profilePhoto;
 		academicSchedule = new AcademicSchedule();
-	}//End User constructor
-
-	public String getName() {
-		return this.name;
-	}
+	}//End Constructor2
 
 	/**
-	 * 
-	 * @param name
+	 *
+	 * @return
 	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getLastName() {
-		return this.lastName;
-	}
-
-	/**
-	 * 
-	 * @param lastName
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
 	public String getUserName() {
 		return this.userName;
 	}
@@ -72,6 +50,9 @@ public class User {
 		this.userName = userName;
 	}
 
+	/**
+	 *
+	 */
 	public String getPassword() {
 		return this.password;
 	}
@@ -84,6 +65,9 @@ public class User {
 		this.password = password;
 	}
 
+	/**
+	 *
+	 */
 	public String getProfilePhoto() {
 		return this.profilePhoto;
 	}
@@ -96,12 +80,19 @@ public class User {
 		this.profilePhoto = profilePhoto;
 	}
 
+	/**
+	 *
+	 */
 	public AcademicSchedule getAcademicSchedule() {
 		return academicSchedule;
 	}
 
+	/**
+	 *
+	 * @param academicSchedule
+	 */
 	public void setAcademicSchedule(AcademicSchedule academicSchedule) {
 		this.academicSchedule = academicSchedule;
 	}
 	
-}
+}//End User

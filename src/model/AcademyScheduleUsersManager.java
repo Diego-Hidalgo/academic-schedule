@@ -7,10 +7,17 @@ public class AcademyScheduleUsersManager {
 	private User currentUser;
 	private ArrayList<User> users;
 
+	/**
+	 *
+	 */
 	public AcademyScheduleUsersManager() {
 		users = new ArrayList<User>();
 	}//End AcademyScheduleUsersManager constructor
 
+	/**
+	 *
+	 * @return
+	 */
 	public User getCurrentUser() {
 		return this.currentUser;
 	}
@@ -40,6 +47,9 @@ public class AcademyScheduleUsersManager {
 		return log;
 	}//End login
 
+	/**
+	 *
+	 */
 	public void logout() {
 		setCurrentUser(null);
 	}//End logout
@@ -47,7 +57,6 @@ public class AcademyScheduleUsersManager {
 	/**
 	 * 
 	 * @param userName
-	 * @param password
 	 */
 	public int searchUser(String userName) {
 		int start = 0;
