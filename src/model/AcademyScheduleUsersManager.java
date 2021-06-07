@@ -37,7 +37,7 @@ public class AcademyScheduleUsersManager implements Serializable {
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
-
+	
 	/**
 	 *
 	 */
