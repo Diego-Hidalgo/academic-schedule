@@ -27,7 +27,7 @@ public class MainWindowsController {
 	final private String FOLDER = "fxml/";
 	@FXML private BorderPane mainPane;
 	@FXML private MenuBar menuBar;
-	//************User data ***************
+	//************User data ***************\\
 	@FXML private ImageView ProfileImg;
 	@FXML private Label imgText;
 	@FXML private TextField nameTxt;
@@ -46,20 +46,7 @@ public class MainWindowsController {
 	
 	
 	//**************************** SCENES *************************************
-	@FXML
-	public void showLoginScene() throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"LoginWindows.fxml"));
-		fxmlLoader.setController(this);
-		Parent loginScene = fxmlLoader.load();
-		mainPane.getChildren().clear();
-		mainPane.setCenter(loginScene);
-		Stage stage = (Stage) mainPane.getScene().getWindow();
-		stage.setTitle("Iniciar sesion");
-		stage.setWidth(600);
-		stage.setHeight(440);
-		stage.setResizable(false);
-	}//End showLoginScene
-	
+
 	@FXML
 	public void switchToMainPane() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"MainWindows.fxml"));
@@ -70,20 +57,7 @@ public class MainWindowsController {
 		window.setScene(scene);
 		window.show();
 	}//End switchToMainPane
-	
-	@FXML
-	public void showRegisterUser() throws IOException {
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindow.fxml"));
-		fxml.setController(this);
-		Parent registerUser = fxml.load();
-		mainPane.setCenter(registerUser);
-		Stage st = (Stage) mainPane.getScene().getWindow();
-		st.setTitle("Registrar usuario");
-		st.setHeight(530);
-		st.setWidth(520);
-		st.setResizable(false);
-	}//End switchToMainPane
-	
+
 	@FXML
 	public void switchToSecondaryPane(Event e) throws IOException{
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"SecondaryWindows.fxml"));
@@ -95,6 +69,48 @@ public class MainWindowsController {
 		window.setTitle("Bienvenido");
 		window.show();
 	}//End switchToSecondaryPane
+
+	@FXML
+	public void showLoginScene() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"LoginWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent loginScene = fxmlLoader.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(loginScene);
+		Stage stage = (Stage) mainPane.getScene().getWindow();
+		stage.setTitle("Iniciar sesion");
+		stage.setWidth(500);
+		stage.setHeight(480);
+		stage.setResizable(false);
+	}//End showLoginScene
+	
+	@FXML
+	public void showRegisterUser() throws IOException {
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindow.fxml"));
+		fxml.setController(this);
+		Parent registerUser = fxml.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(registerUser);
+		Stage st = (Stage) mainPane.getScene().getWindow();
+		st.setTitle("Registrar usuario");
+		st.setHeight(530);
+		st.setWidth(520);
+		st.setResizable(false);
+	}//End switchToMainPane
+
+	@FXML
+	public void showChangePasswordScene() throws IOException {
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"ChangePassword.fxml"));
+		fxml.setController(this);
+		Parent changePassword = fxml.load();
+		mainPane.getChildren().clear();
+		mainPane.setCenter(changePassword);
+		Stage st = (Stage) mainPane.getScene().getWindow();
+		st.setTitle("Restaurar contraseña");
+		st.setHeight(400);
+		st.setWidth(500);
+		st.setResizable(false);
+	}//End showChangePasswordScene
 	
 	public void showInformationAlert(String title,String msg,String header){
 		Alert feedBack = new Alert(AlertType.INFORMATION);

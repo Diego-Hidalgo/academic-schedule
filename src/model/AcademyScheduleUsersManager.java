@@ -2,7 +2,6 @@ package model;
 
 import exceptions.InvalidCredentialsException;
 import exceptions.UserNameAlreadyInUseException;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -53,6 +52,10 @@ public class AcademyScheduleUsersManager implements Serializable {
 		this.users = users;
 	}//End setUsers
 
+	/**
+	 *
+	 * @throws IOException
+	 */
 	public synchronized void saveAllData() throws IOException {
 		File f = new File(SAVE_PATH);
 		if(!f.exists()) {
@@ -113,10 +116,20 @@ public class AcademyScheduleUsersManager implements Serializable {
 		return userIndex;
 	}//End searchUser
 
+	/**
+	 *
+	 * @param name
+	 * @param lastName
+	 * @param userName
+	 * @param passWord
+	 * @param profilePhotoPath
+	 * @throws IOException
+	 * @throws UserNameAlreadyInUseException
+	 */
 	public void addUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException, UserNameAlreadyInUseException {
 		if(searchUser(userName) != -1) {
 			throw new UserNameAlreadyInUseException(userName);
-		}
+		}//End if
 		User newUser = new User(name, lastName, userName, passWord, profilePhotoPath);
 		if(users.isEmpty()) {
 			users.add(newUser);
@@ -131,6 +144,15 @@ public class AcademyScheduleUsersManager implements Serializable {
 		saveAllData();
 	}//End addUser
 
+	/**
+	 *
+	 * @param name
+	 * @param lastName
+	 * @param userName
+	 * @param passWord
+	 * @param profilePhotoPath
+	 * @throws IOException
+	 */
 	public void changeUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException {
 		User userToChange = users.get(searchUser(userName));
 		String prevUserName = userToChange.getUserName();
@@ -145,6 +167,9 @@ public class AcademyScheduleUsersManager implements Serializable {
 		saveAllData();
 	}//End changeUser
 
+	/**
+	 *
+	 */
 	public void sortUsersList() {
 		Comparator<User> userNameComparator = new UserNameComparator();
 		for(int i = 0; i < users.size(); i ++) {
@@ -158,6 +183,11 @@ public class AcademyScheduleUsersManager implements Serializable {
 		}//End for
 	}//End sortUsersList
 
+	/**
+	 *
+	 * @param userName
+	 * @throws IOException
+	 */
 	public void removeUser(String userName) throws IOException {
 		User user = users.get(searchUser(userName));
 		users.remove(user);
