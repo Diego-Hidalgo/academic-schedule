@@ -7,11 +7,17 @@ public class User {
 	private String userName;
 	private String password;
 	private String profilePhoto;
-
+	private AcademicSchedule academicSchedule;
+	
 	public User() {
-		// TODO - implement User.User
-		throw new UnsupportedOperationException();
-	}
+		name = new String();
+		lastName = new String();
+		userName = new String();
+		password = new String();
+		profilePhoto = new String();
+		academicSchedule = new AcademicSchedule();
+				
+	}//End User constructor
 
 	/**
 	 * 
@@ -22,9 +28,13 @@ public class User {
 	 * @param profilePhoto
 	 */
 	public User(String name, String lastName, String userName, String password, String profilePhoto) {
-		// TODO - implement User.User
-		throw new UnsupportedOperationException();
-	}
+		this.name = name;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.password = password;
+		this.profilePhoto = profilePhoto;
+		academicSchedule = new AcademicSchedule();
+	}//End User constructor
 
 	public String getName() {
 		return this.name;
@@ -87,8 +97,11 @@ public class User {
 	}
 
 	public AcademicSchedule getAcademicSchedule() {
-		// TODO - implement User.getAcademicSchedule
-		throw new UnsupportedOperationException();
+		return academicSchedule;
 	}
 
+	public void setAcademicSchedule(AcademicSchedule academicSchedule) {
+		this.academicSchedule = academicSchedule;
+	}
+	
 }
