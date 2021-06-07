@@ -4,6 +4,7 @@ import exceptions.InvalidCredentialsException;
 import exceptions.UserNameAlreadyInUseException;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class AcademyScheduleUsersManager implements Serializable {
@@ -97,24 +98,34 @@ public class AcademyScheduleUsersManager implements Serializable {
 	public int searchUser(String userName) {
 		int start = 0;
 		int end = users.size() - 1;
-		int mid = (end-start)/2;
-		boolean found = false;
-		int userIndex = -1;
-		User current;
-		while(!found && start <= end){
-			current = users.get(mid);
-			if(current.getUserName().equals(userName)){
-				found = true;
-				userIndex = mid;
-			}else if(current.getUserName().compareTo(userName) < 0){
+		while(start <= end) {
+			int mid = (start + end) / 2;
+			if(users.get(mid).getUserName().compareTo(userName) == 0) {
+				return mid;
+			} else if(users.get(mid).getUserName().compareTo(userName) < 0) {
 				start = mid + 1;
-			}else{
+			} else {
 				end = mid - 1;
-			}//End else
-			mid = (end-start)/2;
+			}//End if/else
 		}//End while
-		return userIndex;
+		return -1;
 	}//End searchUser
+
+	public boolean verifyBlankChars(String[] toVerify) {
+		boolean stop = false;
+		int count = 0;
+		for(int i = 0; i < toVerify.length; i ++) {
+			String aux = toVerify[i];
+			stop = false;
+			for(int j = 0; j < aux.length() && !stop; j ++) {
+				if(aux.charAt(j) != ' ') {
+					stop = true;
+					count ++;
+				}//End if
+			}//End for
+		}//End for
+		return count == toVerify.length;
+	}//End verifyBlankChars
 
 	/**
 	 *
@@ -130,13 +141,14 @@ public class AcademyScheduleUsersManager implements Serializable {
 		if(searchUser(userName) != -1) {
 			throw new UserNameAlreadyInUseException(userName);
 		}//End if
+		System.out.println("funciona");
 		User newUser = new User(name, lastName, userName, passWord, profilePhotoPath);
 		if(users.isEmpty()) {
 			users.add(newUser);
 		} else {
 			Comparator<User> userNameComparator = new UserNameComparator();
 			int i = 0;
-			while(i < users.size() && userNameComparator.compare(newUser, users.get(i)) > 0) {
+			while(i < users.size() && userNameComparator.compare(newUser, users.get(i)) < 0) {
 				i ++;
 			}//End while
 			users.add(i, newUser);
