@@ -150,7 +150,7 @@ public class MainWindowsController {
 		} else {
 			showInformationAlert("Campos vacíos","Deben llenarse todos los campos",null);
 		}//End if/else
-	}//End registUser
+	}//End registerUser
 	
 	//********************** Events listeners *******************************************
 
