@@ -2,7 +2,10 @@ package ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import exceptions.InvalidCredentialsException;
+import exceptions.UserNameAlreadyInUseException;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,17 +21,21 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.AcademyScheduleUsersManager;
+import model.Time;
 
-public class MainWindowsController {
+public class MainWindowsController{
 	
 	
 	final private String DEFAULTPROFILEIMG = "file:/fxml/profile.png";
 	final private String FOLDER = "fxml/";
 	@FXML private BorderPane mainPane;
+	@FXML private BorderPane secondaryPane;
 	@FXML private MenuBar menuBar;
+	private EmergentWindowController ewc;
 	//************User data ***************
 	@FXML private ImageView ProfileImg;
 	@FXML private Label imgText;
@@ -37,13 +44,28 @@ public class MainWindowsController {
 	@FXML private TextField userNameTxt;
 	@FXML private TextField passwordTxt;
 	private String imgPath;
-	
+	//************Course data**************
+	@FXML private TextField courseNameTxt;
+	@FXML private TextField creditsTxt;
+	@FXML private Pane monday;
+	@FXML private Pane tuesday;
+	@FXML private Pane wednesday;
+	@FXML private Pane thursday;
+	@FXML private Pane friday;
+	@FXML private Pane saturday;
+	private ArrayList<String> days;
+	private ArrayList<Time> initHour;
+	private ArrayList<Time> finHour;
 	
 	//************ Academic schedule *******
 	private AcademyScheduleUsersManager academicSchedule;
 	
 	public MainWindowsController(AcademyScheduleUsersManager as){
 		this.academicSchedule = as;
+		ewc = new EmergentWindowController(as);
+		days = new ArrayList<String>();
+		initHour = new ArrayList<Time>();
+		finHour = new ArrayList<Time>();
 	}//End MainWindowsController constructor
 	
 	
@@ -99,6 +121,22 @@ public class MainWindowsController {
 		window.show();
 	}//End switchToSecondaryPane
 	
+	@FXML
+	public void showRegisterCourse() throws IOException{
+		days = new ArrayList<String>();
+		initHour = new ArrayList<Time>();
+		finHour = new ArrayList<Time>();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"AddCourseWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		secondaryPane.setCenter(registerScene);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Registrar curso");
+		stage.setHeight(610);
+		stage.setWidth(550);
+		stage.setResizable(false);
+	}//End showRegisterCourse
+	
 	public void showInformationAlert(String title,String msg,String header){
 		Alert feedBack = new Alert(AlertType.INFORMATION);
 		feedBack.setTitle(title);
@@ -107,21 +145,28 @@ public class MainWindowsController {
 		feedBack.showAndWait();
 	}//End showInformationAlert
 	
+	
 	//************************ Objects and data managment *******************
 	
 	@FXML
 	public void registerUser(){
 		if(!nameTxt.getText().isEmpty() && !lastNameTxt.getText().isEmpty() &&
 		   !userNameTxt.getText().isEmpty() && !passwordTxt.getText().isEmpty() && !imgPath.equals(DEFAULTPROFILEIMG)){
-			academicSchedule.addUser(nameTxt.getText(),lastNameTxt.getText(),
-			userNameTxt.getText(),nameTxt.getText(),imgPath);
-			showInformationAlert("registro","El usuario se ha registrado con exito",null);
-			nameTxt.setText("");
-			lastNameTxt.setText("");
-			userNameTxt.setText("");
-			passwordTxt.setText("");
-			imgPath = DEFAULTPROFILEIMG;
-			ProfileImg.setImage(new Image(imgPath));
+			try {
+				academicSchedule.addUser(nameTxt.getText(),lastNameTxt.getText(),
+						userNameTxt.getText(),passwordTxt.getText(),imgPath);
+				showInformationAlert("registro","El usuario se ha registrado con exito",null);
+				nameTxt.setText("");
+				lastNameTxt.setText("");
+				userNameTxt.setText("");
+				passwordTxt.setText("");
+				imgPath = DEFAULTPROFILEIMG;
+				ProfileImg.setImage(new Image(imgPath));
+			}catch(UserNameAlreadyInUseException e){
+				showInformationAlert("registro","El nombre de usuario " + userNameTxt.getText() + " ya est en uso",null);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}//End try/catch
 		}else
 			showInformationAlert("registro","Llena por completo los campos",null);
 	}//End registUser
@@ -129,19 +174,77 @@ public class MainWindowsController {
 	@FXML
 	public void loginUser(Event e) throws IOException{
 		if(!userNameTxt.getText().isEmpty() && !passwordTxt.getText().isEmpty()){
-					if(!academicSchedule.login(userNameTxt.getText(),passwordTxt.getText())){
-						showInformationAlert("registro","Haz ingresado con exito",null);
-						switchToSecondaryPane(e);
-					}else
-						showInformationAlert("registro","Credenciales incorrectas",null);
-				}else
-					showInformationAlert("registro","Llena por completo los campos",null);
+			try{
+				academicSchedule.login(userNameTxt.getText(),passwordTxt.getText());
+				showInformationAlert("registro","Haz ingresado con exito",null);
+				switchToSecondaryPane(e);
+			}catch(InvalidCredentialsException ice){
+				showInformationAlert("registro","Credenciales incorrectas",null);
+			}//End try/catch
+		}else
+			showInformationAlert("registro","Llena por completo los campos",null);
 	}//End loginUser
+	
+	@FXML
+	public void registerCourse(){
+		
+	}//End registerCourse
+	
+	@FXML
+	public void addDay() throws IOException{
+		ewc.showAddDay();
+		String d = ewc.getAndClearDay();
+		days.add(d);
+		initHour.add(ewc.getAndClearInitHour());
+		finHour.add(ewc.getAndClearFinHour());
+		activateDay(d);
+	}//End addDay
+	
+	public void activateDay(String day){
+		switch(day){
+		case "Lunes":
+			monday.setDisable(false);
+			monday.setOpacity(1);
+			break;
+		case "Martes": 
+			tuesday.setDisable(false);
+			tuesday.setOpacity(1);
+			break;
+		case "Miercoles": 
+			wednesday.setDisable(false);
+			wednesday.setOpacity(1);
+			break;
+		case "Jueves": 
+			thursday.setDisable(false);
+			thursday.setOpacity(1);
+			break;
+		case "Viernes": 
+			friday.setDisable(false);
+			friday.setOpacity(1);
+			break;
+		case "Sabado": 
+			saturday.setDisable(false);
+			saturday.setOpacity(1);
+			break;
+		}//End switch
+	}//End activateDay
 	
 	//********************** Events listeners *******************************************
 	
 	@FXML
-	public void listenEnteredProfileImgEvent(MouseEvent event ){
+	public void listenEnteredDay(MouseEvent event){
+		Pane day = (Pane) event.getSource();
+		day.setOpacity(0.7);
+	}//End listenEnteredDay
+	
+	@FXML
+	public void listenExitedDay(MouseEvent event){
+		Pane day = (Pane) event.getSource();
+		day.setOpacity(1);
+	}//End listenEnteredDay
+	
+	@FXML
+	public void listenEnteredProfileImgEvent(MouseEvent event){
 		ProfileImg.setOpacity(0.5);
 		imgText.setOpacity(1);
 	}//End listenProfileImgEvent
@@ -173,4 +276,5 @@ public class MainWindowsController {
 		ProfileImg.setOpacity(1);
 		imgText.setOpacity(0);
 	}//End listenProfileImgEvent
-}
+	
+}//End MainWindowsController

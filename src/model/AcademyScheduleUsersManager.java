@@ -30,12 +30,6 @@ public class AcademyScheduleUsersManager implements Serializable {
 		return this.currentUser;
 	}
 	
-	public boolean addUser(String name, String lastName, String userName, String password, String profilePhoto){
-		boolean added = true;
-		users.add(new User(name,lastName,userName,password,profilePhoto));
-		return added;
-	}//End addUser
-	
 	/**
 	 * 
 	 * @param currentUser
@@ -78,8 +72,7 @@ public class AcademyScheduleUsersManager implements Serializable {
 		int userIndex = searchUser(userName);
 		if(userIndex == -1) {
 			throw new InvalidCredentialsException();
-		}//End if
-		if(users.get(userIndex).getPassword().equals(password)){
+		}else if(users.get(userIndex).getPassword().equals(password)){
 				setCurrentUser(users.get(userIndex));
 		} else {
 			throw new InvalidCredentialsException();

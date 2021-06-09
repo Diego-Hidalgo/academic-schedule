@@ -7,20 +7,20 @@ public class Notify implements Comparable<Notify>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Date toSendAtHour;
+	private Time toSendAtHour;
 	private Event event;
 	
 	public Notify(){
-		toSendAtHour = new Date();
+		toSendAtHour = new Time();
 		event = new Event();
 	}//End Notify constructor
 	
-	public Notify(Date tSAH,Date date, String description, String title, Day day,Course course){
+	public Notify(Time tSAH,Date date, String description, String title, Day day,Course course){
 		toSendAtHour = tSAH;
 		setEvent(date,description,title,day,course);
 	}//End Notify constructor
 	
-	public Date getToSendAtHour() {
+	public Time getToSendAtHour() {
 		return this.toSendAtHour;
 	}
 
@@ -28,7 +28,7 @@ public class Notify implements Comparable<Notify>, Serializable {
 	 * 
 	 * @param toSendAtHour
 	 */
-	public void setToSendAtHour(Date toSendAtHour) {
+	public void setToSendAtHour(Time toSendAtHour) {
 		this.toSendAtHour = toSendAtHour;
 	}
 

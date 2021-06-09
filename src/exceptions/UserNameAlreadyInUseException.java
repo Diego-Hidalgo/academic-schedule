@@ -2,7 +2,11 @@ package exceptions;
 
 public class UserNameAlreadyInUseException extends Exception {
 
-    private String userName;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String userName;
 
     public UserNameAlreadyInUseException(String userName) {
         super("El nombre de usuario ya se encuentra en uso");

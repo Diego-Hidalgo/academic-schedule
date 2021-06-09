@@ -4,8 +4,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 
 <BorderPane fx:id="secondaryPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
@@ -17,6 +15,18 @@
                   <MenuItem mnemonicParsing="false" text="Exportar" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Cursos">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#showRegisterCourse" text="Agregar curso" />
+                  <MenuItem mnemonicParsing="false" text="Ver cursos" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Planes">
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Crear plan de estudio" />
+                <MenuItem mnemonicParsing="false" text="Programar evento" />
+              </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Usuario">
               <items>
                   <MenuItem mnemonicParsing="false" text="Ver perfil" />
@@ -26,13 +36,4 @@
          </menus>
       </MenuBar>
    </top>
-   <left>
-      <VBox fillWidth="false" prefHeight="375.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <VBox fillWidth="false" prefHeight="375.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
-   </right>
-   <bottom>
-      <HBox alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
-   </bottom>
 </BorderPane>

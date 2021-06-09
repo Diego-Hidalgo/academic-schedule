@@ -2,6 +2,10 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import exceptions.InvalidTimeFormatException;
+import exceptions.OutOfTimeRangeException;
+
 import java.util.ArrayList;
 
 public class AcademicSchedule implements Serializable {
@@ -17,13 +21,15 @@ public class AcademicSchedule implements Serializable {
 		notifies = new ArrayList<Notify>();
 	}//End AcademicSchedule constructor
 
-	/**
+	/**Days day,Date initialHour, Date finishHour
 	 * 
 	 * @param name
 	 * @param credits
+	 * @throws OutOfTimeRangeException 
+	 * @throws InvalidTimeFormatException 
 	 */
-	public void addCourse(String name, int credits, ArrayList<Day> days) {
-		Course toAdd = new Course(name,credits,days);
+	public void addCourse(String name, int credits, ArrayList<String> days, ArrayList<Time> initHours,ArrayList<Time> finHours) {
+		Course toAdd = new Course(name,credits,convertToDay(days,initHours,finHours));
 		if(firstCourse == null) {
 			firstCourse = toAdd;
 			firstCourse.setNext(toAdd);
@@ -42,6 +48,13 @@ public class AcademicSchedule implements Serializable {
 			addCourse(current.getNext(),toAdd);
 	}//End addCourse
 	
+	private ArrayList<Day> convertToDay(ArrayList<String> days, ArrayList<Time> initHours,ArrayList<Time> finHours){
+		ArrayList<Day> da = new ArrayList<Day>();
+		for(int i = 0; i < days.size();i++){
+			da.add(new Day(Days.valueOf(days.get(i).toUpperCase()),initHours.get(i),finHours.get(i)));
+		}//End for
+		return da;
+	}//End convertToDay
 	public Course getCourses() {
 		return firstCourse;
 	}//End getCourses
@@ -94,13 +107,13 @@ public class AcademicSchedule implements Serializable {
 	 * @param title
 	 * @param day
 	 */
-	public void addNotify(Date toSendAtHour, Date date, String description, String title, Date initHour, Date finHour, String day,Course course) {
+	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour,Time finHour, String day,Course course) {
 		Day d = new Day(Days.valueOf(day.toUpperCase()),initHour,finHour);
 		Notify n = new Notify(toSendAtHour,date,description,title,d,course);
 		notifies.add(n);
 	}//End addNotify
 	
-	public void addNotify(Date toSendAtHour, Date date, String description, String title, Date initHour, Date finHour, String day,String course) {
+	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour, Time finHour, String day,String course) {
 		Day d = new Day(Days.valueOf(day.toUpperCase()),initHour,finHour);
 		Notify n = new Notify(toSendAtHour,date,description,title,d,searchCourse(course));
 		int i = 0;
@@ -159,7 +172,7 @@ public class AcademicSchedule implements Serializable {
 	 * @param goals
 	 * @param day
 	 */
-	public void addStudyPlan(String title, String description, ArrayList<String> goals, String day, Date initHour, Date finHour,Course course) {
+	public void addStudyPlan(String title, String description, ArrayList<String> goals, String day, Time initHour, Time finHour,Course course) {
 		Day d = new Day(Days.valueOf(day),initHour,finHour);
 		studyPlans.add(new StudyPlan(title,description,getGoals(goals),d,course));
 	}//End addStudyPlan
