@@ -24,7 +24,7 @@
       <HBox prefHeight="58.0" prefWidth="360.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="58.0" prefWidth="129.0" />
-            <Button mnemonicParsing="false" text="Agregar curso">
+            <Button mnemonicParsing="false" onAction="#registerCourse" text="Agregar curso">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

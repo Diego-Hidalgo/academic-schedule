@@ -7,7 +7,7 @@
 
 <BorderPane fx:id="secondaryPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <MenuBar fx:id="menuBar" nodeOrientation="LEFT_TO_RIGHT">
+      <MenuBar fx:id="menuBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0">
          <menus>
             <Menu mnemonicParsing="false" text="Archivo">
               <items>
@@ -18,13 +18,13 @@
             <Menu mnemonicParsing="false" text="Cursos">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#showRegisterCourse" text="Agregar curso" />
-                  <MenuItem mnemonicParsing="false" text="Ver cursos" />
+                  <MenuItem mnemonicParsing="false" onAction="#showAllCourses" text="Ver cursos" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Planes">
               <items>
-                  <MenuItem mnemonicParsing="false" text="Crear plan de estudio" />
-                <MenuItem mnemonicParsing="false" text="Programar evento" />
+                  <MenuItem mnemonicParsing="false" onAction="#showRegisterStudyPlan" text="Crear plan de estudio" />
+                <MenuItem mnemonicParsing="false" onAction="#showRegisterEvent" text="Programar evento" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Usuario">

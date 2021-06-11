@@ -9,27 +9,40 @@ import exceptions.UserNameAlreadyInUseException;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.AcademyScheduleUsersManager;
+import model.Course;
+import model.Goal;
 import model.Time;
 
 public class MainWindowsController{
 	
-	
+	final private String[] colours = {"00B42C","00B468","00B4AC","0086B4","005AB4","0800B4","7D00B4","B400AF",
+									  "B40088","B4005D","B4003C","B4000E"};
 	final private String DEFAULTPROFILEIMG = "file:/fxml/profile.png";
 	final private String FOLDER = "fxml/";
 	@FXML private BorderPane mainPane;
@@ -56,7 +69,26 @@ public class MainWindowsController{
 	private ArrayList<String> days;
 	private ArrayList<Time> initHour;
 	private ArrayList<Time> finHour;
-	
+	//************* Courses ****************
+	private VBox center;
+	//*************Study plan***************
+	@FXML private TextField titleTxt;
+	@FXML private TextField descriptionTxt;
+	@FXML private TextField initTimeTxt;
+	@FXML private TextField finTimeTxt;
+	@FXML private ListView<Goal> goalsLV;
+	@FXML private  ChoiceBox<String> dayCB;
+	@FXML private ChoiceBox<Course> courseCB;
+	//************ Event ********************
+	@FXML private TextField eventName;
+	@FXML private TextField eventDescription;
+	@FXML private TextField eventInitHour;
+	@FXML private TextField eventFinHour;
+	@FXML private TextField eventToSendHour;
+	@FXML private ChoiceBox<String> eventDayCB;
+	@FXML private ChoiceBox<Course> eventCourseCB;
+	@FXML private DatePicker eventDate;
+	@FXML private CheckBox eventSendNotify;
 	//************ Academic schedule *******
 	private AcademyScheduleUsersManager academicSchedule;
 	
@@ -137,6 +169,51 @@ public class MainWindowsController{
 		stage.setResizable(false);
 	}//End showRegisterCourse
 	
+	@FXML
+	public void showRegisterStudyPlan() throws IOException{
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"CreateStudyPlanWindow.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		secondaryPane.setCenter(registerScene);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Crear plan de estudio");
+		stage.setHeight(670);
+		stage.setWidth(550);
+		stage.setResizable(false);
+	}//End showRegisterCourse
+	
+	@FXML
+	public void showAllCourses() throws IOException{
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"ShowCoursesWindow.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		BorderPane cen = (BorderPane) registerScene;
+		center = new VBox();
+		center.setPrefHeight(400);
+		cen.setCenter(center);
+		secondaryPane.setCenter(cen);
+		addCourseToScreen();
+		addCourseToScreen();
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Cursos");
+		stage.setHeight(580);
+		stage.setWidth(500);
+		stage.setResizable(false);
+	}//End showAllCourses
+	
+	@FXML
+	public void showRegisterEvent() throws IOException{
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"AddEventWithNotifyWindow.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		secondaryPane.setCenter(registerScene);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Crear evento");
+		stage.setHeight(630);
+		stage.setWidth(550);
+		stage.setResizable(false);
+	}//End showRegisterCourse
+	
 	public void showInformationAlert(String title,String msg,String header){
 		Alert feedBack = new Alert(AlertType.INFORMATION);
 		feedBack.setTitle(title);
@@ -147,6 +224,21 @@ public class MainWindowsController{
 	
 	
 	//************************ Objects and data managment *******************
+	
+	@FXML
+	public void addCourseToScreen(){
+		HBox course = new HBox();
+		course.setPrefHeight(25);
+		Label cn = new Label();
+		HBox.setMargin(cn, new Insets(3, 0, 0, 5));
+		cn.setFont(Font.font("Avenir Next LT Pro", FontWeight.BOLD, 14));
+		cn.setTextFill(Color.web("FFFFFF"));
+		cn.setText("Joder si");
+		course.setStyle("-fx-background-color: #0000FF;");
+		course.getChildren().addAll(cn);
+		center.getChildren().addAll(course);
+		center.setSpacing(10);
+	}//End addCourseToScreen
 	
 	@FXML
 	public void registerUser(){
@@ -187,7 +279,25 @@ public class MainWindowsController{
 	
 	@FXML
 	public void registerCourse(){
-		
+		String msg = "Llena todos los campos";
+		if(days.size() != 0 && !courseNameTxt.getText().isEmpty() && 
+			!creditsTxt.getText().isEmpty()){
+			try{
+				int credits = Integer.parseInt(creditsTxt.getText());
+				academicSchedule.getCurrentUser().getAcademicSchedule().
+				addCourse(courseNameTxt.getText(), credits, days, initHour, finHour);
+				msg = "Curso agregado con exito";
+				days = new ArrayList<String>();
+				initHour = new ArrayList<Time>();
+				finHour = new ArrayList<Time>();
+				courseNameTxt.setText("");
+				creditsTxt.setText("");
+				DesactivateAllDays();
+			}catch(NumberFormatException e){
+				msg = "Los creditos deben ser un valor numerico entero";
+			}//End try..catch
+		}//End if
+		showInformationAlert("Agregar curso estado",msg,null);
 	}//End registerCourse
 	
 	@FXML
@@ -229,7 +339,27 @@ public class MainWindowsController{
 		}//End switch
 	}//End activateDay
 	
+	public void DesactivateAllDays(){
+		monday.setDisable(true);
+		monday.setOpacity(0.15); 
+		tuesday.setDisable(true);
+		tuesday.setOpacity(0.15);
+		wednesday.setDisable(true);
+		wednesday.setOpacity(0.15);
+		thursday.setDisable(true);
+		thursday.setOpacity(0.15);
+		friday.setDisable(true);
+		friday.setOpacity(0.15); 
+		saturday.setDisable(true);
+		saturday.setOpacity(0.15);
+	}//End activateDay
+	
 	//********************** Events listeners *******************************************
+	
+	@FXML
+	public void ShowCoursesError(){
+		showInformationAlert("Que gonorrea","Ocurrio tremendo error, nunca deberias ver esto",null);
+	}
 	
 	@FXML
 	public void listenEnteredDay(MouseEvent event){
