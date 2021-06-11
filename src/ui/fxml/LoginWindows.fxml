@@ -19,7 +19,7 @@
    <bottom>
       <VBox alignment="CENTER" prefHeight="245.0" prefWidth="340.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#switchToSecondaryPane" prefHeight="30.0" prefWidth="112.0" text="Iniciar sesión">
+            <Button mnemonicParsing="false" onAction="#logInUser" prefHeight="30.0" prefWidth="112.0" text="Iniciar sesión">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -61,7 +61,7 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="25.0" prefWidth="181.0" />
+                  <TextField fx:id="userNameTxt" prefHeight="25.0" prefWidth="181.0" />
                </children>
             </HBox>
             <Pane prefHeight="0.0" prefWidth="295.0" />
@@ -72,7 +72,7 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <PasswordField prefHeight="25.0" prefWidth="178.0" />
+                  <PasswordField fx:id="passwordTxt" prefHeight="25.0" prefWidth="178.0" />
                </children>
             </HBox>
          </children>

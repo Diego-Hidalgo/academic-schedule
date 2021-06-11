@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Optional;
 
+import exceptions.InvalidCredentialsException;
 import exceptions.UserNameAlreadyInUseException;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -67,9 +68,25 @@ public class MainWindowsController {
 		Stage window = (Stage)((Node)e.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root, null);
 		window.setScene(scene);
-		window.setTitle("Bienvenido");
+		window.setTitle("Bienvenido " + as.getCurrentUser().getUserName());
 		window.show();
 	}//End switchToSecondaryPane
+
+	@FXML
+	public void logInUser(Event e) throws IOException {
+		String userName = userNameTxt.getText();
+		String password = passwordTxt.getText();
+		if(as.verifyBlankChars(new String[]{userName, password})) {
+			try {
+				as.login(userName, password);
+				switchToSecondaryPane(e);
+			} catch (InvalidCredentialsException exception) {
+				showErrorAlert("Credenciales incorrectas", exception.getMessage() + ". Vuelva a intentarlo.", null);
+			}//End try/catch
+		} else {
+			showInformationAlert("Campos vacíos","Deben llenarse todos los campos",null);
+		}//End if/else
+	}//End logInUser
 
 	@FXML
 	public void showLoginScene() throws IOException {
@@ -132,6 +149,14 @@ public class MainWindowsController {
 		Optional<ButtonType> result = feedBack.showAndWait();
 		return result.get() == acceptBtn;
 	}//End showConfirmationAlert
+
+	public void showErrorAlert(String title, String msg, String header) {
+		Alert feedBack = new Alert(AlertType.ERROR);
+		feedBack.setTitle(title);
+		feedBack.setHeaderText(header);
+		feedBack.setContentText(msg);
+		feedBack.showAndWait();
+	}//End showErrorAlert
 	
 	//************************ Objects and data managment *******************
 	
