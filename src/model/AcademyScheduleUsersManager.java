@@ -73,10 +73,12 @@ public class AcademyScheduleUsersManager implements Serializable {
 	 */
 	public void login(String userName, String password) throws InvalidCredentialsException {
 		int userIndex = searchUser(userName);
+		System.out.println("El index del usuario es " + userIndex);
 		if(userIndex == -1) {
 			throw new InvalidCredentialsException();
 		}else if(users.get(userIndex).getPassword().equals(password)){
 				setCurrentUser(users.get(userIndex));
+				System.out.println("El usuario actual es: " + users.get(userIndex));
 		} else {
 			throw new InvalidCredentialsException();
 		}//End if/else

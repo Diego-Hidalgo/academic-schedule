@@ -99,4 +99,7 @@ public class User extends Person implements Serializable {
 		this.academicSchedule = academicSchedule;
 	}
 	
+	public String toString(){
+		return userName + " "+password;
+	}
 }//End User
