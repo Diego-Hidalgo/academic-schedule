@@ -129,6 +129,7 @@ public class MainWindowsController{
 	public void logInUser(Event e) throws IOException {
 		String userName = userNameTxt.getText();
 		String password = passwordTxt.getText();
+		academicSchedule.doTest();
 		if(academicSchedule.verifyBlankChars(new String[]{userName, password})) {
 			try {
 				academicSchedule.login(userName, password);
@@ -198,7 +199,11 @@ public class MainWindowsController{
 	}//End showUserProfileScene
 
 	public void setUserProfileFields() throws URISyntaxException {
-		ProfileImg.setImage(new Image(academicSchedule.getCurrentUser().getProfilePhoto()));
+		try {
+			ProfileImg.setImage(new Image(academicSchedule.getCurrentUser().getProfilePhoto()));
+		} catch (NullPointerException e) {
+			ProfileImg.setImage(new Image(getClass().getResource("fxml/img/profile.png").toURI().toString()));
+		}//End try/catch
 		nameTxt.setText(academicSchedule.getCurrentUser().getName());
 		lastNameTxt.setText(academicSchedule.getCurrentUser().getLastName());
 		userNameTxt.setText(academicSchedule.getCurrentUser().getUserName());

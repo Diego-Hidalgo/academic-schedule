@@ -22,6 +22,13 @@ public class AcademyScheduleUsersManager implements Serializable {
 		users = new ArrayList<User>();
 	}//End AcademyScheduleUsersManager constructor
 
+	public void doTest() {
+		System.out.println(users.size());
+		for (User user : users) {
+			System.out.println(user.getUserName());
+		}
+	}
+
 	/**
 	 *
 	 */
@@ -71,7 +78,7 @@ public class AcademyScheduleUsersManager implements Serializable {
 	 * @param userName
 	 * @param password
 	 */
-	public void login(String userName, String password) throws InvalidCredentialsException {
+	public void login(final String userName, final String password) throws InvalidCredentialsException {
 		int userIndex = searchUser(userName);
 		if(userIndex == -1) {
 			throw new InvalidCredentialsException();
@@ -94,14 +101,14 @@ public class AcademyScheduleUsersManager implements Serializable {
 	 * 
 	 * @param userName
 	 */
-	public int searchUser(String userName) {
+	public int searchUser(final String userName) {
 		int start = 0;
 		int end = users.size() - 1;
 		while(start <= end) {
 			int mid = (start + end) / 2;
 			if (users.get(mid).getUserName().compareTo(userName) == 0) {
 				return mid;
-			} else if (users.get(mid).getUserName().compareTo(userName) > 0) {
+			} else if (users.get(mid).getUserName().compareTo(userName) < 0) {
 				start = mid + 1;
 			} else {
 				end = mid - 1;
@@ -146,7 +153,7 @@ public class AcademyScheduleUsersManager implements Serializable {
 		} else {
 			Comparator<User> userNameComparator = new UserNameComparator();
 			int i = 0;
-			while(i < users.size() && userNameComparator.compare(newUser, users.get(i)) < 0) {
+			while(i < users.size() && userNameComparator.compare(newUser, users.get(i)) > 0) {
 				i ++;
 			}//End while
 			users.add(i, newUser);
