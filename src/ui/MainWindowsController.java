@@ -132,7 +132,7 @@ public class MainWindowsController {
 	}//End showChangePasswordScene
 
 	public void showUserProfileScene() throws IOException, URISyntaxException {
-		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER + "UserProfile.fxml"));
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER + "UserProfileWindow.fxml"));
 		fxml.setController(this);
 		Parent userProfile = fxml.load();
 		secondaryPane.setCenter(userProfile);
