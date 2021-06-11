@@ -12,8 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.*;
@@ -24,14 +28,27 @@ public class EmergentWindowController {
 	private AcademyScheduleUsersManager academicSchedule;
 	final private String FOLDER = "fxml/EmergentsWindows/";
 	
-	//******************** Day data *************************+
+	//******************** Day data **************************
 	@FXML private ChoiceBox<String> dayCB;
 	@FXML private TextField initHourTxt;
 	@FXML private TextField finHourTxt;
 	private String day;
 	private Time initHour;
 	private Time finHour;
-	
+	//******************** Course data ***********************
+	private Course currentCourse;
+	@FXML private Label courseNameTxt;
+	@FXML private Label creditsTxt;
+	@FXML private Label estatusLb;
+	@FXML private Label monday;
+	@FXML private Label tuesday;
+	@FXML private Label wednesday;
+	@FXML private Label thursday;
+	@FXML private Label friday;
+	@FXML private Label saturday;
+	@FXML private TableView<Grade> grades;
+	@FXML private TableColumn<Grade,String> gradeDescription;
+	@FXML private TableColumn<Grade,String> gradeValue;
 	public EmergentWindowController(AcademyScheduleUsersManager as) {
 		academicSchedule = as;
 	}//End EmergentWindowController constructor
@@ -42,16 +59,31 @@ public class EmergentWindowController {
 		Parent root = fxml.load();
 		Scene scene = new Scene(root,null);
 		Stage form = new Stage();
-		initializeCourseStatus();
+		initializeDayChoiceBox();
 		form.initModality(Modality.APPLICATION_MODAL);
 		form.setTitle("Agregar dia");
 		form.setScene(scene);
 		form.setResizable(false);
 		form.showAndWait();
-	}
+	}//End showAddDay
+	
+	public void showCourseData(Course courseInfo) throws IOException{
+		currentCourse = courseInfo;
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"ShowCourseInfoEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage form = new Stage();
+		initializeCurrentCourseData();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Información del curso");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.showAndWait();
+	}//End showCourseData
 	
 	//********************* Data management ********************
-	public void initializeCourseStatus(){
+	private void initializeDayChoiceBox(){
 		ObservableList<String> status = FXCollections.observableArrayList();
 		status.add("Lunes");
 		status.add("Martes");
@@ -61,6 +93,30 @@ public class EmergentWindowController {
 		status.add("Sabado");
 		dayCB.setItems(status);
 	}//initializeCourseStatus
+	
+	private void initializeCurrentCourseData(){
+		courseNameTxt.setText(currentCourse.getName());
+		creditsTxt.setText(String.valueOf(currentCourse.getCredits()));
+		estatusLb.setText(currentCourse.getStatus() +"");
+		activateDays();
+	}//End initializeCurrentCourseData
+	
+	private void activateDays(){
+		int size = currentCourse.getDays().size();
+		for(int i = 0; i < size; i++){
+			String day = String.valueOf( currentCourse.getDays().get(i).getDay());
+			switch(day){
+				case "LUNES": monday.setOpacity(1); break;
+				case "MARTES": tuesday.setOpacity(1); break;
+				case "MIERCOLES": wednesday.setOpacity(1); break;
+				case "JUEVES": thursday.setOpacity(1); break;
+				case "VIERNES": friday.setOpacity(1); break;
+				case "SABADO": saturday.setOpacity(1); break;
+				default:
+					System.out.println("Holy shit wth is happening the day was " + day); break;
+			}//End switch
+		}//End for
+	}
 	
 	@FXML
 	public void addDay(ActionEvent event) {

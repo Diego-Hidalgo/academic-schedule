@@ -9,7 +9,6 @@ import exceptions.UserNameAlreadyInUseException;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -71,6 +70,7 @@ public class MainWindowsController{
 	private ArrayList<Time> finHour;
 	//************* Courses ****************
 	private VBox center;
+	private ArrayList<CourseBlock> coursesBlock;
 	//*************Study plan***************
 	@FXML private TextField titleTxt;
 	@FXML private TextField descriptionTxt;
@@ -98,6 +98,7 @@ public class MainWindowsController{
 		days = new ArrayList<String>();
 		initHour = new ArrayList<Time>();
 		finHour = new ArrayList<Time>();
+		coursesBlock = new ArrayList<CourseBlock>();
 	}//End MainWindowsController constructor
 	
 	
@@ -193,7 +194,7 @@ public class MainWindowsController{
 		cen.setCenter(center);
 		secondaryPane.setCenter(cen);
 		addCourseToScreen();
-		addCourseToScreen();
+		//addCourseToScreen();
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Cursos");
 		stage.setHeight(580);
@@ -227,16 +228,8 @@ public class MainWindowsController{
 	
 	@FXML
 	public void addCourseToScreen(){
-		HBox course = new HBox();
-		course.setPrefHeight(25);
-		Label cn = new Label();
-		HBox.setMargin(cn, new Insets(3, 0, 0, 5));
-		cn.setFont(Font.font("Avenir Next LT Pro", FontWeight.BOLD, 14));
-		cn.setTextFill(Color.web("FFFFFF"));
-		cn.setText("Joder si");
-		course.setStyle("-fx-background-color: #0000FF;");
-		course.getChildren().addAll(cn);
-		center.getChildren().addAll(course);
+		coursesBlock.add(new CourseBlock(academicSchedule.getCurrentUser().getAcademicSchedule().getFirstCourse(),colours[0],ewc));
+		center.getChildren().addAll(coursesBlock.get(0).getHBox());
 		center.setSpacing(10);
 	}//End addCourseToScreen
 	

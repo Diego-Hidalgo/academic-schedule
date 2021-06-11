@@ -94,6 +94,11 @@ public class Grade implements Comparable<Grade>, Serializable {
 	public void setParent(Grade parent) {
 		this.parent = parent;
 	}
+	
+	@Override
+	public String toString(){
+		return description + " " + grade;
+	}
 
 	@Override
 	public int compareTo(Grade o) {
