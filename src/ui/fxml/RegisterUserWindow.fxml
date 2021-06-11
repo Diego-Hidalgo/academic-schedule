@@ -5,16 +5,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="423.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="408.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <VBox prefHeight="262.0" prefWidth="265.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="235.0" prefWidth="162.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="6.0" prefWidth="222.0" />
             <TextField fx:id="nameTxt" />
             <Pane prefHeight="20.0" prefWidth="207.0" />
             <TextField fx:id="lastNameTxt" />
             <Pane prefHeight="22.0" prefWidth="207.0" />
-            <TextField fx:id="userNameTxt" />
+            <TextField fx:id="userNameTxt" prefHeight="25.0" prefWidth="158.0" />
             <Pane prefHeight="24.0" prefWidth="207.0" />
             <PasswordField fx:id="passwordTxt" />
             <Pane prefHeight="20.0" prefWidth="207.0" />
@@ -23,10 +23,10 @@
          </children></VBox>
    </center>
    <left>
-      <VBox prefHeight="217.0" prefWidth="168.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER_LEFT" prefHeight="235.0" prefWidth="179.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="7.0" prefWidth="168.0" />
-            <Label text="Nombre:">
+            <Label prefHeight="19.0" prefWidth="65.0" text="Nombre:">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Label>
@@ -77,12 +77,12 @@
          </children></VBox>
    </bottom>
    <right>
-      <Pane prefHeight="235.0" prefWidth="103.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="235.0" prefWidth="60.0" BorderPane.alignment="CENTER" />
    </right>
    <top>
-      <VBox alignment="CENTER" prefHeight="126.0" prefWidth="542.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="126.0" prefWidth="542.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="18.0" prefWidth="115.0" text="REGISTRARSE">
+            <Label prefHeight="27.0" prefWidth="244.0" text="FORMULARIO DE REGISTRO">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>

@@ -2,6 +2,7 @@ package ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import exceptions.UserNameAlreadyInUseException;
 import javafx.event.ActionEvent;
@@ -11,10 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -80,7 +79,7 @@ public class MainWindowsController {
 		mainPane.setCenter(loginScene);
 		Stage stage = (Stage) mainPane.getScene().getWindow();
 		stage.setTitle("Iniciar sesion");
-		stage.setWidth(500);
+		stage.setWidth(485);
 		stage.setHeight(480);
 		stage.setResizable(false);
 	}//End showLoginScene
@@ -94,7 +93,7 @@ public class MainWindowsController {
 		mainPane.setCenter(registerUser);
 		Stage st = (Stage) mainPane.getScene().getWindow();
 		st.setTitle("Registrar usuario");
-		st.setHeight(530);
+		st.setHeight(485);
 		st.setWidth(520);
 		st.setResizable(false);
 	}//End switchToMainPane
@@ -120,6 +119,18 @@ public class MainWindowsController {
 		feedBack.setContentText(msg);
 		feedBack.showAndWait();
 	}//End showInformationAlert
+
+	public boolean showConfirmationAlert(String title, String msg, String header) {
+		Alert feedBack = new Alert(AlertType.CONFIRMATION);
+		feedBack.setTitle(title);
+		feedBack.setHeaderText(header);
+		feedBack.setContentText(msg);
+		ButtonType acceptBtn = new ButtonType("Aceptar");
+		ButtonType cancelBtn = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+		feedBack.getButtonTypes().setAll(acceptBtn, cancelBtn);
+		Optional<ButtonType> result = feedBack.showAndWait();
+		return result.get() == acceptBtn;
+	}//End showConfirmationAlert
 	
 	//************************ Objects and data managment *******************
 	
@@ -151,6 +162,15 @@ public class MainWindowsController {
 			showInformationAlert("Campos vacíos","Deben llenarse todos los campos",null);
 		}//End if/else
 	}//End registerUser
+
+	@FXML
+	public void deleteUserAccount() throws IOException {
+		if(showConfirmationAlert("Eliminar cuenta de usuario", "¿Está seguro que desea eliminar su cuenta de usuario definitivamente?", null)) {
+			as.deleteUser();
+			showLoginScene();
+			showInformationAlert("Cuenta eliminada", "Se ha eliminado su cuenta exitosamente", null);
+		}//ENd
+	}//End deleteUserAccount
 	
 	//********************** Events listeners *******************************************
 
@@ -177,7 +197,7 @@ public class MainWindowsController {
 		if(imgPath != null){
 			ProfileImg.setImage(new Image(imgPath));
 			ProfileImg.setFitWidth(99);
-		}
+		}//End if
 	}//file:/D:/brianR/ElpolloOriginal.jpg
 
 	@FXML
@@ -185,4 +205,4 @@ public class MainWindowsController {
 		ProfileImg.setOpacity(1);
 	}//End listenProfileImgEvent
 
-}
+}//End MainWindowsController

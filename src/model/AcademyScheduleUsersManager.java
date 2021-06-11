@@ -182,6 +182,16 @@ public class AcademyScheduleUsersManager implements Serializable {
 	/**
 	 *
 	 */
+	public void deleteUser() throws IOException {
+		User toDelete = users.get(searchUser(currentUser.getUserName()));
+		users.remove(toDelete);
+		logout();
+		saveAllData();
+	}//End deleteUser
+
+	/**
+	 *
+	 */
 	public void sortUsersList() {
 		Comparator<User> userNameComparator = new UserNameComparator();
 		for(int i = 0; i < users.size(); i ++) {
