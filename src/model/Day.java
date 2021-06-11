@@ -1,19 +1,18 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Day implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Date initialHour;
-	private Date finishHour;
+	private Time initialHour;
+	private Time finishHour;
 	private Days day;
 	
 	public Day() {
-		initialHour = new Date();
-		finishHour = new Date();
+		initialHour = new Time();
+		finishHour = new Time();
 		day = Days.LUNES;
 	}//End Day constructor
 
@@ -22,13 +21,13 @@ public class Day implements Serializable {
 	 * @param initialHour
 	 * @param finishHour
 	 */
-	public Day(Days day,Date initialHour, Date finishHour) {
+	public Day(Days day,Time initialHour, Time finishHour) {
 		this.finishHour = finishHour;
 		this.initialHour = initialHour;
 		this.day = day;
 	}//End Day constructor
 
-	public Date getInitialHour() {
+	public Time getInitialHour() {
 		return this.initialHour;
 	}//End getInitialHour
 
@@ -36,11 +35,11 @@ public class Day implements Serializable {
 	 * 
 	 * @param initialHour
 	 */
-	public void setInitialHour(Date initialHour) {
+	public void setInitialHour(Time initialHour) {
 		this.initialHour = initialHour;
 	}//End setInitialHour
 
-	public Date getFinishHour() {
+	public Time getFinishHour() {
 		return this.finishHour;
 	}//End getFinishHour
 
@@ -48,7 +47,7 @@ public class Day implements Serializable {
 	 * 
 	 * @param finishHour
 	 */
-	public void setFinishHour(Date finishHour) {
+	public void setFinishHour(Time finishHour) {
 		this.finishHour = finishHour;
 	}//End setFinishHour
 

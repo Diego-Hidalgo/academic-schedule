@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="301.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="301.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="30.0" prefWidth="182.0" text="Crear evento">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+         </children></HBox>
+   </top>
+   <bottom>
+      <HBox prefHeight="34.0" prefWidth="301.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="76.0" prefWidth="96.0" />
+            <Button mnemonicParsing="false" text="Crear">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+         </children></HBox>
+   </bottom>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+   </right>
+   <center>
+      <VBox prefHeight="444.0" prefWidth="301.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="52.0" prefWidth="301.0">
+               <children>
+                  <TextField fx:id="eventName" prefHeight="25.0" prefWidth="229.0" promptText="Nombre del evento" />
+               </children>
+            </HBox>
+            <HBox prefHeight="52.0" prefWidth="301.0">
+               <children>
+                  <TextField fx:id="eventDescription" prefWidth="229.0" promptText="descripción del evento" />
+               </children>
+            </HBox>
+            <HBox prefHeight="24.0" prefWidth="301.0">
+               <children>
+                  <Label text="Día">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="24.0" prefWidth="161.0" />
+                  <Label text="Curso">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="52.0" prefWidth="200.0">
+               <children>
+                  <ChoiceBox fx:id="eventDayCB" prefHeight="25.0" prefWidth="126.0" />
+                  <Pane prefHeight="52.0" prefWidth="49.0" />
+                  <ChoiceBox fx:id="eventCourseCB" prefWidth="126.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="28.0" prefWidth="200.0">
+               <children>
+                  <Label text="Hora inicio">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="28.0" prefWidth="113.0" />
+                  <Label text="Hora fin">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="48.0" prefWidth="301.0">
+               <children>
+                  <TextField fx:id="eventInitHour" prefHeight="25.0" prefWidth="110.0" promptText="HH:MM" />
+                  <Pane prefHeight="28.0" prefWidth="64.0" />
+                  <TextField fx:id="eventFinHour" prefHeight="25.0" prefWidth="110.0" promptText="HH:MM" />
+               </children>
+            </HBox>
+            <HBox prefHeight="26.0" prefWidth="301.0">
+               <children>
+                  <Label text="Fecha del evento">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="39.0" prefWidth="301.0">
+               <children>
+                  <DatePicker fx:id="eventDate" />
+               </children>
+            </HBox>
+            <HBox prefHeight="33.0" prefWidth="301.0">
+               <children>
+                  <CheckBox fx:id="eventSendNotify" mnemonicParsing="false" text="Enviar notificación">
+                     <font>
+                        <Font name="System Bold Italic" size="13.0" />
+                     </font>
+                  </CheckBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="26.0" prefWidth="301.0">
+               <children>
+                  <Label text="Enviar a">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="27.0" prefWidth="301.0">
+               <children>
+                  <TextField fx:id="eventToSendHour" promptText="HH:MM" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

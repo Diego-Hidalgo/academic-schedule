@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Optional;
-
+import java.util.ArrayList;
 import exceptions.InvalidCredentialsException;
 import exceptions.UserNameAlreadyInUseException;
 import javafx.event.ActionEvent;
@@ -16,22 +16,37 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.AcademyScheduleUsersManager;
+import model.Course;
+import model.Goal;
+import model.Time;
 
-public class MainWindowsController {
+public class MainWindowsController{
 	
+	final private String[] colours = {"00B42C","00B468","00B4AC","0086B4","005AB4","0800B4","7D00B4","B400AF",
+									  "B40088","B4005D","B4003C","B4000E"};
+	final private String DEFAULTPROFILEIMG = "file:/fxml/profile.png";
 	final private String FOLDER = "fxml/";
 	@FXML private BorderPane mainPane;
-	@FXML private MenuBar menuBar;
 	@FXML private BorderPane secondaryPane;
-
+	@FXML private MenuBar menuBar;
 	//************User data ***************\\
+	private EmergentWindowController ewc;
+	//************User data ***************
 	@FXML private ImageView ProfileImg;
 	@FXML private TextField nameTxt;
 	@FXML private TextField lastNameTxt;
@@ -39,13 +54,49 @@ public class MainWindowsController {
 	@FXML private TextField passwordTxt;
 	@FXML private TextField confirmationTxt;
 	private String imgPath;
-	
-	
+	//************Course data**************
+	@FXML private TextField courseNameTxt;
+	@FXML private TextField creditsTxt;
+	@FXML private Pane monday;
+	@FXML private Pane tuesday;
+	@FXML private Pane wednesday;
+	@FXML private Pane thursday;
+	@FXML private Pane friday;
+	@FXML private Pane saturday;
+	private ArrayList<String> days;
+	private ArrayList<Time> initHour;
+	private ArrayList<Time> finHour;
+	//************* Courses ****************
+	private VBox center;
+	private ArrayList<CourseBlock> coursesBlock;
+	//*************Study plan***************
+	@FXML private TextField titleTxt;
+	@FXML private TextField descriptionTxt;
+	@FXML private TextField initTimeTxt;
+	@FXML private TextField finTimeTxt;
+	@FXML private ListView<Goal> goalsLV;
+	@FXML private  ChoiceBox<String> dayCB;
+	@FXML private ChoiceBox<Course> courseCB;
+	//************ Event ********************
+	@FXML private TextField eventName;
+	@FXML private TextField eventDescription;
+	@FXML private TextField eventInitHour;
+	@FXML private TextField eventFinHour;
+	@FXML private TextField eventToSendHour;
+	@FXML private ChoiceBox<String> eventDayCB;
+	@FXML private ChoiceBox<Course> eventCourseCB;
+	@FXML private DatePicker eventDate;
+	@FXML private CheckBox eventSendNotify;
 	//************ Academic schedule *******
-	private AcademyScheduleUsersManager as;
+	private AcademyScheduleUsersManager academicSchedule;
 	
 	public MainWindowsController(AcademyScheduleUsersManager as){
-		this.as = as;
+		this.academicSchedule = as;
+		ewc = new EmergentWindowController(as);
+		days = new ArrayList<String>();
+		initHour = new ArrayList<Time>();
+		finHour = new ArrayList<Time>();
+		coursesBlock = new ArrayList<CourseBlock>();
 	}//End MainWindowsController constructor
 
 	//**************************** SCENES *************************************
@@ -69,7 +120,7 @@ public class MainWindowsController {
 		Stage window = (Stage)((Node)e.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root, null);
 		window.setScene(scene);
-		window.setTitle("Bienvenido " + as.getCurrentUser().getUserName());
+		window.setTitle("Bienvenido " + academicSchedule.getCurrentUser().getUserName());
 		window.show();
 	}//End switchToSecondaryPane
 
@@ -77,9 +128,9 @@ public class MainWindowsController {
 	public void logInUser(Event e) throws IOException {
 		String userName = userNameTxt.getText();
 		String password = passwordTxt.getText();
-		if(as.verifyBlankChars(new String[]{userName, password})) {
+		if(academicSchedule.verifyBlankChars(new String[]{userName, password})) {
 			try {
-				as.login(userName, password);
+				academicSchedule.login(userName, password);
 				switchToSecondaryPane(e);
 			} catch (InvalidCredentialsException exception) {
 				showErrorAlert("Credenciales incorrectas", exception.getMessage() + ". Vuelva a intentarlo.", null);
@@ -105,6 +156,7 @@ public class MainWindowsController {
 	
 	@FXML
 	public void showRegisterUser() throws IOException {
+		imgPath = DEFAULTPROFILEIMG;
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"RegisterUserWindow.fxml"));
 		fxml.setController(this);
 		Parent registerUser = fxml.load();
@@ -138,18 +190,79 @@ public class MainWindowsController {
 		secondaryPane.setCenter(userProfile);
 		setUserProfileFields();
 		Stage st = (Stage) secondaryPane.getScene().getWindow();
-		st.setTitle("Perfil del usuario " + as.getCurrentUser().getUserName());
+		st.setTitle("Perfil del usuario " + academicSchedule.getCurrentUser().getUserName());
 		st.setHeight(485);
 		st.setWidth(525);
 		st.setResizable(false);
 	}//End showUserProfileScene
 
 	public void setUserProfileFields() throws URISyntaxException {
-		ProfileImg.setImage(new Image(as.getCurrentUser().getProfilePhoto()));
-		nameTxt.setText(as.getCurrentUser().getName());
-		lastNameTxt.setText(as.getCurrentUser().getLastName());
-		userNameTxt.setText(as.getCurrentUser().getUserName());
+		ProfileImg.setImage(new Image(academicSchedule.getCurrentUser().getProfilePhoto()));
+		nameTxt.setText(academicSchedule.getCurrentUser().getName());
+		lastNameTxt.setText(academicSchedule.getCurrentUser().getLastName());
+		userNameTxt.setText(academicSchedule.getCurrentUser().getUserName());
 	}//End setUserProfileFields
+	
+	@FXML
+	public void showRegisterCourse() throws IOException{
+		days = new ArrayList<String>();
+		initHour = new ArrayList<Time>();
+		finHour = new ArrayList<Time>();
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"AddCourseWindows.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		secondaryPane.setCenter(registerScene);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Registrar curso");
+		stage.setHeight(610);
+		stage.setWidth(550);
+		stage.setResizable(false);
+	}//End showRegisterCourse
+	
+	@FXML
+	public void showRegisterStudyPlan() throws IOException{
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"CreateStudyPlanWindow.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		secondaryPane.setCenter(registerScene);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Crear plan de estudio");
+		stage.setHeight(670);
+		stage.setWidth(550);
+		stage.setResizable(false);
+	}//End showRegisterCourse
+	
+	@FXML
+	public void showAllCourses() throws IOException{
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"ShowCoursesWindow.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		BorderPane cen = (BorderPane) registerScene;
+		center = new VBox();
+		center.setPrefHeight(400);
+		cen.setCenter(center);
+		secondaryPane.setCenter(cen);
+		addCourseToScreen();
+		//addCourseToScreen();
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Cursos");
+		stage.setHeight(580);
+		stage.setWidth(500);
+		stage.setResizable(false);
+	}//End showAllCourses
+	
+	@FXML
+	public void showRegisterEvent() throws IOException{
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"AddEventWithNotifyWindow.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		secondaryPane.setCenter(registerScene);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Crear evento");
+		stage.setHeight(630);
+		stage.setWidth(550);
+		stage.setResizable(false);
+	}//End showRegisterCourse
 	
 	public void showInformationAlert(String title,String msg,String header){
 		Alert feedBack = new Alert(AlertType.INFORMATION);
@@ -178,21 +291,107 @@ public class MainWindowsController {
 		feedBack.setContentText(msg);
 		feedBack.showAndWait();
 	}//End showErrorAlert
-	
+
 	//************************ Objects and data managment *******************
+	public void addCourseToScreen(){
+		coursesBlock.add(new CourseBlock(academicSchedule.getCurrentUser().getAcademicSchedule().getFirstCourse(),colours[0],ewc));
+		center.getChildren().addAll(coursesBlock.get(0).getHBox());
+		center.setSpacing(10);
+	}//End addCourseToScreen
 	
 	@FXML
-	public void registerUser(ActionEvent event) throws URISyntaxException {
+	public void registerCourse(){
+		String msg = "Llena todos los campos";
+		if(days.size() != 0 && !courseNameTxt.getText().isEmpty() && 
+			!creditsTxt.getText().isEmpty()){
+			try{
+				int credits = Integer.parseInt(creditsTxt.getText());
+				if(academicSchedule.getCurrentUser() == null){
+					System.out.println("Usuario nulo");
+				}else if(academicSchedule.getCurrentUser().getAcademicSchedule() == null) {
+					System.out.println("Academic schedule nulo");
+				}
+				academicSchedule.getCurrentUser().getAcademicSchedule().
+				addCourse(courseNameTxt.getText(), credits, days, initHour, finHour);
+				msg = "Curso agregado con exito";
+				days = new ArrayList<String>();
+				initHour = new ArrayList<Time>();
+				finHour = new ArrayList<Time>();
+				courseNameTxt.setText("");
+				creditsTxt.setText("");
+				DesactivateAllDays();
+			}catch(NumberFormatException e){
+				msg = "Los creditos deben ser un valor numerico entero";
+			}//End try..catch
+		}//End if
+		showInformationAlert("Agregar curso estado",msg,null);
+	}//End registerCourse
+	
+	@FXML
+	public void addDay() throws IOException{
+		ewc.showAddDay();
+		String d = ewc.getAndClearDay();
+		days.add(d);
+		initHour.add(ewc.getAndClearInitHour());
+		finHour.add(ewc.getAndClearFinHour());
+		activateDay(d);
+	}//End addDay
+	
+	public void activateDay(String day){
+		switch(day){
+		case "Lunes":
+			monday.setDisable(false);
+			monday.setOpacity(1);
+			break;
+		case "Martes": 
+			tuesday.setDisable(false);
+			tuesday.setOpacity(1);
+			break;
+		case "Miercoles": 
+			wednesday.setDisable(false);
+			wednesday.setOpacity(1);
+			break;
+		case "Jueves": 
+			thursday.setDisable(false);
+			thursday.setOpacity(1);
+			break;
+		case "Viernes": 
+			friday.setDisable(false);
+			friday.setOpacity(1);
+			break;
+		case "Sabado": 
+			saturday.setDisable(false);
+			saturday.setOpacity(1);
+			break;
+		}//End switch
+	}//End activateDay
+	
+	public void DesactivateAllDays(){
+		monday.setDisable(true);
+		monday.setOpacity(0.15); 
+		tuesday.setDisable(true);
+		tuesday.setOpacity(0.15);
+		wednesday.setDisable(true);
+		wednesday.setOpacity(0.15);
+		thursday.setDisable(true);
+		thursday.setOpacity(0.15);
+		friday.setDisable(true);
+		friday.setOpacity(0.15); 
+		saturday.setDisable(true);
+		saturday.setOpacity(0.15);
+	}//End activateDay
+
+	public void registerUser(ActionEvent event) throws URISyntaxException, IOException {
 		String name = nameTxt.getText();
 		String lastName = lastNameTxt.getText();
 		String userName = userNameTxt.getText();
 		String password = passwordTxt.getText();
 		String confirmation = confirmationTxt.getText();
-		if(as.verifyBlankChars(new String[]{name, lastName, userName, password, confirmation})) {
+		if(academicSchedule.verifyBlankChars(new String[]{name, lastName, userName, password, confirmation})) {
 			if(password.equals(confirmation)) {
 				if(password.length() >= 7) {
 					try {
-						as.addUser(name, lastName, userName, password, imgPath);
+						academicSchedule.addUser(name, lastName, userName, password, imgPath);
 						showInformationAlert("Registro completado", "Se ha registrado al nuevo usuario exitosamente", null);
 						nameTxt.clear();
 						lastNameTxt.clear();
@@ -221,11 +420,11 @@ public class MainWindowsController {
 		String userName = userNameTxt.getText();
 		String newPassword = passwordTxt.getText();
 		String confirmation = confirmationTxt.getText();
-		if(as.verifyBlankChars(new String[]{userName, newPassword, confirmation})) {
-			if(as.searchUser(userName) != -1) {
+		if(academicSchedule.verifyBlankChars(new String[]{userName, newPassword, confirmation})) {
+			if(academicSchedule.searchUser(userName) != -1) {
 				if(newPassword.equals(confirmation)) {
 					if(newPassword.length() >= 7) {
-						as.changeUserPassword(userName, newPassword);
+						academicSchedule.changeUserPassword(userName, newPassword);
 						showInformationAlert("Contraseña cambiada", "La contraseña se ha cambiado exitosamente", null);
 						userNameTxt.clear();
 						passwordTxt.clear();
@@ -252,11 +451,11 @@ public class MainWindowsController {
 		String password = passwordTxt.getText();
 		String confirmation = confirmationTxt.getText();
 		if(showConfirmationAlert("Cambiar datos de la cuente", "¿Está seguro que desea cambiar los datos de la cuenta?", null)) {
-			if(as.verifyBlankChars(new String[]{name, lastName, userName, password, confirmation})) {
+			if(academicSchedule.verifyBlankChars(new String[]{name, lastName, userName, password, confirmation})) {
 				if(password.equals(confirmation)) {
 					if(password.length() >= 7) {
 						try {
-							as.changeUser(name, lastName, userName, password, imgPath);
+							academicSchedule.changeUser(name, lastName, userName, password, imgPath);
 							showInformationAlert("Cambios regitrados", "Se han cambiado los datos exitosamente", null);
 							setUserProfileFields();
 							passwordTxt.clear();
@@ -283,8 +482,8 @@ public class MainWindowsController {
 		if(showConfirmationAlert("Eliminar cuenta de usuario", "¿Está seguro que desea eliminar su cuenta de usuario definitivamente?", null)) {
 			switchToMainPane();
 			showLoginScene();
-			as.deleteUser();
-			as.logout();
+			academicSchedule.deleteUser();
+			academicSchedule.logout();
 			showInformationAlert("Cuenta eliminada", "Se ha eliminado su cuenta exitosamente", null);
 		}//End if
 	}//End deleteUserAccount
@@ -292,7 +491,24 @@ public class MainWindowsController {
 	//********************** Events listeners *******************************************
 
 	@FXML
-	public void listenEnteredProfileImgEvent(MouseEvent event ){
+	public void ShowCoursesError(){
+		showInformationAlert("Que gonorrea","Ocurrio tremendo error, nunca deberias ver esto",null);
+	}//End showCoursesError
+	
+	@FXML
+	public void listenEnteredDay(MouseEvent event){
+		Pane day = (Pane) event.getSource();
+		day.setOpacity(0.7);
+	}//End listenEnteredDay
+	
+	@FXML
+	public void listenExitedDay(MouseEvent event){
+		Pane day = (Pane) event.getSource();
+		day.setOpacity(1);
+	}//End listenEnteredDay
+	
+	@FXML
+	public void listenEnteredProfileImgEvent(MouseEvent event){
 		ProfileImg.setOpacity(0.5);
 	}//End listenProfileImgEvent
 	

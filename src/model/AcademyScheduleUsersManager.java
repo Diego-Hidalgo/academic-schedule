@@ -28,7 +28,7 @@ public class AcademyScheduleUsersManager implements Serializable {
 	public User getCurrentUser() {
 		return this.currentUser;
 	}
-
+	
 	/**
 	 * 
 	 * @param currentUser
@@ -99,9 +99,9 @@ public class AcademyScheduleUsersManager implements Serializable {
 		int end = users.size() - 1;
 		while(start <= end) {
 			int mid = (start + end) / 2;
-			if(users.get(mid).getUserName().compareTo(userName) == 0) {
+			if (users.get(mid).getUserName().compareTo(userName) == 0) {
 				return mid;
-			} else if(users.get(mid).getUserName().compareTo(userName) < 0) {
+			} else if (users.get(mid).getUserName().compareTo(userName) > 0) {
 				start = mid + 1;
 			} else {
 				end = mid - 1;
@@ -164,7 +164,7 @@ public class AcademyScheduleUsersManager implements Serializable {
 	 * @throws IOException
 	 */
 	public void changeUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException, UserNameAlreadyInUseException {
-		User userToChange = users.get(searchUser(userName));
+		User userToChange = getCurrentUser();
 		String prevUserName = userToChange.getUserName();
 		if(searchUser(userName) != -1 && !prevUserName.equals(userName)) {
 			throw new UserNameAlreadyInUseException(userName);

@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.ArrayList;
 
 public class Course implements Serializable {
@@ -60,7 +59,7 @@ public class Course implements Serializable {
 	 * @param initialHour
 	 * @param finishHour
 	 */
-	public void addDays(Days day, Date initialHour, Date finishHour) {
+	public void addDays(Days day, Time initialHour, Time finishHour) {
 		days.add(new Day(day,initialHour,finishHour));
 	}//End addDays
 
@@ -71,7 +70,7 @@ public class Course implements Serializable {
 	 * @param initialHour
 	 * @param finishHour
 	 */
-	public void editDay(Day dayToEdit, Days day, Date initialHour, Date finishHour) {
+	public void editDay(Day dayToEdit, Days day, Time initialHour, Time finishHour) {
 		dayToEdit.setDay(day);
 		dayToEdit.setInitialHour(initialHour);
 		dayToEdit.setFinishHour(finishHour);
