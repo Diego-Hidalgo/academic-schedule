@@ -20,7 +20,7 @@
             <Menu mnemonicParsing="false" text="Usuario">
               <items>
                 <MenuItem mnemonicParsing="false" text="Agregar" />
-                  <MenuItem mnemonicParsing="false" text="Gestionar" />
+                  <MenuItem mnemonicParsing="false" text="Gestionar" onAction="#showUserProfileScene"/>
                   <MenuItem mnemonicParsing="false" text="Salir del sistema" />
               </items>
             </Menu>

@@ -163,9 +163,12 @@ public class AcademyScheduleUsersManager implements Serializable {
 	 * @param profilePhotoPath
 	 * @throws IOException
 	 */
-	public void changeUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException {
+	public void changeUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException, UserNameAlreadyInUseException {
 		User userToChange = users.get(searchUser(userName));
 		String prevUserName = userToChange.getUserName();
+		if(searchUser(userName) != -1 && !prevUserName.equals(userName)) {
+			throw new UserNameAlreadyInUseException(userName);
+		}//End if
 		userToChange.setName(name);
 		userToChange.setLastName(lastName);
 		userToChange.setUserName(userName);
@@ -189,7 +192,6 @@ public class AcademyScheduleUsersManager implements Serializable {
 	public void deleteUser() throws IOException {
 		User toDelete = users.get(searchUser(currentUser.getUserName()));
 		users.remove(toDelete);
-		logout();
 		saveAllData();
 	}//End deleteUser
 

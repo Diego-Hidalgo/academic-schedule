@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="408.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <VBox prefHeight="235.0" prefWidth="162.0" BorderPane.alignment="CENTER">
+            <children>
+                <Pane prefHeight="6.0" prefWidth="222.0" />
+                <TextField fx:id="nameTxt" />
+                <Pane prefHeight="20.0" prefWidth="207.0" />
+                <TextField fx:id="lastNameTxt" />
+                <Pane prefHeight="22.0" prefWidth="207.0" />
+                <TextField fx:id="userNameTxt" prefHeight="25.0" prefWidth="158.0" />
+                <Pane prefHeight="24.0" prefWidth="207.0" />
+                <PasswordField fx:id="passwordTxt" />
+                <Pane prefHeight="20.0" prefWidth="207.0" />
+                <PasswordField fx:id="confirmationTxt" />
+                <Pane prefHeight="53.0" prefWidth="207.0" />
+            </children></VBox>
+    </center>
+    <left>
+        <VBox alignment="CENTER_LEFT" prefHeight="235.0" prefWidth="179.0" BorderPane.alignment="CENTER">
+            <children>
+                <Pane prefHeight="7.0" prefWidth="168.0" />
+                <Label prefHeight="19.0" prefWidth="65.0" text="Nombre:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font></Label>
+                <Pane prefHeight="25.0" prefWidth="168.0" />
+                <Label text="Apellido:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Label>
+                <Pane prefHeight="25.0" prefWidth="168.0" />
+                <Label text="Nombre de usuario:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Label>
+                <Pane prefHeight="25.0" prefWidth="168.0" />
+                <Label text="Contraseña:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Label>
+                <Pane prefHeight="25.0" prefWidth="168.0" />
+                <Label text="Confirmar Contraseña:">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Label>
+                <Pane prefHeight="58.0" prefWidth="168.0" />
+            </children>
+        </VBox>
+    </left>
+    <bottom>
+        <VBox prefHeight="39.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" prefHeight="68.0" prefWidth="542.0">
+                    <children>
+                        <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#deleteUserAccount" text="Eliminar cuenta">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font></Button>
+                        <Pane prefHeight="50.0" prefWidth="69.0" />
+                        <Button mnemonicParsing="false" onAction="#changeUserData" text="Cambiar datos">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font></Button>
+                    </children>
+                </HBox>
+            </children></VBox>
+    </bottom>
+    <right>
+        <Pane prefHeight="235.0" prefWidth="60.0" BorderPane.alignment="CENTER" />
+    </right>
+    <top>
+        <VBox alignment="CENTER" prefHeight="126.0" prefWidth="542.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label prefHeight="27.0" prefWidth="145.0" text="Perfil de usuario">
+                    <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                    </font>
+                </Label>
+                <Pane prefHeight="11.0" prefWidth="542.0" />
+                <ImageView fx:id="ProfileImg" fitHeight="52.0" fitWidth="52.0" layoutX="14.0" layoutY="4.0" onMouseClicked="#listenChooseImage" onMouseEntered="#listenEnteredProfileImgEvent" onMouseExited="#listenExitedProfileImgEvent" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@img/profile.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </VBox>
+    </top>
+</BorderPane>

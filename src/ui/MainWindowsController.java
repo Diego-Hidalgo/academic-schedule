@@ -29,6 +29,7 @@ public class MainWindowsController {
 	final private String FOLDER = "fxml/";
 	@FXML private BorderPane mainPane;
 	@FXML private MenuBar menuBar;
+	@FXML private BorderPane secondaryPane;
 
 	//************User data ***************\\
 	@FXML private ImageView ProfileImg;
@@ -129,6 +130,26 @@ public class MainWindowsController {
 		st.setWidth(500);
 		st.setResizable(false);
 	}//End showChangePasswordScene
+
+	public void showUserProfileScene() throws IOException, URISyntaxException {
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER + "UserProfile.fxml"));
+		fxml.setController(this);
+		Parent userProfile = fxml.load();
+		secondaryPane.setCenter(userProfile);
+		setUserProfileFields();
+		Stage st = (Stage) secondaryPane.getScene().getWindow();
+		st.setTitle("Perfil del usuario " + as.getCurrentUser().getUserName());
+		st.setHeight(485);
+		st.setWidth(525);
+		st.setResizable(false);
+	}//End showUserProfileScene
+
+	public void setUserProfileFields() throws URISyntaxException {
+		ProfileImg.setImage(new Image(as.getCurrentUser().getProfilePhoto()));
+		nameTxt.setText(as.getCurrentUser().getName());
+		lastNameTxt.setText(as.getCurrentUser().getLastName());
+		userNameTxt.setText(as.getCurrentUser().getUserName());
+	}//End setUserProfileFields
 	
 	public void showInformationAlert(String title,String msg,String header){
 		Alert feedBack = new Alert(AlertType.INFORMATION);
@@ -224,10 +245,46 @@ public class MainWindowsController {
 	}//End changeUserPassword
 
 	@FXML
-	public void deleteUserAccount() throws IOException {
+	public void changeUserData() throws URISyntaxException, IOException {
+		String name = nameTxt.getText();
+		String lastName = lastNameTxt.getText();
+		String userName = userNameTxt.getText();
+		String password = passwordTxt.getText();
+		String confirmation = confirmationTxt.getText();
+		if(showConfirmationAlert("Cambiar datos de la cuente", "¿Está seguro que desea cambiar los datos de la cuenta?", null)) {
+			if(as.verifyBlankChars(new String[]{name, lastName, userName, password, confirmation})) {
+				if(password.equals(confirmation)) {
+					if(password.length() >= 7) {
+						try {
+							as.changeUser(name, lastName, userName, password, imgPath);
+							showInformationAlert("Cambios regitrados", "Se han cambiado los datos exitosamente", null);
+							setUserProfileFields();
+							passwordTxt.clear();
+							confirmationTxt.clear();
+						} catch (UserNameAlreadyInUseException e) {
+							showInformationAlert("No se pudo completar el cambio", e.getMessage(), null);
+						} catch (IOException e) {
+							showInformationAlert("No se pudo completar el cambio", "Ocurrió un eeror inesperado :(", null);
+						}//End try/catch
+					} else {
+						showInformationAlert("Contraseña demasiado corta", "La contraseña es demasiado corta, debe contener por lo menos siete (7) caracteres. Vuelva a intentarlo", null);
+					}//End if/else
+				} else {
+					showInformationAlert("Contraseñas distintas","Las contraseñas no coinciden, vuelva a intentarlo",null);
+				}//End if/else
+			} else {
+				showInformationAlert("Campos vacíos","Deben llenarse todos los campos",null);
+			}//End if/else
+		}//End if
+	}//End changeUserData
+
+	@FXML
+	public void deleteUserAccount(Event e) throws IOException {
 		if(showConfirmationAlert("Eliminar cuenta de usuario", "¿Está seguro que desea eliminar su cuenta de usuario definitivamente?", null)) {
-			as.deleteUser();
+			switchToMainPane();
 			showLoginScene();
+			as.deleteUser();
+			as.logout();
 			showInformationAlert("Cuenta eliminada", "Se ha eliminado su cuenta exitosamente", null);
 		}//End if
 	}//End deleteUserAccount
