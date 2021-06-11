@@ -4,7 +4,6 @@ import exceptions.InvalidCredentialsException;
 import exceptions.UserNameAlreadyInUseException;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 
 public class AcademyScheduleUsersManager implements Serializable {
@@ -141,7 +140,6 @@ public class AcademyScheduleUsersManager implements Serializable {
 		if(searchUser(userName) != -1) {
 			throw new UserNameAlreadyInUseException(userName);
 		}//End if
-		System.out.println("funciona");
 		User newUser = new User(name, lastName, userName, passWord, profilePhotoPath);
 		if(users.isEmpty()) {
 			users.add(newUser);
@@ -178,6 +176,12 @@ public class AcademyScheduleUsersManager implements Serializable {
 		}//End if
 		saveAllData();
 	}//End changeUser
+
+	public void changeUserPassword(String userName, String newPassword) throws IOException {
+		User userToChange = users.get(searchUser(userName));
+		userToChange.setPassword(newPassword);
+		saveAllData();
+	}//End changeUserPassword
 
 	/**
 	 *

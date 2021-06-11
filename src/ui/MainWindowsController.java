@@ -2,6 +2,7 @@ package ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import exceptions.UserNameAlreadyInUseException;
@@ -135,7 +136,7 @@ public class MainWindowsController {
 	//************************ Objects and data managment *******************
 	
 	@FXML
-	public void registerUser(ActionEvent event) {
+	public void registerUser(ActionEvent event) throws URISyntaxException {
 		String name = nameTxt.getText();
 		String lastName = lastNameTxt.getText();
 		String userName = userNameTxt.getText();
@@ -147,6 +148,12 @@ public class MainWindowsController {
 					try {
 						as.addUser(name, lastName, userName, password, imgPath);
 						showInformationAlert("Registro completado", "Se ha registrado al nuevo usuario exitosamente", null);
+						nameTxt.clear();
+						lastNameTxt.clear();
+						userNameTxt.clear();
+						passwordTxt.clear();
+						confirmationTxt.clear();
+						ProfileImg.setImage(new Image(getClass().getResource("fxml/img/profile.png").toURI().toString()));
 					} catch (UserNameAlreadyInUseException e) {
 						showInformationAlert("No se pudo completar el registro", e.getMessage(), null);
 					} catch (IOException e) {
@@ -164,12 +171,40 @@ public class MainWindowsController {
 	}//End registerUser
 
 	@FXML
+	public void changeUserPassword() throws IOException {
+		String userName = userNameTxt.getText();
+		String newPassword = passwordTxt.getText();
+		String confirmation = confirmationTxt.getText();
+		if(as.verifyBlankChars(new String[]{userName, newPassword, confirmation})) {
+			if(as.searchUser(userName) != -1) {
+				if(newPassword.equals(confirmation)) {
+					if(newPassword.length() >= 7) {
+						as.changeUserPassword(userName, newPassword);
+						showInformationAlert("Contraseña cambiada", "La contraseña se ha cambiado exitosamente", null);
+						userNameTxt.clear();
+						passwordTxt.clear();
+						confirmationTxt.clear();
+					} else {
+						showInformationAlert("Contraseña demasiado corta", "La contraseña es demasiado corta, debe contener por lo menos siete (7) caracteres. Vuelva a intentarlo", null);
+					}//Enf if/else
+				} else {
+					showInformationAlert("Contraseñas distintas","Las contraseñas no coinciden, vuelva a intentarlo",null);
+				}//End if/else
+			} else {
+				showInformationAlert("Usuario inexistente", "El nombre de usuario ingresado no existe", null);
+			}//End if/else
+		} else {
+			showInformationAlert("Campos vacíos","Deben llenarse todos los campos",null);
+		}//End if/else
+	}//End changeUserPassword
+
+	@FXML
 	public void deleteUserAccount() throws IOException {
 		if(showConfirmationAlert("Eliminar cuenta de usuario", "¿Está seguro que desea eliminar su cuenta de usuario definitivamente?", null)) {
 			as.deleteUser();
 			showLoginScene();
 			showInformationAlert("Cuenta eliminada", "Se ha eliminado su cuenta exitosamente", null);
-		}//ENd
+		}//End if
 	}//End deleteUserAccount
 	
 	//********************** Events listeners *******************************************
@@ -183,7 +218,7 @@ public class MainWindowsController {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Selecciona una imagen");
 		fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("JPG, PNG, JPEG", "*.jpg", "*.png", "*.jpeg")
+                new FileChooser.ExtensionFilter("Custom extensions", "*.jpg", "*.png", "*.jpeg")
             );
 		File f = fileChooser.showOpenDialog(null);
 		if(f != null) {
