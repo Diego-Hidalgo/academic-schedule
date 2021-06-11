@@ -24,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -204,7 +205,6 @@ public class MainWindowsController{
 		cen.setCenter(center);
 		secondaryPane.setCenter(cen);
 		addCourseToScreen();
-		//addCourseToScreen();
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Cursos");
 		stage.setHeight(580);
@@ -238,10 +238,28 @@ public class MainWindowsController{
 	
 	@FXML
 	public void addCourseToScreen(){
-		coursesBlock.add(new CourseBlock(academicSchedule.getCurrentUser().getAcademicSchedule().getFirstCourse(),colours[0],ewc));
-		center.getChildren().addAll(coursesBlock.get(0).getHBox());
-		center.setSpacing(10);
+		coursesBlock = new ArrayList<CourseBlock>();
+		Course current = academicSchedule.getCurrentUser().
+				getAcademicSchedule().getFirstCourse();
+		center.getChildren().setAll((new CourseBlock(current,colours[0],ewc)).getHBox());
+		if(current != null) {
+			coursesBlock.add(new CourseBlock(current,colours[0],ewc));
+			addCourse(academicSchedule.getCurrentUser().getAcademicSchedule().
+					getFirstCourse().getNext(),1);
+			for(int i = 1; i < coursesBlock.size();i++){
+				center.getChildren().addAll(coursesBlock.get(i).getHBox());
+				center.setSpacing(10);
+			}//End for
+		}
+		
 	}//End addCourseToScreen
+	
+	private void addCourse(Course current, int index){
+		if(current != academicSchedule.getCurrentUser().getAcademicSchedule().getFirstCourse()){
+			coursesBlock.add(new CourseBlock(current,colours[index],ewc));
+			addCourse(current.getNext(),(++index));
+		}//End if
+	}//End addCourse
 	
 	@FXML
 	public void loginUser(Event e) throws IOException{
