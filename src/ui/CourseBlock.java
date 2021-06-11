@@ -36,7 +36,7 @@ public class CourseBlock {
 		if(cs != null)
 		cn.setText(cs.getName());
 		else
-			cn.setText("Era nulo");
+			cn.setText("Tal parece que aun no hay cursos");
 		course.setStyle("-fx-background-color: #"+colour+";");
 		course.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			  public void handle(MouseEvent e){
