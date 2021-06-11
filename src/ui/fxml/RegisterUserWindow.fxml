@@ -1,35 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="423.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox prefHeight="262.0" prefWidth="265.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="32.0" prefWidth="232.0" text="Registrarse" HBox.hgrow="ALWAYS">
+            <Pane prefHeight="6.0" prefWidth="222.0" />
+            <TextField fx:id="nameTxt" />
+            <Pane prefHeight="20.0" prefWidth="207.0" />
+            <TextField fx:id="lastNameTxt" />
+            <Pane prefHeight="22.0" prefWidth="207.0" />
+            <TextField fx:id="userNameTxt" />
+            <Pane prefHeight="24.0" prefWidth="207.0" />
+            <PasswordField fx:id="passwordTxt" />
+            <Pane prefHeight="20.0" prefWidth="207.0" />
+            <PasswordField fx:id="confirmationTxt" />
+            <Pane prefHeight="53.0" prefWidth="207.0" />
+         </children></VBox>
+   </center>
+   <left>
+      <VBox prefHeight="217.0" prefWidth="168.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="7.0" prefWidth="168.0" />
+            <Label text="Nombre:">
                <font>
-                  <Font name="System Bold Italic" size="22.0" />
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
+            <Pane prefHeight="25.0" prefWidth="168.0" />
+            <Label text="Apellido:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
                </font>
             </Label>
+            <Pane prefHeight="25.0" prefWidth="168.0" />
+            <Label text="Nombre de usuario:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Pane prefHeight="25.0" prefWidth="168.0" />
+            <Label text="Contraseña:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Pane prefHeight="25.0" prefWidth="168.0" />
+            <Label text="Confirmar Contraseña:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Pane prefHeight="58.0" prefWidth="168.0" />
          </children>
-      </HBox>
-   </top>
+      </VBox>
+   </left>
    <bottom>
-      <HBox prefHeight="143.0" prefWidth="474.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="39.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER" prefHeight="68.0" prefWidth="542.0">
                <children>
+<<<<<<< HEAD
                   <Pane prefHeight="20.0" prefWidth="474.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
@@ -48,20 +82,28 @@
                         <VBox prefHeight="109.0" prefWidth="166.0" />
                      </children>
                   </HBox>
+=======
+                  <Button mnemonicParsing="false" onAction="#showLoginScene" text="Regresar">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
+                  <Pane prefHeight="50.0" prefWidth="69.0" />
+                  <Button mnemonicParsing="false" onAction="#registerUser" text="Registar">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
+>>>>>>> 9b12ef5bae6275c89e1e651fbf0590586506d2df
                </children>
-            </VBox>
-         </children>
-      </HBox>
+            </HBox>
+         </children></VBox>
    </bottom>
-   <left>
-      <VBox prefHeight="321.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
-   </left>
    <right>
-      <VBox prefHeight="321.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="235.0" prefWidth="103.0" BorderPane.alignment="CENTER" />
    </right>
-   <center>
-      <VBox prefHeight="292.0" prefWidth="359.0" BorderPane.alignment="CENTER">
+   <top>
+      <VBox alignment="CENTER" prefHeight="126.0" prefWidth="542.0" BorderPane.alignment="CENTER">
          <children>
+<<<<<<< HEAD
             <VBox prefHeight="145.0" prefWidth="359.0" VBox.vgrow="ALWAYS">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="226.0" prefWidth="428.0" VBox.vgrow="ALWAYS">
@@ -100,7 +142,20 @@
                   </HBox>
                </children>
             </VBox>
+=======
+            <Label prefHeight="18.0" prefWidth="115.0" text="REGISTRARSE">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Label>
+            <Pane prefHeight="11.0" prefWidth="542.0" />
+             <ImageView fx:id="ProfileImg" fitHeight="52.0" fitWidth="52.0" layoutX="14.0" layoutY="4.0" onMouseClicked="#listenChooseImage" onMouseEntered="#listenEnteredProfileImgEvent" onMouseExited="#listenExitedProfileImgEvent" pickOnBounds="true" preserveRatio="true">
+                 <image>
+                     <Image url="@img/profile.png" />
+                 </image>
+             </ImageView>
+>>>>>>> 9b12ef5bae6275c89e1e651fbf0590586506d2df
          </children>
       </VBox>
-   </center>
+   </top>
 </BorderPane>
