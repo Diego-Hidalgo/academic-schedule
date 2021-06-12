@@ -16,56 +16,56 @@ public class AcademicScheduleUsersManager implements Serializable {
 	private ArrayList<User> users;
 
 	/**
-	 * <br>
+	 * Constructor of the AcademicScheduleUsersManager class. Creates a new object.<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
+	 *     <b>post:</b> a new object has been created.
 	 */
 	public AcademicScheduleUsersManager() {
 		users = new ArrayList<User>();
 	}//End AcademicScheduleUsersManager constructor
 
 	/**
-	 * <br>
+	 * returns the current user logged in the system.<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
+	 *     <b>post:</b> the user in the system.
 	 */
 	public User getCurrentUser() {
 		return this.currentUser;
 	}
 	
 	/**
-	 * <br>
+	 * changes the current user in the system.<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param currentUser
+	 *     <b>post:</b> the current user has been changed.
+	 * @param currentUser the new current user in the system.
 	 */
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
 	
 	/**
-	 * <br>
+	 * returns the list of users.<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
+	 *     <b>post:</b> the list of users
 	 */
 	public ArrayList<User> getUsers() {
 		return users;
 	}//End getUsers
 
 	/**
-	 * <br>
+	 * changes the list of users.<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param users
+	 *     <b>post:</b> the list of users have been changed.
+	 * @param users the new list of users.
 	 */
 	public void setUsers(ArrayList<User> users) {
 		this.users = users;
 	}//End setUsers
 
 	/**
-	 * <br>
+	 * Serializes the information of the system.<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
+	 *     <b>post:</b> the information has been saved in the specified path
 	 */
 	public synchronized void saveAllData() throws IOException {
 		File f = new File(SAVE_PATH);
@@ -78,11 +78,11 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End saveAllData
 
 	/**
-	 * <br>
+	 * allows an user to log in in the system.<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param userName
-	 * @param password
+	 *     <b>post:</b> the user has logged in
+	 * @param userName the name of the user that tries to log in
+	 * @param password the password of the user that tries to log in
 	 */
 	public void logIn(final String userName, final String password) throws InvalidCredentialsException {
 		int userIndex = searchUser(userName);
@@ -97,19 +97,19 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End login
 
 	/**
-	 * <br>
+	 * logs out the current user from the system.<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
+	 *     <b>post:</b> the user has logged out from the system.
 	 */
 	public void logout() {
 		setCurrentUser(null);
 	}//End logout
 	
 	/**
-	 * <br>
+	 * searches an user using binary search given its name<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param userName
+	 *     <b>post:</b> the index of the user in the list of users.
+	 * @param userName the name used as the search parameter
 	 */
 	public int searchUser(final String userName) {
 		int start = 0;
@@ -128,10 +128,10 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End searchUser
 
 	/**
-	 * <br>
+	 * verifies if a set of strings contains only blank spaces<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param toVerify
+	 *     <b>post:</b> returns false if contains only blank spaeces, false if not
+	 * @param toVerify the set of strings to verify
 	 */
 	public boolean verifyBlankChars(String[] toVerify) {
 		boolean stop = false;
@@ -150,14 +150,14 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End verifyBlankChars
 
 	/**
-	 * <br>
+	 * adds a new user to the system.<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param name
-	 * @param lastName
-	 * @param userName
-	 * @param passWord
-	 * @param profilePhotoPath
+	 *     <b>post:</b> a new user has been added
+	 * @param name the name of the new user
+	 * @param lastName the last name of the new user
+	 * @param userName the user name of the new user
+	 * @param passWord the password of the new user
+	 * @param profilePhotoPath the path to the profile photo of the new user
 	 */
 	public void addUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException, UserNameAlreadyInUseException {
 		if(searchUser(userName) != -1) {
@@ -178,14 +178,14 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End addUser
 
 	/**
-	 * <br>
+	 * Changes the information of the current user<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param name
-	 * @param lastName
-	 * @param userName
-	 * @param passWord
-	 * @param profilePhotoPath
+	 *     <b>post:</b> the information of the user has been changed.
+	 * @param name the new name of the user
+	 * @param lastName the new last name of the user
+	 * @param userName the new user name of the user
+	 * @param passWord the new password of the user
+	 * @param profilePhotoPath the new profile photo of the user
 	 */
 	public void changeUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException, UserNameAlreadyInUseException {
 		User userToChange = getCurrentUser();
@@ -205,11 +205,11 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End changeUser
 
 	/**
-	 * <br>
-	 *     <b>pre:</b>
-	 *     <b>post:</b>
-	 * @param userName
-	 * @param newPassword
+	 * changes the password of a given user<br>
+	 *     <b>pre:</b> the user exists in the list.
+	 *     <b>post:</b> the password of the user has been changed
+	 * @param userName the user name of the user to change the password
+	 * @param newPassword the new password of the user
 	 */
 	public void changeUserPassword(String userName, String newPassword) throws IOException {
 		User userToChange = users.get(searchUser(userName));
@@ -218,9 +218,9 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End changeUserPassword
 
 	/**
-	 * <br>
+	 * deletes the current user in the system<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
+	 *     <b>post:</b> the user has been deleted
 	 */
 	public void deleteUser() throws IOException {
 		User toDelete = users.get(searchUser(currentUser.getUserName()));
@@ -230,9 +230,9 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End deleteUser
 
 	/**
-	 * <br>
+	 * sorts the list of user using bubble sort<br>
 	 *     <b>pre:</b>
-	 *     <b>post:</b>
+	 *     <b>post:</b> the list of users has been sorted
 	 */
 	public void sortUsersList() {
 		Comparator<User> userNameComparator = new UserNameComparator();
