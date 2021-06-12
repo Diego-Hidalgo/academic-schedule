@@ -17,7 +17,7 @@ This program allows the management (create, change information and delete) users
 ## Documentation
 
 
-The functional requirements,  description and mock ups can be found in the next folder: [link](https://github.com/Diego-Hidalgo/academic-schedule/tree/master/docs "link").
+The description, functional requirements, class diagram, test design and mock ups can be found in the next folder: [link](https://github.com/Diego-Hidalgo/academic-schedule/tree/master/docs "link").
 
 
 
@@ -37,7 +37,6 @@ The functional requirements,  description and mock ups can be found in the next 
 This project is going to be be developed using:
 - Java 8
 - JavaFX
-- CSS
 - Intellij IDEA
 - Eclipse
 - Windows 10
