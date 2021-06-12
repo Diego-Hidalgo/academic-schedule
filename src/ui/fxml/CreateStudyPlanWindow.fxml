@@ -26,7 +26,7 @@
       <HBox prefHeight="45.0" prefWidth="307.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="54.0" prefWidth="115.0" />
-            <Button mnemonicParsing="false" text="Crear">
+            <Button mnemonicParsing="false" onAction="#createStudyPlan" text="Crear">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -100,15 +100,15 @@
             <Pane prefHeight="28.0" prefWidth="307.0" />
             <HBox prefHeight="129.0" prefWidth="307.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                  <VBox prefHeight="129.0" prefWidth="199.0" HBox.hgrow="ALWAYS">
                      <children>
                         <ListView fx:id="goalsLV" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </VBox>
-                  <Pane prefHeight="124.0" prefWidth="9.0" />
-                  <VBox prefHeight="124.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
+                  <Pane prefHeight="129.0" prefWidth="8.0" />
+                  <VBox prefHeight="129.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button mnemonicParsing="false" text="Agregar meta">
+                        <Button mnemonicParsing="false" onAction="#addGoals" prefHeight="45.0" prefWidth="63.0" text="Agregar meta" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>

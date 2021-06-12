@@ -183,4 +183,8 @@ public class Course implements Serializable {
 		this.days = days;
 	}
 	
+	@Override
+	public String toString(){
+		return name;
+	}//End toString
 }

@@ -172,7 +172,7 @@ public class AcademicSchedule implements Serializable {
 	 * @param day
 	 */
 	public void addStudyPlan(String title, String description, ArrayList<String> goals, String day, Time initHour, Time finHour,Course course) {
-		Day d = new Day(Days.valueOf(day),initHour,finHour);
+		Day d = new Day(Days.valueOf(day.toUpperCase()),initHour,finHour);
 		studyPlans.add(new StudyPlan(title,description,getGoals(goals),d,course));
 	}//End addStudyPlan
 	
