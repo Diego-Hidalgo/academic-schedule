@@ -20,14 +20,7 @@ public class AcademicSchedule implements Serializable {
 		notifies = new ArrayList<Notify>();
 	}//End AcademicSchedule constructor
 
-	/**Days day,Date initialHour, Date finishHour
-	 * 
-	 * @param name
-	 * @param credits
-	 * @throws OutOfTimeRangeException 
-	 * @throws InvalidTimeFormatException 
-	 */
-	public void addCourse(String name, int credits, ArrayList<String> days, ArrayList<Time> initHours,ArrayList<Time> finHours) throws IOException {
+	public void addCourse(String name, int credits, ArrayList<String> days, ArrayList<Time> initHours,ArrayList<Time> finHours) {
 		Course toAdd = new Course(name,credits,convertToDay(days,initHours,finHours));
 		if(firstCourse == null) {
 			firstCourse = toAdd;
@@ -37,7 +30,7 @@ public class AcademicSchedule implements Serializable {
 			addCourse(firstCourse,toAdd);
 	}//End addCourse
 	
-	private void addCourse(Course current,Course toAdd) throws IOException {
+	private void addCourse(Course current,Course toAdd) {
 		if(current.getNext() == firstCourse){
 			current.setNext(toAdd);
 			toAdd.setPrev(current);
@@ -59,24 +52,18 @@ public class AcademicSchedule implements Serializable {
 		return firstCourse;
 	}//End getCourses
 
-	/**
-	 * 
-	 * @param courseName
-	 */
-	public boolean deleteCourse(String courseName) throws IOException {
+	public boolean deleteCourse(String courseName) {
 		Course toDelete = searchCourse(courseName);
 		boolean status = false;
 		if(toDelete != null){
 			toDelete.getNext().setPrev(toDelete.getPrev());
 			toDelete.getPrev().setNext(toDelete.getNext());
+			status = true;
 		}//End if
 		return status;
 	}//End deleteCourse
 
-	/**
-	 * 
-	 */
-	public void deleteCourse(Course toDelete) throws IOException {
+	public void deleteCourse(Course toDelete) {
 		toDelete.getNext().setPrev(toDelete.getPrev());
 		toDelete.getPrev().setNext(toDelete.getNext());
 	}//End deleteCourse
@@ -98,22 +85,14 @@ public class AcademicSchedule implements Serializable {
 		else
 			return null;
 	}//searchCourse
-	
-	/**
-	 * 
-	 * @param toSendAtHour
-	 * @param date
-	 * @param description
-	 * @param title
-	 * @param day
-	 */
-	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour,Time finHour, String day,Course course) throws IOException {
+
+	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour,Time finHour, String day,Course course) {
 		Day d = new Day(Days.valueOf(day.toUpperCase()),initHour,finHour);
 		Notify n = new Notify(toSendAtHour,date,description,title,d,course);
 		notifies.add(n);
 	}//End addNotify
 	
-	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour, Time finHour, String day,String course) throws IOException {
+	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour, Time finHour, String day,String course) {
 		Day d = new Day(Days.valueOf(day.toUpperCase()),initHour,finHour);
 		Notify n = new Notify(toSendAtHour,date,description,title,d,searchCourse(course));
 		int i = 0;
@@ -125,34 +104,18 @@ public class AcademicSchedule implements Serializable {
 		return notifies;
 	}//End getNotifies
 
-	/**
-	 * 
-	 * @param title
-	 */
 	public Notify getNotify(String title) {
 		return searchNotify(title);
 	}//End getNotify
 
-	/**
-	 * 
-	 * @param title
-	 */
-	public void deleteNotify(String title) throws IOException {
+	public void deleteNotify(String title) {
 		notifies.remove(searchNotify(title));
 	}//End deleteNotify
 
-	/**
-	 * 
-	 * @param notify
-	 */
-	public void deleteNotify(Notify notify) throws IOException {
+	public void deleteNotify(Notify notify) {
 		notifies.remove(notify);
 	}//End deleteNotify
 
-	/**
-	 * 
-	 * @param title
-	 */  
 	private Notify searchNotify(String title) {
 		boolean found = false;
 		Notify n = null;
@@ -165,14 +128,7 @@ public class AcademicSchedule implements Serializable {
 		return n;
 	}//End searchNotify
 
-	/**
-	 * 
-	 * @param title
-	 * @param description
-	 * @param goals
-	 * @param day
-	 */
-	public void addStudyPlan(String title, String description, ArrayList<String> goals, String day, Time initHour, Time finHour,Course course) throws IOException {
+	public void addStudyPlan(String title, String description, ArrayList<String> goals, String day, Time initHour, Time finHour,Course course) {
 		Day d = new Day(Days.valueOf(day.toUpperCase()),initHour,finHour);
 		studyPlans.add(new StudyPlan(title,description,getGoals(goals),d,course));
 	}//End addStudyPlan
@@ -184,10 +140,7 @@ public class AcademicSchedule implements Serializable {
 		}//End for
 		return goals;
 	}//End getGoals
-	/**
-	 * 
-	 * @param title
-	 */
+
 	public StudyPlan searchStudyPlan(String title) {
 		boolean found = false;
 		StudyPlan s = null;
@@ -200,19 +153,11 @@ public class AcademicSchedule implements Serializable {
 		return s;
 	}//End getStudyPlan
 
-	/**
-	 * 
-	 * @param title
-	 */
-	public void deleteStudyPlan(String title) throws IOException {
+	public void deleteStudyPlan(String title) {
 		studyPlans.remove(searchStudyPlan(title));
 	}//End deleteStudyPlan
 
-	/**
-	 * 
-	 * @param plan
-	 */
-	public void deleteStudyPlan(StudyPlan plan) throws IOException {
+	public void deleteStudyPlan(StudyPlan plan) {
 		studyPlans.remove(plan);
 	}//End deleteStudyPlan
 

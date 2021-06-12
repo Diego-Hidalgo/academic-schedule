@@ -10,28 +10,28 @@ public class AcademicScheduleUsersManagerTest {
 
     private AcademicScheduleUsersManager asum;
 
-    private void setUpScenary1() {
+    private void setUpScenery1() {
         asum = new AcademicScheduleUsersManager();
-    }//End setUpScenary1
+    }//End setUpScenery1
 
-    private void setUpScenary2() throws IOException, UserNameAlreadyInUseException {
+    private void setUpScenery2() throws IOException, UserNameAlreadyInUseException {
         asum = new AcademicScheduleUsersManager();
         asum.addUser("Diego","Hidalgo","DiegoH","diegofer","...");
         asum.addUser("Brian","Romero","BrianR","brianromero","...");
         asum.addUser("Juan","Hernandez","JuanR","juanhernandez","...");
-    }//End setUpScenary2
+    }//End setUpScenery2
 
-    private void setUpScenary3() {
+    private void setUpScenery3() {
         asum = new AcademicScheduleUsersManager();
         try {
             asum.addUser("Diego", "Hidalgo", "DiegoH", "diegofer", "...");
             asum.logIn("DiegoH", "diegofer");
         } catch (UserNameAlreadyInUseException | InvalidCredentialsException | IOException ignored) {}
-    }//End setUpScenary3
+    }//End setUpScenery3
 
     @Test
     public void testAddUser1() throws IOException {
-        setUpScenary1();
+        setUpScenery1();
         String name = "Diego";
         String lastName = "Hidalgo";
         String userName = "DiegoH";
@@ -49,7 +49,7 @@ public class AcademicScheduleUsersManagerTest {
 
     @Test
     public void testAddUser2() throws IOException, UserNameAlreadyInUseException {
-        setUpScenary2();
+        setUpScenery2();
         String name = "Diego";
         String lastName = "Hidalgo";
         String userName = "DiegoH";
@@ -65,7 +65,7 @@ public class AcademicScheduleUsersManagerTest {
 
     @Test
     public void testLogIn1() throws IOException, UserNameAlreadyInUseException {
-        setUpScenary2();
+        setUpScenery2();
         try {
             asum.logIn("DiegoH", "diegofer");
             assertEquals("DiegoH", asum.getCurrentUser().getUserName());
@@ -76,7 +76,7 @@ public class AcademicScheduleUsersManagerTest {
 
     @Test
     public void testLogIn2() throws IOException, UserNameAlreadyInUseException {
-        setUpScenary2();
+        setUpScenery2();
         try{
             asum.logIn("DiegoH","1234567");
         } catch (InvalidCredentialsException e) {
@@ -86,19 +86,19 @@ public class AcademicScheduleUsersManagerTest {
 
     @Test
     public void testVerifyBlankChars1() {
-        setUpScenary1();
+        setUpScenery1();
         assertTrue(asum.verifyBlankChars(new String[]{"a","b","c","d","e","f"}));
     }//End testVerifyBlankChars1
 
     @Test
     public void testVerifyBlankChars2() {
-        setUpScenary1();
+        setUpScenery1();
         assertFalse(asum.verifyBlankChars(new String[]{" ", "  ", "   ", "ab  "}));
     }//End testVerifyBlankChars2
 
     @Test
     public void testChangeUser1() throws IOException, UserNameAlreadyInUseException {
-        setUpScenary3();
+        setUpScenery3();
         asum.changeUser("Juan","Perez","JuanPe","1234567","...");
         assertEquals("Juan",asum.getCurrentUser().getName());
         assertEquals("Perez", asum.getCurrentUser().getLastName());
@@ -108,14 +108,14 @@ public class AcademicScheduleUsersManagerTest {
 
     @Test
     public void testDeleteUser1() throws IOException {
-        setUpScenary3();
+        setUpScenery3();
         asum.deleteUser();
         assertNull(asum.getCurrentUser());
     }//End testDeleteUser1
 
     @Test
     public void testChangeUserPassword1() throws IOException, UserNameAlreadyInUseException {
-        setUpScenary2();
+        setUpScenery2();
         asum.changeUserPassword("DiegoH","diegofer12345");
         assertEquals("diegofer12345",asum.getUsers().get(1).getPassword());
     }//End testChangeUserPassword1
