@@ -2,7 +2,12 @@ package exceptions;
 
 public class InvalidCredentialsException extends Exception {
 
-    public InvalidCredentialsException() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public InvalidCredentialsException() {
         super("Las credenciales que ha ingresado son incorrectas");
     }//End Constructor1
 
