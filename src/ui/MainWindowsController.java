@@ -34,10 +34,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.AcademicScheduleUsersManager;
-import model.Course;
-import model.Goal;
-import model.Time;
+import model.*;
 
 public class MainWindowsController{
 	
@@ -82,6 +79,7 @@ public class MainWindowsController{
 	@FXML private  ChoiceBox<String> dayCB;
 	@FXML private ChoiceBox<Course> courseCB;
 	private ArrayList<String> goalsSt;
+	private ArrayList<StudyPlansBlock> plansBlock;
 	//************ Event ********************
 	@FXML private TextField eventName;
 	@FXML private TextField eventDescription;
@@ -275,6 +273,25 @@ public class MainWindowsController{
 		stage.setResizable(false);
 	}//End showRegisterCourse
 	
+	@FXML
+	public void showStudyPlansCreated() throws IOException{
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"ShowStudyPlansCreatedWindow.fxml"));
+		fxmlLoader.setController(this);
+		Parent registerScene = fxmlLoader.load();
+		BorderPane cen = (BorderPane) registerScene;
+		center = new VBox();
+		center.setPrefHeight(400);
+		cen.setCenter(center);
+		secondaryPane.setCenter(cen);
+		addStudyPlanToScreen();
+		secondaryPane.setCenter(cen);
+		Stage stage = (Stage) secondaryPane.getScene().getWindow();
+		stage.setTitle("Planes creados");
+		stage.setHeight(630);
+		stage.setWidth(550);
+		stage.setResizable(false);
+	}//End showRegisterCourse
+	
 	public void showInformationAlert(String title,String msg,String header){
 		Alert feedBack = new Alert(AlertType.INFORMATION);
 		feedBack.setTitle(title);
@@ -321,6 +338,22 @@ public class MainWindowsController{
 	}//End showErrorAlert
 
 	//************************ Objects and data managment *******************
+	
+	public void addStudyPlanToScreen(){
+		plansBlock = new ArrayList<StudyPlansBlock>();
+		ArrayList<StudyPlan> studyplans = academicSchedule.getCurrentUser().getAcademicSchedule().getStudyPlans();
+		if(studyplans.size() == 0){
+			center.getChildren().setAll((new StudyPlansBlock(null,colours[0],ewc)).getHBox());
+		}else {
+		for(int i = 0; i < studyplans.size();i++){
+			StudyPlansBlock st = new StudyPlansBlock(studyplans.get(i),colours[i],ewc); 
+			plansBlock.add(st);
+			center.getChildren().addAll(st.getHBox());
+			center.setSpacing(10);
+			}//End for
+		}
+	}//End addCourseToScreen
+	
 	public void addCourseToScreen(){
 		coursesBlock = new ArrayList<CourseBlock>();
 		Course current = academicSchedule.getCurrentUser().

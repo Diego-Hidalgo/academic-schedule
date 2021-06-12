@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -55,6 +56,13 @@ public class EmergentWindowController {
 	@FXML private TextArea goalDescriptionTA;
 	private String goalST;
 
+	//******************** Study plan **************************
+	@FXML private Label titleLB;
+	@FXML private Label descriptionLB;
+	@FXML private Label relationateCourseLB;
+	@FXML private ListView<Goal> goalsLV;
+	private StudyPlan currenStudyPlan;
+
 	public EmergentWindowController(AcademicScheduleUsersManager as) {
 		academicSchedule = as;
 	}//End EmergentWindowController constructor
@@ -88,6 +96,21 @@ public class EmergentWindowController {
 		form.showAndWait();
 	}//End showCourseData
 	
+	public void showStudyPlanData(StudyPlan planInfo) throws IOException{
+		currenStudyPlan = planInfo;
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"ShowStudyPlansInfoEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage form = new Stage();
+		initializeCurrentStudyPlanData();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Informaci�n del plan");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.showAndWait();
+	}//End showCourseData
+	
 	public void showAddGoal() throws IOException{
 		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"AddGoalEmergent.fxml"));
 		fxml.setController(this);
@@ -101,6 +124,7 @@ public class EmergentWindowController {
 		form.showAndWait();
 	}//End showCourseData
 	
+
 	//********************* Data management ********************
 	private void initializeDayChoiceBox(){
 		ObservableList<String> status = FXCollections.observableArrayList();
@@ -120,6 +144,14 @@ public class EmergentWindowController {
 		activateDays();
 	}//End initializeCurrentCourseData
 	
+	private void initializeCurrentStudyPlanData(){
+		titleLB.setText(currenStudyPlan.getTitle());
+		descriptionLB.setText(currenStudyPlan.getDescription());
+		relationateCourseLB.setText(currenStudyPlan.getCourse().toString());
+		ObservableList<Goal> goals = FXCollections.observableArrayList(currenStudyPlan.getGoals());
+		goalsLV.setItems(goals);
+	}//End initializeCurrentCourseData
+	
 	private void activateDays(){
 		int size = currentCourse.getDays().size();
 		for(int i = 0; i < size; i++){
@@ -132,10 +164,10 @@ public class EmergentWindowController {
 				case "VIERNES": friday.setOpacity(1); break;
 				case "SABADO": saturday.setOpacity(1); break;
 				default:
-					System.out.println("Holy shit wth is happening the day was " + day); break;
+					System.out.println("Holy shit wth is happening, the day was " + day); break;
 			}//End switch
 		}//End for
-	}
+	}//End activateDays
 	
 	@FXML
 	public void addDay(ActionEvent event) {
