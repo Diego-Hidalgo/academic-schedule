@@ -2,8 +2,6 @@ package model;
 
 import java.io.*;
 import java.util.Date;
-import exceptions.InvalidTimeFormatException;
-import exceptions.OutOfTimeRangeException;
 
 import java.util.ArrayList;
 
@@ -11,16 +9,25 @@ public class AcademicSchedule implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private AcademicScheduleUsersManager asum;
+
 	private Course firstCourse;
 	private ArrayList<StudyPlan> studyPlans;
 	private ArrayList<Notify> notifies;
-	
+
 	public AcademicSchedule() {
 		studyPlans = new ArrayList<StudyPlan>();
 		notifies = new ArrayList<Notify>();
+		this.asum = new AcademicScheduleUsersManager();
+	}//End AcademicSchedule constructor
+	
+	public AcademicSchedule(AcademicScheduleUsersManager asum) {
+		studyPlans = new ArrayList<StudyPlan>();
+		notifies = new ArrayList<Notify>();
+		this.asum = asum;
 	}//End AcademicSchedule constructor
 
-	public void addCourse(String name, int credits, ArrayList<String> days, ArrayList<Time> initHours,ArrayList<Time> finHours) {
+	public void addCourse(String name, int credits, ArrayList<String> days, ArrayList<Time> initHours,ArrayList<Time> finHours) throws IOException {
 		Course toAdd = new Course(name,credits,convertToDay(days,initHours,finHours));
 		if(firstCourse == null) {
 			firstCourse = toAdd;
@@ -28,6 +35,7 @@ public class AcademicSchedule implements Serializable {
 			firstCourse.setPrev(toAdd);
 		}else
 			addCourse(firstCourse,toAdd);
+		asum.saveAllData();
 	}//End addCourse
 	
 	private void addCourse(Course current,Course toAdd) {
@@ -52,7 +60,7 @@ public class AcademicSchedule implements Serializable {
 		return firstCourse;
 	}//End getCourses
 
-	public boolean deleteCourse(String courseName) {
+	public boolean deleteCourse(String courseName) throws IOException {
 		Course toDelete = searchCourse(courseName);
 		boolean status = false;
 		if(toDelete != null){
@@ -60,12 +68,14 @@ public class AcademicSchedule implements Serializable {
 			toDelete.getPrev().setNext(toDelete.getNext());
 			status = true;
 		}//End if
+		asum.saveAllData();
 		return status;
 	}//End deleteCourse
 
-	public void deleteCourse(Course toDelete) {
+	public void deleteCourse(Course toDelete) throws IOException {
 		toDelete.getNext().setPrev(toDelete.getPrev());
 		toDelete.getPrev().setNext(toDelete.getNext());
+		asum.saveAllData();
 	}//End deleteCourse
 
 	public Course searchCourse(String name) {
@@ -86,18 +96,20 @@ public class AcademicSchedule implements Serializable {
 			return null;
 	}//searchCourse
 
-	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour,Time finHour, String day,Course course) {
+	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour,Time finHour, String day,Course course) throws IOException {
 		Day d = new Day(Days.valueOf(day.toUpperCase()),initHour,finHour);
 		Notify n = new Notify(toSendAtHour,date,description,title,d,course);
 		notifies.add(n);
+		asum.saveAllData();
 	}//End addNotify
 	
-	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour, Time finHour, String day,String course) {
+	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour, Time finHour, String day,String course) throws IOException {
 		Day d = new Day(Days.valueOf(day.toUpperCase()),initHour,finHour);
 		Notify n = new Notify(toSendAtHour,date,description,title,d,searchCourse(course));
 		int i = 0;
 		while(notifies.get(i).compareTo(n) > 0) {i++;}
 		notifies.add(i,n);
+		asum.saveAllData();
 	}//End addNotify
 	
 	public ArrayList<Notify> getNotifies() {
@@ -108,12 +120,14 @@ public class AcademicSchedule implements Serializable {
 		return searchNotify(title);
 	}//End getNotify
 
-	public void deleteNotify(String title) {
+	public void deleteNotify(String title) throws IOException {
 		notifies.remove(searchNotify(title));
+		asum.saveAllData();
 	}//End deleteNotify
 
-	public void deleteNotify(Notify notify) {
+	public void deleteNotify(Notify notify) throws IOException {
 		notifies.remove(notify);
+		asum.saveAllData();
 	}//End deleteNotify
 
 	private Notify searchNotify(String title) {
@@ -128,9 +142,10 @@ public class AcademicSchedule implements Serializable {
 		return n;
 	}//End searchNotify
 
-	public void addStudyPlan(String title, String description, ArrayList<String> goals, String day, Time initHour, Time finHour,Course course) {
+	public void addStudyPlan(String title, String description, ArrayList<String> goals, String day, Time initHour, Time finHour,Course course) throws IOException {
 		Day d = new Day(Days.valueOf(day.toUpperCase()),initHour,finHour);
 		studyPlans.add(new StudyPlan(title,description,getGoals(goals),d,course));
+		asum.saveAllData();
 	}//End addStudyPlan
 	
 	private ArrayList<Goal> getGoals(ArrayList<String> g){
@@ -153,32 +168,37 @@ public class AcademicSchedule implements Serializable {
 		return s;
 	}//End getStudyPlan
 
-	public void deleteStudyPlan(String title) {
+	public void deleteStudyPlan(String title) throws IOException {
 		studyPlans.remove(searchStudyPlan(title));
+		asum.saveAllData();
 	}//End deleteStudyPlan
 
-	public void deleteStudyPlan(StudyPlan plan) {
+	public void deleteStudyPlan(StudyPlan plan) throws IOException {
 		studyPlans.remove(plan);
+		asum.saveAllData();
 	}//End deleteStudyPlan
 
 	public Course getFirstCourse() {
 		return firstCourse;
 	}
 
-	public void setFirstCourse(Course firstCourse) {
+	public void setFirstCourse(Course firstCourse) throws IOException {
 		this.firstCourse = firstCourse;
-	}
+		asum.saveAllData();
+	}//End setFirstCourse
 
-	public void setStudyPlans(ArrayList<StudyPlan> studyPlans) {
+	public void setStudyPlans(ArrayList<StudyPlan> studyPlans) throws IOException {
 		this.studyPlans = studyPlans;
-	}
+		asum.saveAllData();
+	}//End setStudyPlans
 	
 	public ArrayList<StudyPlan> getStudyPlans(){
 		return studyPlans;
 	}
 	
-	public void setNotifies(ArrayList<Notify> notifies) {
+	public void setNotifies(ArrayList<Notify> notifies) throws IOException {
 		this.notifies = notifies;
-	}
+		asum.saveAllData();
+	}//End setNotifies
 	
 }//End AcademicSchedule

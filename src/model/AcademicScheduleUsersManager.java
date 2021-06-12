@@ -140,7 +140,7 @@ public class AcademicScheduleUsersManager implements Serializable {
 		if(searchUser(userName) != -1) {
 			throw new UserNameAlreadyInUseException(userName);
 		}//End if
-		User newUser = new User(name, lastName, userName, passWord, profilePhotoPath);
+		User newUser = new User(name, lastName, userName, passWord, profilePhotoPath, this);
 		if(users.isEmpty()) {
 			users.add(newUser);
 		} else {

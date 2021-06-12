@@ -18,7 +18,7 @@ public class AcademicScheduleTest {
         as = new AcademicSchedule();
     }//End setUpScenery4
 
-    private void setUpScenery5() throws InvalidTimeFormatException, OutOfTimeRangeException {
+    private void setUpScenery5() throws InvalidTimeFormatException, OutOfTimeRangeException, IOException {
         as = new AcademicSchedule();
         String name = "APO II";
         int credits = 3;
@@ -34,7 +34,7 @@ public class AcademicScheduleTest {
         as.addCourse(name, credits, days, initHours, finishHours);
     }//End setUpScenery5
 
-    private void setUpScenery6() throws OutOfTimeRangeException, InvalidTimeFormatException {
+    private void setUpScenery6() throws OutOfTimeRangeException, InvalidTimeFormatException, IOException {
         setUpScenery5();
         Time toSendAtHour = new Time("13:00");
         Date date = new Date();
@@ -46,7 +46,7 @@ public class AcademicScheduleTest {
         as.addNotify(toSendAtHour, date, description, title, initHour, finHour, day, as.getFirstCourse());
     }//End setUpScenery6
 
-    private void setUpScenery7() throws InvalidTimeFormatException, OutOfTimeRangeException {
+    private void setUpScenery7() throws InvalidTimeFormatException, OutOfTimeRangeException, IOException {
         setUpScenery5();
         String title = "Plan de estudio";
         String description = "Prueba de plan de estudio";
@@ -61,7 +61,7 @@ public class AcademicScheduleTest {
     }//End setUpScenery7
 
     @Test
-    public void testAddCourse1() throws InvalidTimeFormatException, OutOfTimeRangeException {
+    public void testAddCourse1() throws InvalidTimeFormatException, OutOfTimeRangeException, IOException {
         setUpScenery4();
         String name = "Álgebra lineal";
         int credits = 3;
@@ -82,7 +82,7 @@ public class AcademicScheduleTest {
     }//End testAddCourse1
 
     @Test
-    public void testAddCourse2() throws InvalidTimeFormatException, OutOfTimeRangeException {
+    public void testAddCourse2() throws InvalidTimeFormatException, OutOfTimeRangeException, IOException {
         setUpScenery5();
         String name = "Álgebra lineal";
         int credits = 3;
@@ -103,14 +103,14 @@ public class AcademicScheduleTest {
     }//End testAddCourse2
 
     @Test
-    public void testDeleteCourse1() throws InvalidTimeFormatException, OutOfTimeRangeException {
+    public void testDeleteCourse1() throws InvalidTimeFormatException, OutOfTimeRangeException, IOException {
         setUpScenery5();
         as.deleteCourse(as.getFirstCourse());
         assertNull(as.getFirstCourse());
     }//End testDeleteCourse1
 
     @Test
-    public void testAddNotify1() throws InvalidTimeFormatException, OutOfTimeRangeException {
+    public void testAddNotify1() throws InvalidTimeFormatException, OutOfTimeRangeException, IOException {
         setUpScenery5();
         Time toSendAtHour = new Time("14:00");
         Date date = new Date();
@@ -124,14 +124,14 @@ public class AcademicScheduleTest {
     }//End testAddNotify1
 
     @Test
-    public void testDeleteNotify1() throws InvalidTimeFormatException, OutOfTimeRangeException {
+    public void testDeleteNotify1() throws InvalidTimeFormatException, OutOfTimeRangeException, IOException {
         setUpScenery6();
         as.deleteNotify(as.getNotifies().get(0));
         assertEquals(0, as.getNotifies().size());
     }//End testDeleteNotify1
 
     @Test
-    public void testAddStudyPlan1() throws InvalidTimeFormatException, OutOfTimeRangeException {
+    public void testAddStudyPlan1() throws InvalidTimeFormatException, OutOfTimeRangeException, IOException {
         setUpScenery5();
         String title = "Prueba";
         String description = "Prueba";
@@ -148,7 +148,7 @@ public class AcademicScheduleTest {
     }//End testAddStudyPlan1
 
     @Test
-    public void testDeleteStudyPlan1() throws InvalidTimeFormatException, OutOfTimeRangeException {
+    public void testDeleteStudyPlan1() throws InvalidTimeFormatException, OutOfTimeRangeException, IOException {
         setUpScenery7();
         as.deleteStudyPlan(as.getStudyPlans().get(0));
         assertEquals(0, as.getStudyPlans().size());
