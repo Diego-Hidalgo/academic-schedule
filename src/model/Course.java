@@ -15,7 +15,12 @@ public class Course implements Serializable {
 	private Course prev;
 	private Course next;
 	private ArrayList<Day> days;
-	
+
+	/**
+	 * Constructor of the Course class. Creates a new Course object<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> a new Course object has been created.
+	 */
 	public Course() {
 		name = new String();
 		credits = 0;
@@ -24,6 +29,14 @@ public class Course implements Serializable {
 		days = new ArrayList<Day>();
 	}//End Course constructor
 
+	/**
+	 * Constructor of the Course class. Creates a new Course object.<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> a new Course object has been created with the given parameters.
+	 * @param name the name of the Course
+	 * @param credit the amount of credits of the course
+	 * @param days days the course is taken
+	 */
 	public Course(String name, int credit, ArrayList<Day> days) {
 		this.name = name;
 		this.credits = credit;
@@ -31,10 +44,6 @@ public class Course implements Serializable {
 		this.days = days;
 	}//End Course constructor
 
-	/**
-	 * 
-	 * @param name
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}//End setName
@@ -42,10 +51,7 @@ public class Course implements Serializable {
 	public String getName() {
 		return this.name;
 	}//End getName
-	/**
-	 * 
-	 * @param credit
-	 */
+
 	public void setCredit(int credit) {
 		credits = credit;
 	}//End setCredit
@@ -54,7 +60,13 @@ public class Course implements Serializable {
 		return this.credits;
 	}//End getCredit
 
-	public List<Grade> getGradesInList(Grade current) {
+	/**
+	 * returns a list that contains all the elements of the Grade tree <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> the list that contains all the elements.
+	 * @param current the current Grade used to traverse the tree
+	 */
+	private List<Grade> getGradesInList(Grade current) {
 		List<Grade> gradesList = new ArrayList<>();
 		gradesList.add(current);
 		if(current.getLeft() != null) {
@@ -66,6 +78,11 @@ public class Course implements Serializable {
 		return gradesList;
 	}//End getGradesInList
 
+	/**
+	 * returns a list that contains all the elements of the Grade tree<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> the list that contains all the elements
+	 */
 	public List<Grade> getGradesInList() {
 		if(gradesRoot == null) {
 			return null;
@@ -75,21 +92,24 @@ public class Course implements Serializable {
 	}//End getGradesInList
 
 	/**
-	 * 
-	 * @param day
-	 * @param initialHour
-	 * @param finishHour
+	 * Adds a new day to the course<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> a new day has been added
+	 * @param day the day of the class
+	 * @param initialHour the initial hour
+	 * @param finishHour the finish hour
 	 */
 	public void addDays(Days day, Time initialHour, Time finishHour) {
 		days.add(new Day(day,initialHour,finishHour));
 	}//End addDays
 
 	/**
-	 * 
-	 * @param dayToEdit
-	 * @param day
-	 * @param initialHour
-	 * @param finishHour
+	 * Edits the information of a day<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> the day has been changed
+	 * @param dayToEdit the object of the day that will be edited
+	 * @param day the new day
+	 * @param initialHour the new initial hour
 	 */
 	public void editDay(Day dayToEdit, Days day, Time initialHour, Time finishHour) {
 		dayToEdit.setDay(day);
@@ -98,18 +118,22 @@ public class Course implements Serializable {
 	}//End editDay
 
 	/**
-	 * 
-	 * @param dayToDelete
+	 * deletes a day from the list of days <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> the day has been deleted
+	 * @param dayToDelete the object of the day to delete
 	 */
 	public void deleteDay(Day dayToDelete) {
 		days.remove(dayToDelete);
 	}//End deleteDay
 
 	/**
-	 * 
-	 * @param grade
-	 * @param percentage
-	 * @param description
+	 * adds a new grade to the course<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> a new grade has been added
+	 * @param grade the value of the new grade
+	 * @param percentage the percentage of the new grade
+	 * @param description the description of the new grade
 	 */
 	public void addGrade(double grade, double percentage, String description) {
 		Grade toAdd = new Grade(grade,percentage,description);
@@ -118,7 +142,14 @@ public class Course implements Serializable {
 		else
 			addGrade(gradesRoot,toAdd);
 	}//End addGrade
-	
+
+	/**
+	 * adds a new grade to the course.<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> a new grade has been added
+	 * @param current the current grade used to traverse the tree.
+	 * @param toAdd the object of the grade to add.
+	 */
 	private void addGrade(Grade current, Grade toAdd){
 		if(current.compareTo(toAdd) >= 0){
 			if(current.getRigth() == null){
@@ -136,11 +167,13 @@ public class Course implements Serializable {
 	}//End addGrade
 	
 	/**
-	 * 
-	 * @param gradeToEdit
-	 * @param newGrade
-	 * @param newPercentage
-	 * @param newDescription
+	 * Edits the information of a specific grade<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> the grade has been changed
+	 * @param gradeToEdit the object of the grade to edit
+	 * @param newGrade the new grade value
+	 * @param newPercentage the new percentage value
+	 * @param newDescription the new description of the grade
 	 */
 	public void editGrade(Grade gradeToEdit, double newGrade, double newPercentage, String newDescription) {
 		gradeToEdit.setGrade(newGrade);
@@ -149,8 +182,10 @@ public class Course implements Serializable {
 	}//End editGrade
 
 	/**
-	 * 
-	 * @param gradeToDelete
+	 * Deletes an specific grade<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> the grade has been deleted
+	 * @param gradeToDelete the grade given to delete
 	 */
 	public void deleteGrade(Grade gradeToDelete) {
 		
@@ -203,9 +238,15 @@ public class Course implements Serializable {
 	public void setDays(ArrayList<Day> days) {
 		this.days = days;
 	}
-	
+
+	/**
+	 * returns a String that contains the information of the course<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> the information of the course
+	 */
 	@Override
 	public String toString(){
 		return name;
 	}//End toString
-}
+
+}//End Course

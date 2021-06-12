@@ -16,21 +16,27 @@ public class AcademicScheduleUsersManager implements Serializable {
 	private ArrayList<User> users;
 
 	/**
-	 *
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 */
 	public AcademicScheduleUsersManager() {
 		users = new ArrayList<User>();
 	}//End AcademicScheduleUsersManager constructor
 
 	/**
-	 *
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 */
 	public User getCurrentUser() {
 		return this.currentUser;
 	}
 	
 	/**
-	 * 
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 * @param currentUser
 	 */
 	public void setCurrentUser(User currentUser) {
@@ -38,14 +44,18 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}
 	
 	/**
-	 *
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 */
 	public ArrayList<User> getUsers() {
 		return users;
 	}//End getUsers
 
 	/**
-	 *
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 * @param users
 	 */
 	public void setUsers(ArrayList<User> users) {
@@ -53,8 +63,9 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End setUsers
 
 	/**
-	 *
-	 * @throws IOException
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 */
 	public synchronized void saveAllData() throws IOException {
 		File f = new File(SAVE_PATH);
@@ -67,7 +78,9 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End saveAllData
 
 	/**
-	 * 
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 * @param userName
 	 * @param password
 	 */
@@ -84,14 +97,18 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End login
 
 	/**
-	 *
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 */
 	public void logout() {
 		setCurrentUser(null);
 	}//End logout
 	
 	/**
-	 * 
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 * @param userName
 	 */
 	public int searchUser(final String userName) {
@@ -110,6 +127,12 @@ public class AcademicScheduleUsersManager implements Serializable {
 		return -1;
 	}//End searchUser
 
+	/**
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
+	 * @param toVerify
+	 */
 	public boolean verifyBlankChars(String[] toVerify) {
 		boolean stop = false;
 		int count = 0;
@@ -127,14 +150,14 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End verifyBlankChars
 
 	/**
-	 *
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 * @param name
 	 * @param lastName
 	 * @param userName
 	 * @param passWord
 	 * @param profilePhotoPath
-	 * @throws IOException
-	 * @throws UserNameAlreadyInUseException
 	 */
 	public void addUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException, UserNameAlreadyInUseException {
 		if(searchUser(userName) != -1) {
@@ -155,13 +178,14 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End addUser
 
 	/**
-	 *
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 * @param name
 	 * @param lastName
 	 * @param userName
 	 * @param passWord
 	 * @param profilePhotoPath
-	 * @throws IOException
 	 */
 	public void changeUser(String name, String lastName, String userName, String passWord, String profilePhotoPath) throws IOException, UserNameAlreadyInUseException {
 		User userToChange = getCurrentUser();
@@ -180,6 +204,13 @@ public class AcademicScheduleUsersManager implements Serializable {
 		saveAllData();
 	}//End changeUser
 
+	/**
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
+	 * @param userName
+	 * @param newPassword
+	 */
 	public void changeUserPassword(String userName, String newPassword) throws IOException {
 		User userToChange = users.get(searchUser(userName));
 		userToChange.setPassword(newPassword);
@@ -187,7 +218,9 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End changeUserPassword
 
 	/**
-	 *
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 */
 	public void deleteUser() throws IOException {
 		User toDelete = users.get(searchUser(currentUser.getUserName()));
@@ -197,7 +230,9 @@ public class AcademicScheduleUsersManager implements Serializable {
 	}//End deleteUser
 
 	/**
-	 *
+	 * <br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b>
 	 */
 	public void sortUsersList() {
 		Comparator<User> userNameComparator = new UserNameComparator();

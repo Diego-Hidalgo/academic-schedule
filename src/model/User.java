@@ -12,7 +12,9 @@ public class User extends Person implements Serializable {
 	private AcademicSchedule academicSchedule;
 
 	/**
-	 *
+	 * Constructor of the User class. Creates an User object<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> a new User object has been created.
 	 */
 	public User() {
 		super();
@@ -23,12 +25,14 @@ public class User extends Person implements Serializable {
 	}//End Constructor1
 
 	/**
-	 * 
-	 * @param name
-	 * @param lastName
-	 * @param userName
-	 * @param password
-	 * @param profilePhoto
+	 * Constructor of the User class. Creates a new User object.<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> a new User object has been created.
+	 * @param name the name of the user
+	 * @param lastName the last name of the user
+	 * @param userName the user name of the user
+	 * @param password the password of the user
+	 * @param profilePhoto the path to the profile photo of the user
 	 */
 	public User(String name, String lastName, String userName, String password, String profilePhoto, AcademicScheduleUsersManager asum) {
 		super(name, lastName);
@@ -38,69 +42,36 @@ public class User extends Person implements Serializable {
 		academicSchedule = new AcademicSchedule(asum);
 	}//End Constructor2
 
-	/**
-	 *
-	 * @return
-	 */
 	public String getUserName() {
 		return this.userName;
 	}
 
-	/**
-	 * 
-	 * @param userName
-	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-	/**
-	 *
-	 */
 	public String getPassword() {
 		return this.password;
 	}
 
-	/**
-	 * 
-	 * @param password
-	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	/**
-	 *
-	 */
 	public String getProfilePhoto() {
 		return this.profilePhoto;
 	}
 
-	/**
-	 * 
-	 * @param profilePhoto
-	 */
 	public void setProfilePhoto(String profilePhoto) {
 		this.profilePhoto = profilePhoto;
 	}
 
-	/**
-	 *
-	 */
 	public AcademicSchedule getAcademicSchedule() {
 		return academicSchedule;
 	}
 
-	/**
-	 *
-	 * @param academicSchedule
-	 */
 	public void setAcademicSchedule(AcademicSchedule academicSchedule) {
 		this.academicSchedule = academicSchedule;
-	}
-	
-	public String toString(){
-		return userName + " "+password;
 	}
 
 }//End User

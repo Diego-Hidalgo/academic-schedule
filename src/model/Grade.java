@@ -12,7 +12,12 @@ public class Grade implements Comparable<Grade>, Serializable {
 	private Grade parent;
 	private Grade rigth;
 	private Grade left;
-	
+
+	/**
+	 * Constructor of the Grade class. Creates a new Grade object<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> a new Grade object has been created.
+	 */
 	public Grade() {
 		grade = 0;
 		percentage = 0;
@@ -20,7 +25,9 @@ public class Grade implements Comparable<Grade>, Serializable {
 	}//End Grade constructor
 
 	/**
-	 * 
+	 * Constructor of the Grade class. Creates a new Grade object<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> a new Grade object has been created.
 	 * @param grade
 	 * @param percentage
 	 * @param description
@@ -31,26 +38,14 @@ public class Grade implements Comparable<Grade>, Serializable {
 		this.description = description;
 	}//End Grade constructor
 
-	/**
-	 * 
-	 * @param grade
-	 */
 	public void setGrade(double grade) {
 		this.grade = grade;
 	}
 
-	/**
-	 * 
-	 * @param percentage
-	 */
 	public void setPercentage(double percentage) {
 		this.percentage = percentage;
 	}
 
-	/**
-	 * 
-	 * @param description
-	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -94,12 +89,23 @@ public class Grade implements Comparable<Grade>, Serializable {
 	public void setParent(Grade parent) {
 		this.parent = parent;
 	}
-	
+
+	/**
+	 * returns the information of the description and the value of the grade in a String<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> the String that contains the indicated information
+	 */
 	@Override
 	public String toString(){
 		return description + " " + grade;
 	}
 
+	/**
+	 * Compares this Grade object with a given Grade object<br>
+	 *     <b>pre:</b> the param is not null
+	 *     <b>post:</b> a numeric value that indicates the comparison
+	 * @param o the other object to compare
+	 */
 	@Override
 	public int compareTo(Grade o) {
 		int result = 0;

@@ -10,7 +10,12 @@ public abstract class Plan implements Serializable {
 	private String title;
 	private Day	day;
 	private Course course;
-	
+
+	/**
+	 * The constructor of the Plan class. Creates a new Plan object<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> a new Plan object has been created.
+	 */
 	public Plan() {
 		this.description = new String();
 		this.title = new String();
@@ -19,9 +24,13 @@ public abstract class Plan implements Serializable {
 	}//End Plan constructor1
 	
 	/**
-	 * 
-	 * @param description
-	 * @param day
+	 * Constructor of the Plan class<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> a new Plan object has been created
+	 * @param title the title of the plan
+	 * @param description the description of the plan
+	 * @param day the day of the plan
+	 * @param course the course related to the plan
 	 */
 	public Plan(String title,String description, Day day,Course course) {
 		this.description = description;
@@ -34,10 +43,6 @@ public abstract class Plan implements Serializable {
 		return this.description;
 	}//End getDescription
 
-	/**
-	 * 
-	 * @param description
-	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}//End setDescription
@@ -46,10 +51,6 @@ public abstract class Plan implements Serializable {
 		return this.title;
 	}//End getTitle
 
-	/**
-	 * 
-	 * @param title
-	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}//End setTitle
@@ -70,4 +71,4 @@ public abstract class Plan implements Serializable {
 		this.course = course;
 	}//End setCourse
 
-}
+}//End Plan
