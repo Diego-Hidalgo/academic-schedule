@@ -3,9 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class StudyPlan extends Plan implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class StudyPlan extends Plan {
 
 	private ArrayList<Goal> goals;
 
@@ -42,11 +40,6 @@ public class StudyPlan extends Plan implements Serializable {
 		goals.remove(goal);
 	}//End deleteGoal
 
-	/**
-	 * 
-	 * @param oldGoal
-	 * @param newGoal
-	 */
 	public void editGoal(Goal oldGoal, String goal, boolean status) {
 		if(goal != null)
 			oldGoal.setDescription(goal);
