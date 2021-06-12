@@ -37,5 +37,8 @@ public class Goal implements Serializable {
 		return status;
 	}//End getStatus
 	
+	public String toString(){
+		return description;
+	}//End toString
 	
 }

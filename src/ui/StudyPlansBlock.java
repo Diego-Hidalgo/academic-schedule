@@ -66,7 +66,7 @@ public class StudyPlansBlock {
 				showInformationAlert("Error","Ha ocurrido un error inesperado",null);
 			}	
 		}else
-			showInformationAlert("Upps","Tal parece que este curso no tiene informacion",null);
+			showInformationAlert("Upps","Tal parece que aun no tienes planes de estudio",null);
 	}
 	
 	private void showInformationAlert(String title,String msg,String header){
