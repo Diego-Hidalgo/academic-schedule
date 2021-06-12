@@ -144,6 +144,15 @@ public class MainWindowsController{
 	}//End logInUser
 
 	@FXML
+	public void logOutUser(Event e) throws IOException {
+		if(showConfirmationAlert("Salir del sistema", "¿Está seguro que desea salir?", null)) {
+			switchToMainPane();
+			showLoginScene();
+			academicSchedule.logout();
+		}//End if
+	}//End logOutUser
+
+	@FXML
 	public void showLoginScene() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FOLDER+"LoginWindows.fxml"));
 		fxmlLoader.setController(this);

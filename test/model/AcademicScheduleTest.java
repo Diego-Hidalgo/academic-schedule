@@ -62,7 +62,7 @@ public class AcademicScheduleTest {
     @Test
     public void testAddCourse1() throws InvalidTimeFormatException, OutOfTimeRangeException, IOException {
         setUpScenery4();
-        String name = "Álgebra lineal";
+        String name = "Algebra lineal";
         int credits = 3;
         ArrayList<String> days = new ArrayList<>();
         days.add("Lunes");
@@ -83,7 +83,7 @@ public class AcademicScheduleTest {
     @Test
     public void testAddCourse2() throws InvalidTimeFormatException, OutOfTimeRangeException, IOException {
         setUpScenery5();
-        String name = "Álgebra lineal";
+        String name = "Algebra lineal";
         int credits = 3;
         ArrayList<String> days = new ArrayList<>();
         days.add("Lunes");

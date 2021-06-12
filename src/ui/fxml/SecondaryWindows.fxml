@@ -30,7 +30,7 @@
             <Menu mnemonicParsing="false" text="Usuario">
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#showUserProfileScene" text="Ver perfil" />
-                  <MenuItem mnemonicParsing="false" text="Salir del sistema" />
+                  <MenuItem mnemonicParsing="false" onAction="#logOutUser" text="Salir del sistema" />
               </items>
             </Menu>
          </menus>
