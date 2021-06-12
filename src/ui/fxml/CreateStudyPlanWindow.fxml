@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="307.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox alignment="TOP_CENTER" prefHeight="69.0" prefWidth="307.0" BorderPane.alignment="TOP_CENTER">
          <children>
-            <Label prefHeight="17.0" prefWidth="326.0" text="Crear plan de estudio">
+            <Label prefHeight="17.0" prefWidth="326.0" text="Crear plan de estudio" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>
@@ -26,7 +26,7 @@
       <HBox prefHeight="45.0" prefWidth="307.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="54.0" prefWidth="115.0" />
-            <Button mnemonicParsing="false" onAction="#createStudyPlan" text="Crear">
+            <Button mnemonicParsing="false" onAction="#createStudyPlan" style="-fx-background-color: #A94CC9;" text="Crear" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -42,19 +42,19 @@
    <center>
       <VBox prefHeight="423.0" prefWidth="307.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="titleTxt" promptText="Titulo del plan" />
+            <TextField fx:id="titleTxt" promptText="Titulo del plan" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
             <Pane prefHeight="28.0" prefWidth="307.0" />
-            <TextField fx:id="descriptionTxt" promptText="Description" />
+            <TextField fx:id="descriptionTxt" promptText="Description" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
             <Pane prefHeight="28.0" prefWidth="200.0" />
             <HBox prefHeight="21.0" prefWidth="307.0">
                <children>
-                  <Label text="Dia">
+                  <Label text="Dia" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                   <Pane prefHeight="21.0" prefWidth="178.0" />
-                  <Label text="Curso relacionado">
+                  <Label text="Curso relacionado" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -63,9 +63,9 @@
             </HBox>
             <HBox prefHeight="27.0" prefWidth="307.0">
                <children>
-                  <ChoiceBox fx:id="dayCB" prefHeight="25.0" prefWidth="112.0" />
+                  <ChoiceBox fx:id="dayCB" prefHeight="25.0" prefWidth="112.0" style="-fx-background-color: #A94CC9;" />
                   <Pane prefHeight="27.0" prefWidth="85.0" />
-                  <ChoiceBox fx:id="courseCB" prefHeight="25.0" prefWidth="112.0" />
+                  <ChoiceBox fx:id="courseCB" prefHeight="25.0" prefWidth="112.0" style="-fx-background-color: #A94CC9;" />
                </children>
             </HBox>
             <Pane prefHeight="18.0" prefWidth="307.0" />
@@ -73,25 +73,25 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="80.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="Hora inicial">
+                        <Label text="Hora inicial" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
                         <Pane prefHeight="14.0" prefWidth="153.0" />
-                        <TextField fx:id="initTimeTxt" prefHeight="25.0" prefWidth="115.0" promptText="HH:MM" />
+                        <TextField fx:id="initTimeTxt" prefHeight="25.0" prefWidth="115.0" promptText="HH:MM" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
                      </children>
                   </VBox>
                   <VBox prefHeight="59.0" prefWidth="61.0" HBox.hgrow="ALWAYS" />
                   <VBox prefHeight="59.0" prefWidth="103.0">
                      <children>
-                        <Label text="Hora final">
+                        <Label text="Hora final" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
                         <Pane prefHeight="14.0" prefWidth="200.0" />
-                        <TextField fx:id="finTimeTxt" promptText="HH:MM" />
+                        <TextField fx:id="finTimeTxt" promptText="HH:MM" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
                      </children>
                   </VBox>
                   <VBox prefHeight="59.0" prefWidth="24.0" />
@@ -102,13 +102,13 @@
                <children>
                   <VBox prefHeight="129.0" prefWidth="199.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <ListView fx:id="goalsLV" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="goalsLV" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
                      </children>
                   </VBox>
                   <Pane prefHeight="129.0" prefWidth="8.0" />
                   <VBox prefHeight="129.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#addGoals" prefHeight="45.0" prefWidth="63.0" text="Agregar meta" textAlignment="CENTER" wrapText="true">
+                        <Button mnemonicParsing="false" onAction="#addGoals" prefHeight="45.0" prefWidth="63.0" style="-fx-background-color: #A94CC9;" text="Agregar meta" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>

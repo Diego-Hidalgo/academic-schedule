@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="455.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox alignment="CENTER" prefHeight="79.0" prefWidth="415.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="titles" text="INICIO DE SESIÓN">
+            <Label fx:id="titles" text="INICIO DE SESIÓN" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
@@ -25,31 +25,31 @@
    <bottom>
       <VBox alignment="CENTER" prefHeight="245.0" prefWidth="340.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#logInUser" prefHeight="30.0" prefWidth="112.0" text="Iniciar sesión">
+            <Button mnemonicParsing="false" onAction="#logInUser" prefHeight="30.0" prefWidth="112.0" style="-fx-background-color: #A94CC9;" text="Iniciar sesión" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
             <Pane prefHeight="57.0" prefWidth="421.0" />
-            <Label text="¿Aún no cuentas con un usuario?">
+            <Label text="¿Aún no cuentas con un usuario?" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
             <Pane prefHeight="7.0" prefWidth="415.0" />
-            <Button mnemonicParsing="false" onAction="#showRegisterUser" text="Registrarse">
+            <Button mnemonicParsing="false" onAction="#showRegisterUser" style="-fx-background-color: #A94CC9;" text="Registrarse" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
             <Pane prefHeight="16.0" prefWidth="415.0" />
-            <Label text="¿Olvidaste tu contraseña?">
+            <Label text="¿Olvidaste tu contraseña?" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
             <Pane prefHeight="19.0" prefWidth="340.0" />
-            <Button mnemonicParsing="false" onAction="#showChangePasswordScene" text="Restaurar contraseña">
+            <Button mnemonicParsing="false" onAction="#showChangePasswordScene" style="-fx-background-color: #A94CC9;" text="Restaurar contraseña" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -62,23 +62,23 @@
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="56.0" prefWidth="417.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0" prefWidth="148.0" text="Nombre de usuario:" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0" prefWidth="148.0" text="Nombre de usuario:" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="userNameTxt" prefHeight="25.0" prefWidth="181.0" />
+                  <TextField fx:id="userNameTxt" prefHeight="25.0" prefWidth="181.0" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
                </children>
             </HBox>
             <Pane prefHeight="0.0" prefWidth="295.0" />
             <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="300.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="19.0" prefWidth="150.0" text="Contraseña:">
+                  <Label alignment="CENTER" prefHeight="19.0" prefWidth="150.0" text="Contraseña:" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="passwordTxt" prefHeight="25.0" prefWidth="178.0" />
+                  <PasswordField fx:id="passwordTxt" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
                </children>
             </HBox>
          </children>

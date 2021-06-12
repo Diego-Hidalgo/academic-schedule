@@ -12,20 +12,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="408.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="408.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox prefHeight="235.0" prefWidth="162.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="6.0" prefWidth="222.0" />
-            <TextField fx:id="nameTxt" />
+            <TextField fx:id="nameTxt" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
             <Pane prefHeight="20.0" prefWidth="207.0" />
-            <TextField fx:id="lastNameTxt" />
+            <TextField fx:id="lastNameTxt" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
             <Pane prefHeight="22.0" prefWidth="207.0" />
-            <TextField fx:id="userNameTxt" prefHeight="25.0" prefWidth="158.0" />
+            <TextField fx:id="userNameTxt" prefHeight="25.0" prefWidth="158.0" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
             <Pane prefHeight="24.0" prefWidth="207.0" />
-            <PasswordField fx:id="passwordTxt" />
+            <PasswordField fx:id="passwordTxt" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
             <Pane prefHeight="20.0" prefWidth="207.0" />
-            <PasswordField fx:id="confirmationTxt" />
+            <PasswordField fx:id="confirmationTxt" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
             <Pane prefHeight="53.0" prefWidth="207.0" />
          </children></VBox>
    </center>
@@ -33,30 +33,30 @@
       <VBox alignment="CENTER_LEFT" prefHeight="235.0" prefWidth="179.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="7.0" prefWidth="168.0" />
-            <Label prefHeight="19.0" prefWidth="65.0" text="Nombre:">
+            <Label prefHeight="19.0" prefWidth="65.0" text="Nombre:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Label>
             <Pane prefHeight="25.0" prefWidth="168.0" />
-            <Label text="Apellido:">
+            <Label text="Apellido:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
             <Pane prefHeight="25.0" prefWidth="168.0" />
-            <Label text="Nombre de usuario:">
+            <Label text="Nombre de usuario:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
             <Pane prefHeight="25.0" prefWidth="168.0" />
-            <Label text="Contraseña:">
+            <Label text="Contraseña:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
             <Pane prefHeight="25.0" prefWidth="168.0" />
-            <Label text="Confirmar Contraseña:">
+            <Label text="Confirmar Contraseña:" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -70,12 +70,12 @@
          <children>
             <HBox alignment="CENTER" prefHeight="68.0" prefWidth="542.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#showLoginScene" text="Regresar">
+                  <Button mnemonicParsing="false" onAction="#showLoginScene" style="-fx-background-color: #A94CC9;" text="Regresar" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Button>
                   <Pane prefHeight="50.0" prefWidth="69.0" />
-                  <Button mnemonicParsing="false" onAction="#registerUser" text="Registar">
+                  <Button mnemonicParsing="false" onAction="#registerUser" style="-fx-background-color: #A94CC9;" text="Registar" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Button>
@@ -89,7 +89,7 @@
    <top>
       <VBox alignment="TOP_CENTER" prefHeight="126.0" prefWidth="542.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="27.0" prefWidth="244.0" text="FORMULARIO DE REGISTRO">
+            <Label prefHeight="27.0" prefWidth="244.0" text="FORMULARIO DE REGISTRO" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>

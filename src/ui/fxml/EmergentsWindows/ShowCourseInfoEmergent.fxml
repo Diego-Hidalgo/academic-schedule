@@ -8,59 +8,59 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="420.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="courseNameTxt" alignment="CENTER" layoutX="1.0" layoutY="27.0" prefHeight="30.0" prefWidth="426.0" text="Información del curso">
+      <Label fx:id="courseNameTxt" alignment="CENTER" layoutX="1.0" layoutY="27.0" prefHeight="30.0" prefWidth="426.0" text="Información del curso" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="21.0" layoutY="86.0" prefHeight="41.0" prefWidth="76.0" text="Número de créditos:" wrapText="true">
+      <Label layoutX="21.0" layoutY="86.0" prefHeight="41.0" prefWidth="76.0" text="Número de créditos:" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="creditsTxt" layoutX="100.0" layoutY="92.0" prefHeight="30.0" prefWidth="116.0" text="Texto base" wrapText="true" />
+      <Label fx:id="creditsTxt" layoutX="100.0" layoutY="92.0" prefHeight="30.0" prefWidth="116.0" text="Texto base" textFill="WHITE" wrapText="true" />
       <Separator layoutX="95.0" layoutY="86.0" orientation="VERTICAL" prefHeight="41.0" prefWidth="6.0" />
-      <Label layoutX="240.0" layoutY="98.0" text="Estado:">
+      <Label layoutX="240.0" layoutY="98.0" text="Estado:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
       <Separator layoutX="297.0" layoutY="86.0" orientation="VERTICAL" prefHeight="41.0" />
-      <Label fx:id="estatusLb" layoutX="314.0" layoutY="86.0" prefHeight="41.0" prefWidth="102.0" text="Label" wrapText="true" />
-      <Label layoutX="21.0" layoutY="155.0" text="Lo ve los días">
+      <Label fx:id="estatusLb" layoutX="314.0" layoutY="86.0" prefHeight="41.0" prefWidth="102.0" text="Label" textFill="WHITE" wrapText="true" />
+      <Label layoutX="21.0" layoutY="155.0" text="Lo ve los días" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="monday" layoutX="51.0" layoutY="184.0" opacity="0.15" prefHeight="17.0" prefWidth="44.0" text="Lunes">
+      <Label fx:id="monday" layoutX="51.0" layoutY="184.0" opacity="0.15" prefHeight="17.0" prefWidth="44.0" text="Lunes" textFill="WHITE">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>
       </Label>
       <Separator layoutX="43.0" layoutY="184.0" orientation="VERTICAL" prefHeight="19.0" prefWidth="6.0" />
-      <Label fx:id="tuesday" layoutX="102.0" layoutY="184.0" opacity="0.15" text="Martes">
+      <Label fx:id="tuesday" layoutX="102.0" layoutY="184.0" opacity="0.15" text="Martes" textFill="WHITE">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="wednesday" layoutX="165.0" layoutY="184.0" opacity="0.15" text="Miercoles">
+      <Label fx:id="wednesday" layoutX="165.0" layoutY="184.0" opacity="0.15" text="Miercoles" textFill="WHITE">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="thursday" layoutX="240.0" layoutY="184.0" opacity="0.15" text="Jueves">
+      <Label fx:id="thursday" layoutX="240.0" layoutY="184.0" opacity="0.15" text="Jueves" textFill="WHITE">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="friday" layoutX="295.0" layoutY="184.0" opacity="0.15" text="Viernes">
+      <Label fx:id="friday" layoutX="295.0" layoutY="184.0" opacity="0.15" text="Viernes" textFill="WHITE">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="saturday" layoutX="351.0" layoutY="184.0" opacity="0.15" text="Sabado">
+      <Label fx:id="saturday" layoutX="351.0" layoutY="184.0" opacity="0.15" text="Sabado" textFill="WHITE">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>
@@ -70,7 +70,7 @@
       <Separator layoutX="234.0" layoutY="183.0" orientation="VERTICAL" prefHeight="19.0" />
       <Separator layoutX="288.0" layoutY="182.0" orientation="VERTICAL" prefHeight="19.0" />
       <Separator layoutX="343.0" layoutY="182.0" orientation="VERTICAL" prefHeight="19.0" />
-      <Label layoutX="21.0" layoutY="230.0" text="Notas">
+      <Label layoutX="21.0" layoutY="230.0" text="Notas" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -81,7 +81,7 @@
           <TableColumn fx:id="gradeValue" editable="false" minWidth="3.0" prefWidth="98.0" resizable="false" sortable="false" text="Nota" />
         </columns>
       </TableView>
-      <Button layoutX="389.0" layoutY="257.0" mnemonicParsing="false" text="+">
+      <Button layoutX="389.0" layoutY="257.0" mnemonicParsing="false" style="-fx-background-color: #A94CC9;" text="+" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

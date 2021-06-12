@@ -7,32 +7,32 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="299.0" prefWidth="295.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="299.0" prefWidth="295.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="86.0" layoutY="28.0" text="Agregar día">
+      <Label layoutX="86.0" layoutY="28.0" text="Agregar día" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="22.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="dayCB" layoutX="39.0" layoutY="123.0" prefWidth="150.0" />
-      <Label layoutX="38.0" layoutY="97.0" text="Seleccionar día:">
+      <ChoiceBox fx:id="dayCB" layoutX="39.0" layoutY="123.0" prefWidth="150.0" style="-fx-background-color: #A94CC9;" />
+      <Label layoutX="38.0" layoutY="97.0" text="Seleccionar día:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="39.0" layoutY="181.0" text="Hora inicio:">
+      <Label layoutX="39.0" layoutY="181.0" text="Hora inicio:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="initHourTxt" layoutX="38.0" layoutY="198.0" prefHeight="25.0" prefWidth="60.0" promptText="HH:MM" />
-      <TextField fx:id="finHourTxt" layoutX="148.0" layoutY="198.0" prefHeight="25.0" prefWidth="60.0" promptText="HH:MM" />
-      <Label layoutX="148.0" layoutY="181.0" text="Hora final:">
+      <TextField fx:id="initHourTxt" layoutX="38.0" layoutY="198.0" prefHeight="25.0" prefWidth="60.0" promptText="HH:MM" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
+      <TextField fx:id="finHourTxt" layoutX="148.0" layoutY="198.0" prefHeight="25.0" prefWidth="60.0" promptText="HH:MM" style="-fx-background-color: #555555; -fx-text-fill: #FFFFFF;" />
+      <Label layoutX="148.0" layoutY="181.0" text="Hora final:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Button layoutX="189.0" layoutY="260.0" mnemonicParsing="false" onAction="#addDay" text="Agregar">
+      <Button layoutX="189.0" layoutY="260.0" mnemonicParsing="false" onAction="#addDay" style="-fx-background-color: #A94CC9;" text="Agregar" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
