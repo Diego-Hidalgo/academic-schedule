@@ -24,13 +24,13 @@
             <Menu mnemonicParsing="false" text="Planes">
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#showRegisterStudyPlan" text="Crear plan de estudio" />
-                <MenuItem mnemonicParsing="false" onAction="#showRegisterEvent" text="Programar evento" />
+                <MenuItem mnemonicParsing="false" onAction="#showStudyPlansCreated" text="Ver planes de estudio" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Usuario">
               <items>
                 <MenuItem mnemonicParsing="false" text="Agregar" />
-                  <MenuItem mnemonicParsing="false" text="Ver perfil" onAction="#showUserProfileScene"/>
+                  <MenuItem mnemonicParsing="false" onAction="#showUserProfileScene" text="Ver perfil" />
                   <MenuItem mnemonicParsing="false" text="Salir del sistema" />
               </items>
             </Menu>
