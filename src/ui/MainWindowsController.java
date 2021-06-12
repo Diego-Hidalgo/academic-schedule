@@ -26,12 +26,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.AcademyScheduleUsersManager;
+import model.AcademicScheduleUsersManager;
 import model.Course;
 import model.Goal;
 import model.Time;
@@ -89,9 +88,9 @@ public class MainWindowsController{
 	@FXML private DatePicker eventDate;
 	@FXML private CheckBox eventSendNotify;
 	//************ Academic schedule *******
-	private AcademyScheduleUsersManager academicSchedule;
+	private AcademicScheduleUsersManager academicSchedule;
 	
-	public MainWindowsController(AcademyScheduleUsersManager as){
+	public MainWindowsController(AcademicScheduleUsersManager as){
 		this.academicSchedule = as;
 		ewc = new EmergentWindowController(as);
 		days = new ArrayList<String>();
@@ -129,10 +128,9 @@ public class MainWindowsController{
 	public void logInUser(Event e) throws IOException {
 		String userName = userNameTxt.getText();
 		String password = passwordTxt.getText();
-		academicSchedule.doTest();
 		if(academicSchedule.verifyBlankChars(new String[]{userName, password})) {
 			try {
-				academicSchedule.login(userName, password);
+				academicSchedule.logIn(userName, password);
 				switchToSecondaryPane(e);
 			} catch (InvalidCredentialsException exception) {
 				showErrorAlert("Credenciales incorrectas", exception.getMessage() + ". Vuelva a intentarlo.", null);
@@ -506,7 +504,6 @@ public class MainWindowsController{
 			switchToMainPane();
 			showLoginScene();
 			academicSchedule.deleteUser();
-			academicSchedule.logout();
 			showInformationAlert("Cuenta eliminada", "Se ha eliminado su cuenta exitosamente", null);
 		}//End if
 	}//End deleteUserAccount
