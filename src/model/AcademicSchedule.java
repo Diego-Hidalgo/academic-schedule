@@ -2,7 +2,6 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import exceptions.InvalidTimeFormatException;
 import exceptions.OutOfTimeRangeException;
 
@@ -236,4 +235,4 @@ public class AcademicSchedule implements Serializable {
 		this.notifies = notifies;
 	}
 	
-}
+}//End AcademicSchedule

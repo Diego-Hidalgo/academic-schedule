@@ -2,6 +2,8 @@ package ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Optional;
 import java.util.ArrayList;
 import exceptions.InvalidCredentialsException;
 import exceptions.InvalidTimeFormatException;
@@ -16,7 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -46,6 +48,7 @@ public class MainWindowsController{
 	@FXML private BorderPane mainPane;
 	@FXML private BorderPane secondaryPane;
 	@FXML private MenuBar menuBar;
+	//************User data ***************\\
 	private EmergentWindowController ewc;
 	//************User data ***************
 	@FXML private ImageView ProfileImg;
@@ -122,9 +125,26 @@ public class MainWindowsController{
 		Stage window = (Stage)((Node)e.getSource()).getScene().getWindow();
 		Scene scene = new Scene(root, null);
 		window.setScene(scene);
-		window.setTitle("Bienvenido");
+		window.setTitle("Bienvenido " + academicSchedule.getCurrentUser().getUserName());
 		window.show();
 	}//End switchToSecondaryPane
+
+	@FXML
+	public void logInUser(Event e) throws IOException {
+		String userName = userNameTxt.getText();
+		String password = passwordTxt.getText();
+		academicSchedule.doTest();
+		if(academicSchedule.verifyBlankChars(new String[]{userName, password})) {
+			try {
+				academicSchedule.login(userName, password);
+				switchToSecondaryPane(e);
+			} catch (InvalidCredentialsException exception) {
+				showErrorAlert("Credenciales incorrectas", exception.getMessage() + ". Vuelva a intentarlo.", null);
+			}//End try/catch
+		} else {
+			showInformationAlert("Campos vacíos","Deben llenarse todos los campos",null);
+		}//End if/else
+	}//End logInUser
 
 	@FXML
 	public void showLoginScene() throws IOException {
@@ -135,7 +155,7 @@ public class MainWindowsController{
 		mainPane.setCenter(loginScene);
 		Stage stage = (Stage) mainPane.getScene().getWindow();
 		stage.setTitle("Iniciar sesion");
-		stage.setWidth(500);
+		stage.setWidth(485);
 		stage.setHeight(480);
 		stage.setResizable(false);
 	}//End showLoginScene
@@ -150,7 +170,7 @@ public class MainWindowsController{
 		mainPane.setCenter(registerUser);
 		Stage st = (Stage) mainPane.getScene().getWindow();
 		st.setTitle("Registrar usuario");
-		st.setHeight(530);
+		st.setHeight(485);
 		st.setWidth(520);
 		st.setResizable(false);
 	}//End switchToMainPane
@@ -168,6 +188,30 @@ public class MainWindowsController{
 		st.setWidth(500);
 		st.setResizable(false);
 	}//End showChangePasswordScene
+
+	public void showUserProfileScene() throws IOException, URISyntaxException {
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER + "UserProfileWindow.fxml"));
+		fxml.setController(this);
+		Parent userProfile = fxml.load();
+		secondaryPane.setCenter(userProfile);
+		setUserProfileFields();
+		Stage st = (Stage) secondaryPane.getScene().getWindow();
+		st.setTitle("Perfil del usuario " + academicSchedule.getCurrentUser().getUserName());
+		st.setHeight(485);
+		st.setWidth(525);
+		st.setResizable(false);
+	}//End showUserProfileScene
+
+	public void setUserProfileFields() throws URISyntaxException {
+		try {
+			ProfileImg.setImage(new Image(academicSchedule.getCurrentUser().getProfilePhoto()));
+		} catch (NullPointerException e) {
+			ProfileImg.setImage(new Image(getClass().getResource("fxml/img/profile.png").toURI().toString()));
+		}//End try/catch
+		nameTxt.setText(academicSchedule.getCurrentUser().getName());
+		lastNameTxt.setText(academicSchedule.getCurrentUser().getLastName());
+		userNameTxt.setText(academicSchedule.getCurrentUser().getUserName());
+	}//End setUserProfileFields
 	
 	@FXML
 	public void showRegisterCourse() throws IOException{
@@ -239,7 +283,6 @@ public class MainWindowsController{
 		feedBack.setContentText(msg);
 		feedBack.showAndWait();
 	}//End showInformationAlert
-	
 	//************************ Objects and data managment *******************
 	
 	@FXML
@@ -258,6 +301,27 @@ public class MainWindowsController{
 	}//End addGoals
 	
 	@FXML
+	public boolean showConfirmationAlert(String title, String msg, String header) {
+		Alert feedBack = new Alert(AlertType.CONFIRMATION);
+		feedBack.setTitle(title);
+		feedBack.setHeaderText(header);
+		feedBack.setContentText(msg);
+		ButtonType acceptBtn = new ButtonType("Aceptar");
+		ButtonType cancelBtn = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+		feedBack.getButtonTypes().setAll(acceptBtn, cancelBtn);
+		Optional<ButtonType> result = feedBack.showAndWait();
+		return result.get() == acceptBtn;
+	}//End showConfirmationAlert
+
+	public void showErrorAlert(String title, String msg, String header) {
+		Alert feedBack = new Alert(AlertType.ERROR);
+		feedBack.setTitle(title);
+		feedBack.setHeaderText(header);
+		feedBack.setContentText(msg);
+		feedBack.showAndWait();
+	}//End showErrorAlert
+
+	//************************ Objects and data managment *******************
 	public void addCourseToScreen(){
 		coursesBlock = new ArrayList<CourseBlock>();
 		Course current = academicSchedule.getCurrentUser().
@@ -281,20 +345,6 @@ public class MainWindowsController{
 			addCourse(current.getNext(),(++index));
 		}//End if
 	}//End addCourse
-	
-	@FXML
-	public void loginUser(Event e) throws IOException{
-		if(!userNameTxt.getText().isEmpty() && !passwordTxt.getText().isEmpty()){
-			try{
-				academicSchedule.login(userNameTxt.getText(),passwordTxt.getText());
-				showInformationAlert("registro","Haz ingresado con exito",null);
-				switchToSecondaryPane(e);
-			}catch(InvalidCredentialsException ice){
-				showInformationAlert("registro","Credenciales incorrectas",null);
-			}//End try/catch
-		}else
-			showInformationAlert("registro","Llena por completo los campos",null);
-	}//End loginUser
 	
 	@FXML
 	public void registerCourse(){
@@ -415,7 +465,7 @@ public class MainWindowsController{
 		saturday.setOpacity(0.15);
 	}//End activateDay
 
-	public void registerUser(ActionEvent event) {
+	public void registerUser(ActionEvent event) throws URISyntaxException, IOException {
 		String name = nameTxt.getText();
 		String lastName = lastNameTxt.getText();
 		String userName = userNameTxt.getText();
@@ -427,6 +477,12 @@ public class MainWindowsController{
 					try {
 						academicSchedule.addUser(name, lastName, userName, password, imgPath);
 						showInformationAlert("Registro completado", "Se ha registrado al nuevo usuario exitosamente", null);
+						nameTxt.clear();
+						lastNameTxt.clear();
+						userNameTxt.clear();
+						passwordTxt.clear();
+						confirmationTxt.clear();
+						ProfileImg.setImage(new Image(getClass().getResource("fxml/img/profile.png").toURI().toString()));
 					} catch (UserNameAlreadyInUseException e) {
 						showInformationAlert("No se pudo completar el registro", e.getMessage(), null);
 					} catch (IOException e) {
@@ -442,6 +498,79 @@ public class MainWindowsController{
 			showInformationAlert("Campos vacíos","Deben llenarse todos los campos",null);
 		}//End if/else
 	}//End registerUser
+
+	@FXML
+	public void changeUserPassword() throws IOException {
+		String userName = userNameTxt.getText();
+		String newPassword = passwordTxt.getText();
+		String confirmation = confirmationTxt.getText();
+		if(academicSchedule.verifyBlankChars(new String[]{userName, newPassword, confirmation})) {
+			if(academicSchedule.searchUser(userName) != -1) {
+				if(newPassword.equals(confirmation)) {
+					if(newPassword.length() >= 7) {
+						academicSchedule.changeUserPassword(userName, newPassword);
+						showInformationAlert("Contraseña cambiada", "La contraseña se ha cambiado exitosamente", null);
+						userNameTxt.clear();
+						passwordTxt.clear();
+						confirmationTxt.clear();
+					} else {
+						showInformationAlert("Contraseña demasiado corta", "La contraseña es demasiado corta, debe contener por lo menos siete (7) caracteres. Vuelva a intentarlo", null);
+					}//Enf if/else
+				} else {
+					showInformationAlert("Contraseñas distintas","Las contraseñas no coinciden, vuelva a intentarlo",null);
+				}//End if/else
+			} else {
+				showInformationAlert("Usuario inexistente", "El nombre de usuario ingresado no existe", null);
+			}//End if/else
+		} else {
+			showInformationAlert("Campos vacíos","Deben llenarse todos los campos",null);
+		}//End if/else
+	}//End changeUserPassword
+
+	@FXML
+	public void changeUserData() throws URISyntaxException, IOException {
+		String name = nameTxt.getText();
+		String lastName = lastNameTxt.getText();
+		String userName = userNameTxt.getText();
+		String password = passwordTxt.getText();
+		String confirmation = confirmationTxt.getText();
+		if(showConfirmationAlert("Cambiar datos de la cuente", "¿Está seguro que desea cambiar los datos de la cuenta?", null)) {
+			if(academicSchedule.verifyBlankChars(new String[]{name, lastName, userName, password, confirmation})) {
+				if(password.equals(confirmation)) {
+					if(password.length() >= 7) {
+						try {
+							academicSchedule.changeUser(name, lastName, userName, password, imgPath);
+							showInformationAlert("Cambios regitrados", "Se han cambiado los datos exitosamente", null);
+							setUserProfileFields();
+							passwordTxt.clear();
+							confirmationTxt.clear();
+						} catch (UserNameAlreadyInUseException e) {
+							showInformationAlert("No se pudo completar el cambio", e.getMessage(), null);
+						} catch (IOException e) {
+							showInformationAlert("No se pudo completar el cambio", "Ocurrió un eeror inesperado :(", null);
+						}//End try/catch
+					} else {
+						showInformationAlert("Contraseña demasiado corta", "La contraseña es demasiado corta, debe contener por lo menos siete (7) caracteres. Vuelva a intentarlo", null);
+					}//End if/else
+				} else {
+					showInformationAlert("Contraseñas distintas","Las contraseñas no coinciden, vuelva a intentarlo",null);
+				}//End if/else
+			} else {
+				showInformationAlert("Campos vacíos","Deben llenarse todos los campos",null);
+			}//End if/else
+		}//End if
+	}//End changeUserData
+
+	@FXML
+	public void deleteUserAccount(Event e) throws IOException {
+		if(showConfirmationAlert("Eliminar cuenta de usuario", "¿Está seguro que desea eliminar su cuenta de usuario definitivamente?", null)) {
+			switchToMainPane();
+			showLoginScene();
+			academicSchedule.deleteUser();
+			academicSchedule.logout();
+			showInformationAlert("Cuenta eliminada", "Se ha eliminado su cuenta exitosamente", null);
+		}//End if
+	}//End deleteUserAccount
 	
 	private void initializeDayChoiceBox(){
 		ObservableList<String> status = FXCollections.observableArrayList();
@@ -476,7 +605,7 @@ public class MainWindowsController{
 	@FXML
 	public void ShowCoursesError(){
 		showInformationAlert("Que gonorrea","Ocurrio tremendo error, nunca deberias ver esto",null);
-	}
+	}//End showCoursesError
 	
 	@FXML
 	public void listenEnteredDay(MouseEvent event){
@@ -499,7 +628,7 @@ public class MainWindowsController{
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Selecciona una imagen");
 		fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("JPG, PNG, JPEG", "*.jpg", "*.png", "*.jpeg")
+                new FileChooser.ExtensionFilter("Custom extensions", "*.jpg", "*.png", "*.jpeg")
             );
 		File f = fileChooser.showOpenDialog(null);
 		if(f != null) {
@@ -513,7 +642,7 @@ public class MainWindowsController{
 		if(imgPath != null){
 			ProfileImg.setImage(new Image(imgPath));
 			ProfileImg.setFitWidth(99);
-		}
+		}//End if
 	}//file:/D:/brianR/ElpolloOriginal.jpg
 
 	@FXML
@@ -522,5 +651,3 @@ public class MainWindowsController{
 	}//End listenProfileImgEvent
 
 }//End MainWindowsController
-
-

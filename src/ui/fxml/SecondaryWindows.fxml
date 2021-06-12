@@ -29,7 +29,8 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Usuario">
               <items>
-                  <MenuItem mnemonicParsing="false" text="Ver perfil" />
+                <MenuItem mnemonicParsing="false" text="Agregar" />
+                  <MenuItem mnemonicParsing="false" text="Ver perfil" onAction="#showUserProfileScene"/>
                   <MenuItem mnemonicParsing="false" text="Salir del sistema" />
               </items>
             </Menu>
