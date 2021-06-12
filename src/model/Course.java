@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Course implements Serializable {
 
@@ -52,6 +53,26 @@ public class Course implements Serializable {
 	public int getCredits() {
 		return this.credits;
 	}//End getCredit
+
+	public List<Grade> getGradesInList(Grade current) {
+		List<Grade> gradesList = new ArrayList<>();
+		gradesList.add(current);
+		if(current.getLeft() != null) {
+			gradesList.addAll(getGradesInList(current.getLeft()));
+		}//End if
+		if(current.getRigth() != null) {
+			gradesList.addAll(getGradesInList(current.getRigth()));
+		}//End if
+		return gradesList;
+	}//End getGradesInList
+
+	public List<Grade> getGradesInList() {
+		if(gradesRoot == null) {
+			return null;
+		} else {
+			return getGradesInList(gradesRoot);
+		}//End if/else
+	}//End getGradesInList
 
 	/**
 	 * 
@@ -147,7 +168,7 @@ public class Course implements Serializable {
 		this.status = status;
 	}
 
-	public Grade getGradesRoot() {
+	public Grade getGradesRoot(Grade left) {
 		return gradesRoot;
 	}
 
