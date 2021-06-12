@@ -1,6 +1,6 @@
 package model;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.Date;
 import exceptions.InvalidTimeFormatException;
 import exceptions.OutOfTimeRangeException;
@@ -27,7 +27,7 @@ public class AcademicSchedule implements Serializable {
 	 * @throws OutOfTimeRangeException 
 	 * @throws InvalidTimeFormatException 
 	 */
-	public void addCourse(String name, int credits, ArrayList<String> days, ArrayList<Time> initHours,ArrayList<Time> finHours) {
+	public void addCourse(String name, int credits, ArrayList<String> days, ArrayList<Time> initHours,ArrayList<Time> finHours) throws IOException {
 		Course toAdd = new Course(name,credits,convertToDay(days,initHours,finHours));
 		if(firstCourse == null) {
 			firstCourse = toAdd;
@@ -37,7 +37,7 @@ public class AcademicSchedule implements Serializable {
 			addCourse(firstCourse,toAdd);
 	}//End addCourse
 	
-	private void addCourse(Course current,Course toAdd){
+	private void addCourse(Course current,Course toAdd) throws IOException {
 		if(current.getNext() == firstCourse){
 			current.setNext(toAdd);
 			toAdd.setPrev(current);
@@ -54,6 +54,7 @@ public class AcademicSchedule implements Serializable {
 		}//End for
 		return da;
 	}//End convertToDay
+
 	public Course getCourses() {
 		return firstCourse;
 	}//End getCourses
@@ -62,7 +63,7 @@ public class AcademicSchedule implements Serializable {
 	 * 
 	 * @param courseName
 	 */
-	public boolean deleteCourse(String courseName) {
+	public boolean deleteCourse(String courseName) throws IOException {
 		Course toDelete = searchCourse(courseName);
 		boolean status = false;
 		if(toDelete != null){
@@ -75,7 +76,7 @@ public class AcademicSchedule implements Serializable {
 	/**
 	 * 
 	 */
-	public void deleteCourse(Course toDelete) {
+	public void deleteCourse(Course toDelete) throws IOException {
 		toDelete.getNext().setPrev(toDelete.getPrev());
 		toDelete.getPrev().setNext(toDelete.getNext());
 	}//End deleteCourse
@@ -106,13 +107,13 @@ public class AcademicSchedule implements Serializable {
 	 * @param title
 	 * @param day
 	 */
-	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour,Time finHour, String day,Course course) {
+	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour,Time finHour, String day,Course course) throws IOException {
 		Day d = new Day(Days.valueOf(day.toUpperCase()),initHour,finHour);
 		Notify n = new Notify(toSendAtHour,date,description,title,d,course);
 		notifies.add(n);
 	}//End addNotify
 	
-	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour, Time finHour, String day,String course) {
+	public void addNotify(Time toSendAtHour, Date date, String description, String title, Time initHour, Time finHour, String day,String course) throws IOException {
 		Day d = new Day(Days.valueOf(day.toUpperCase()),initHour,finHour);
 		Notify n = new Notify(toSendAtHour,date,description,title,d,searchCourse(course));
 		int i = 0;
@@ -136,7 +137,7 @@ public class AcademicSchedule implements Serializable {
 	 * 
 	 * @param title
 	 */
-	public void deleteNotify(String title) {
+	public void deleteNotify(String title) throws IOException {
 		notifies.remove(searchNotify(title));
 	}//End deleteNotify
 
@@ -144,7 +145,7 @@ public class AcademicSchedule implements Serializable {
 	 * 
 	 * @param notify
 	 */
-	public void deleteNotify(Notify notify) {
+	public void deleteNotify(Notify notify) throws IOException {
 		notifies.remove(notify);
 	}//End deleteNotify
 
@@ -171,7 +172,7 @@ public class AcademicSchedule implements Serializable {
 	 * @param goals
 	 * @param day
 	 */
-	public void addStudyPlan(String title, String description, ArrayList<String> goals, String day, Time initHour, Time finHour,Course course) {
+	public void addStudyPlan(String title, String description, ArrayList<String> goals, String day, Time initHour, Time finHour,Course course) throws IOException {
 		Day d = new Day(Days.valueOf(day.toUpperCase()),initHour,finHour);
 		studyPlans.add(new StudyPlan(title,description,getGoals(goals),d,course));
 	}//End addStudyPlan
@@ -203,7 +204,7 @@ public class AcademicSchedule implements Serializable {
 	 * 
 	 * @param title
 	 */
-	public void deleteStudyPlan(String title) {
+	public void deleteStudyPlan(String title) throws IOException {
 		studyPlans.remove(searchStudyPlan(title));
 	}//End deleteStudyPlan
 
@@ -211,7 +212,7 @@ public class AcademicSchedule implements Serializable {
 	 * 
 	 * @param plan
 	 */
-	public void deleteStudyPlan(StudyPlan plan) {
+	public void deleteStudyPlan(StudyPlan plan) throws IOException {
 		studyPlans.remove(plan);
 	}//End deleteStudyPlan
 

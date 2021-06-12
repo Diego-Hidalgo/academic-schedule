@@ -23,9 +23,9 @@ public class Main extends Application{
 			loadAllData();
 		} catch(IOException | ClassNotFoundException e) {
 			as = new AcademicScheduleUsersManager();
-		}
+		}//End try/catch
 		mwc = new MainWindowsController(as);
-	}
+	}//End Constructor
 	
 	public static void main(String[] args){
 		launch(args);

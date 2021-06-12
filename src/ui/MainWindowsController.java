@@ -346,7 +346,7 @@ public class MainWindowsController{
 	}//End addCourse
 	
 	@FXML
-	public void registerCourse(){
+	public void registerCourse() throws IOException {
 		String msg = "Llena todos los campos";
 		if(days.size() != 0 && !courseNameTxt.getText().isEmpty() && 
 			!creditsTxt.getText().isEmpty()){
@@ -379,7 +379,7 @@ public class MainWindowsController{
 	}//End addDay
 	
 	@FXML
-	public void createStudyPlan(){
+	public void createStudyPlan() throws IOException {
 		String msg = new String();
 		if(!titleTxt.getText().isEmpty() && !descriptionTxt.getText().isEmpty() && 
 			dayCB.getValue() != null && courseCB.getValue() != null && !initTimeTxt.getText().isEmpty()

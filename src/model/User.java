@@ -1,6 +1,6 @@
 package model;
 
-import java.io.Serializable;
+import java.io.*;
 
 public class User extends Person implements Serializable {
 
@@ -19,7 +19,6 @@ public class User extends Person implements Serializable {
 		userName = new String();
 		password = new String();
 		profilePhoto = new String();
-		academicSchedule = new AcademicSchedule();
 	}//End Constructor1
 
 	/**
@@ -102,4 +101,5 @@ public class User extends Person implements Serializable {
 	public String toString(){
 		return userName + " "+password;
 	}
+
 }//End User
