@@ -80,4 +80,13 @@ public class Goal implements Serializable {
 		return status;
 	}//End getStatus
 
+	/**
+	 * returns the information of the Goal in a String<br>
+	 *     <b>pre:</b>
+	 *     <b>post:</b> the String that contains the description
+	 */
+	public String toString(){
+		return description;
+	}//End toString
+
 }//End Goal
