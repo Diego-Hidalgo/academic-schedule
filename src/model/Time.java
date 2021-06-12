@@ -3,7 +3,11 @@ package model;
 import exceptions.InvalidTimeFormatException;
 import exceptions.OutOfTimeRangeException;
 
-public class Time implements Comparable<Time>{
+import java.io.Serializable;
+
+public class Time implements Comparable<Time>, Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	final private int MAXHOUR = 23;
 	final private int MAXMINUTE = 59;

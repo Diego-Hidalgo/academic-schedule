@@ -1,6 +1,6 @@
 package model;
 
-import java.io.Serializable;
+import java.io.*;
 
 public class User extends Person implements Serializable {
 
@@ -30,12 +30,12 @@ public class User extends Person implements Serializable {
 	 * @param password
 	 * @param profilePhoto
 	 */
-	public User(String name, String lastName, String userName, String password, String profilePhoto) {
+	public User(String name, String lastName, String userName, String password, String profilePhoto, AcademicScheduleUsersManager asum) {
 		super(name, lastName);
 		this.userName = userName;
 		this.password = password;
 		this.profilePhoto = profilePhoto;
-		academicSchedule = new AcademicSchedule();
+		academicSchedule = new AcademicSchedule(asum);
 	}//End Constructor2
 
 	/**
@@ -102,4 +102,5 @@ public class User extends Person implements Serializable {
 	public String toString(){
 		return userName + " "+password;
 	}
+
 }//End User

@@ -91,9 +91,9 @@ public class MainWindowsController{
 	@FXML private DatePicker eventDate;
 	@FXML private CheckBox eventSendNotify;
 	//************ Academic schedule *******
-	private AcademyScheduleUsersManager academicSchedule;
+	private AcademicScheduleUsersManager academicSchedule;
 	
-	public MainWindowsController(AcademyScheduleUsersManager as){
+	public MainWindowsController(AcademicScheduleUsersManager as){
 		this.academicSchedule = as;
 		ewc = new EmergentWindowController(as);
 		days = new ArrayList<String>();
@@ -131,10 +131,9 @@ public class MainWindowsController{
 	public void logInUser(Event e) throws IOException {
 		String userName = userNameTxt.getText();
 		String password = passwordTxt.getText();
-		academicSchedule.doTest();
 		if(academicSchedule.verifyBlankChars(new String[]{userName, password})) {
 			try {
-				academicSchedule.login(userName, password);
+				academicSchedule.logIn(userName, password);
 				switchToSecondaryPane(e);
 			} catch (InvalidCredentialsException exception) {
 				showErrorAlert("Credenciales incorrectas", exception.getMessage() + ". Vuelva a intentarlo.", null);
@@ -380,7 +379,7 @@ public class MainWindowsController{
 	}//End addCourse
 	
 	@FXML
-	public void registerCourse(){
+	public void registerCourse() throws IOException {
 		String msg = "Llena todos los campos";
 		if(days.size() != 0 && !courseNameTxt.getText().isEmpty() && 
 			!creditsTxt.getText().isEmpty()){
@@ -413,7 +412,7 @@ public class MainWindowsController{
 	}//End addDay
 	
 	@FXML
-	public void createStudyPlan(){
+	public void createStudyPlan() throws IOException {
 		String msg = new String();
 		if(!titleTxt.getText().isEmpty() && !descriptionTxt.getText().isEmpty() && 
 			dayCB.getValue() != null && courseCB.getValue() != null && !initTimeTxt.getText().isEmpty()
@@ -595,7 +594,6 @@ public class MainWindowsController{
 			switchToMainPane();
 			showLoginScene();
 			academicSchedule.deleteUser();
-			academicSchedule.logout();
 			showInformationAlert("Cuenta eliminada", "Se ha eliminado su cuenta exitosamente", null);
 		}//End if
 	}//End deleteUserAccount

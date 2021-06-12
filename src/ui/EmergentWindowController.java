@@ -25,9 +25,9 @@ import model.*;
 import exceptions.*;
 
 public class EmergentWindowController {
-	
-	@SuppressWarnings("unused")
-	private AcademyScheduleUsersManager academicSchedule;
+
+	private AcademicScheduleUsersManager academicSchedule;
+
 	final private String FOLDER = "fxml/EmergentsWindows/";
 	
 	//******************** Day data **************************
@@ -51,16 +51,19 @@ public class EmergentWindowController {
 	@FXML private TableView<Grade> grades;
 	@FXML private TableColumn<Grade,String> gradeDescription;
 	@FXML private TableColumn<Grade,String> gradeValue;
+
 	//******************** Goals *****************************
 	@FXML private TextArea goalDescriptionTA;
 	private String goalST;
+
 	//******************** Study plan **************************
 	@FXML private Label titleLB;
 	@FXML private Label descriptionLB;
 	@FXML private Label relationateCourseLB;
 	@FXML private ListView<Goal> goalsLV;
 	private StudyPlan currenStudyPlan;
-	public EmergentWindowController(AcademyScheduleUsersManager as) {
+
+	public EmergentWindowController(AcademicScheduleUsersManager as) {
 		academicSchedule = as;
 	}//End EmergentWindowController constructor
 	
@@ -87,7 +90,7 @@ public class EmergentWindowController {
 		Stage form = new Stage();
 		initializeCurrentCourseData();
 		form.initModality(Modality.APPLICATION_MODAL);
-		form.setTitle("Información del curso");
+		form.setTitle("Informaciï¿½n del curso");
 		form.setScene(scene);
 		form.setResizable(false);
 		form.showAndWait();
@@ -102,7 +105,7 @@ public class EmergentWindowController {
 		Stage form = new Stage();
 		initializeCurrentStudyPlanData();
 		form.initModality(Modality.APPLICATION_MODAL);
-		form.setTitle("Información del plan");
+		form.setTitle("Informaciï¿½n del plan");
 		form.setScene(scene);
 		form.setResizable(false);
 		form.showAndWait();

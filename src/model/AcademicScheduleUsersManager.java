@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class AcademyScheduleUsersManager implements Serializable {
+public class AcademicScheduleUsersManager implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -18,16 +18,9 @@ public class AcademyScheduleUsersManager implements Serializable {
 	/**
 	 *
 	 */
-	public AcademyScheduleUsersManager() {
+	public AcademicScheduleUsersManager() {
 		users = new ArrayList<User>();
-	}//End AcademyScheduleUsersManager constructor
-
-	public void doTest() {
-		System.out.println(users.size());
-		for (User user : users) {
-			System.out.println(user.getUserName());
-		}
-	}
+	}//End AcademicScheduleUsersManager constructor
 
 	/**
 	 *
@@ -78,7 +71,7 @@ public class AcademyScheduleUsersManager implements Serializable {
 	 * @param userName
 	 * @param password
 	 */
-	public void login(final String userName, final String password) throws InvalidCredentialsException {
+	public void logIn(final String userName, final String password) throws InvalidCredentialsException {
 		int userIndex = searchUser(userName);
 		if(userIndex == -1) {
 			throw new InvalidCredentialsException();
@@ -147,7 +140,7 @@ public class AcademyScheduleUsersManager implements Serializable {
 		if(searchUser(userName) != -1) {
 			throw new UserNameAlreadyInUseException(userName);
 		}//End if
-		User newUser = new User(name, lastName, userName, passWord, profilePhotoPath);
+		User newUser = new User(name, lastName, userName, passWord, profilePhotoPath, this);
 		if(users.isEmpty()) {
 			users.add(newUser);
 		} else {
@@ -199,6 +192,7 @@ public class AcademyScheduleUsersManager implements Serializable {
 	public void deleteUser() throws IOException {
 		User toDelete = users.get(searchUser(currentUser.getUserName()));
 		users.remove(toDelete);
+		logout();
 		saveAllData();
 	}//End deleteUser
 
@@ -218,15 +212,5 @@ public class AcademyScheduleUsersManager implements Serializable {
 		}//End for
 	}//End sortUsersList
 
-	/**
-	 *
-	 * @param userName
-	 * @throws IOException
-	 */
-	public void removeUser(String userName) throws IOException {
-		User user = users.get(searchUser(userName));
-		users.remove(user);
-		saveAllData();
-	}//End removeUser
 
 }//End AcademyScheduleManager

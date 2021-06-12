@@ -16,16 +16,16 @@ public class Main extends Application{
 	private static final String SAVE_PATH = "save-file.dm";
 	
 	private MainWindowsController mwc;
-	private AcademyScheduleUsersManager as;
+	private AcademicScheduleUsersManager as;
 	
 	public Main() {
 		try {
 			loadAllData();
 		} catch(IOException | ClassNotFoundException e) {
-			as = new AcademyScheduleUsersManager();
-		}
+			as = new AcademicScheduleUsersManager();
+		}//End try/catch
 		mwc = new MainWindowsController(as);
-	}
+	}//End Constructor
 	
 	public static void main(String[] args){
 		launch(args);
@@ -37,7 +37,7 @@ public class Main extends Application{
 			f.createNewFile();
 		}
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-		as = (AcademyScheduleUsersManager) ois.readObject();
+		as = (AcademicScheduleUsersManager) ois.readObject();
 		ois.close();
 	}//End loadAllData
 
