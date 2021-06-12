@@ -15,6 +15,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Modality;
@@ -24,6 +25,7 @@ import exceptions.*;
 
 public class EmergentWindowController {
 	
+	@SuppressWarnings("unused")
 	private AcademyScheduleUsersManager academicSchedule;
 	final private String FOLDER = "fxml/EmergentsWindows/";
 	
@@ -48,6 +50,9 @@ public class EmergentWindowController {
 	@FXML private TableView<Grade> grades;
 	@FXML private TableColumn<Grade,String> gradeDescription;
 	@FXML private TableColumn<Grade,String> gradeValue;
+	//******************** Goals *****************************
+	@FXML private TextArea goalDescriptionTA;
+	private String goalST;
 	public EmergentWindowController(AcademyScheduleUsersManager as) {
 		academicSchedule = as;
 	}//End EmergentWindowController constructor
@@ -76,6 +81,19 @@ public class EmergentWindowController {
 		initializeCurrentCourseData();
 		form.initModality(Modality.APPLICATION_MODAL);
 		form.setTitle("Información del curso");
+		form.setScene(scene);
+		form.setResizable(false);
+		form.showAndWait();
+	}//End showCourseData
+	
+	public void showAddGoal() throws IOException{
+		FXMLLoader fxml = new FXMLLoader(getClass().getResource(FOLDER+"AddGoalEmergent.fxml"));
+		fxml.setController(this);
+		Parent root = fxml.load();
+		Scene scene = new Scene(root,null);
+		Stage form = new Stage();
+		form.initModality(Modality.APPLICATION_MODAL);
+		form.setTitle("Agregar metas");
 		form.setScene(scene);
 		form.setResizable(false);
 		form.showAndWait();
@@ -146,8 +164,20 @@ public class EmergentWindowController {
 			closeEmergentWindows(event);
 	}//End addDay
 	
-	//************************* Management *********************+
+	public void addGoal(ActionEvent event){
+		String msg = "Llena todos los campos";
+		boolean exit = false;
+		if(!goalDescriptionTA.getText().isEmpty()){
+			goalST = goalDescriptionTA.getText();
+			msg = "Meta agregada con exito";
+			exit = true;
+		}//End if
+		showInformationAlert("Agregar meta",msg,null);
+		if(exit)
+			closeEmergentWindows(event);
+	}//End addGoal
 	
+	//************************* Management *********************
 	public void showInformationAlert(String title,String msg,String header){
 		Alert feedBack = new Alert(AlertType.INFORMATION);
 		feedBack.setTitle(title);
@@ -161,6 +191,10 @@ public class EmergentWindowController {
 		initHour = null;
 		return t;
 	}//End getAndClearInitHour
+	
+	public String getGoal(){
+		return goalST;
+	}
 	
 	public Time getAndClearFinHour(){
 		Time t = finHour;

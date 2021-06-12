@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import exceptions.InvalidCredentialsException;
+import exceptions.InvalidTimeFormatException;
+import exceptions.OutOfTimeRangeException;
 import exceptions.UserNameAlreadyInUseException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -24,7 +28,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -72,9 +75,10 @@ public class MainWindowsController{
 	@FXML private TextField descriptionTxt;
 	@FXML private TextField initTimeTxt;
 	@FXML private TextField finTimeTxt;
-	@FXML private ListView<Goal> goalsLV;
+	@FXML private ListView<String> goalsLV;
 	@FXML private  ChoiceBox<String> dayCB;
 	@FXML private ChoiceBox<Course> courseCB;
+	private ArrayList<String> goalsSt;
 	//************ Event ********************
 	@FXML private TextField eventName;
 	@FXML private TextField eventDescription;
@@ -187,6 +191,9 @@ public class MainWindowsController{
 		fxmlLoader.setController(this);
 		Parent registerScene = fxmlLoader.load();
 		secondaryPane.setCenter(registerScene);
+		goalsSt = new ArrayList<String>();
+		initializeDayChoiceBox();
+		initializeCoursesChoiceBox();
 		Stage stage = (Stage) secondaryPane.getScene().getWindow();
 		stage.setTitle("Crear plan de estudio");
 		stage.setHeight(670);
@@ -233,8 +240,22 @@ public class MainWindowsController{
 		feedBack.showAndWait();
 	}//End showInformationAlert
 	
-	
 	//************************ Objects and data managment *******************
+	
+	@FXML
+	public void addGoals() throws IOException{
+		ewc.showAddGoal();
+		boolean show = true;
+		String msg = "No se ha agregado la meta";
+		if(ewc.getGoal() != null && !ewc.getGoal().isEmpty()){
+			goalsSt.add(ewc.getGoal());
+			ObservableList<String> gls = FXCollections.observableArrayList(goalsSt);
+			goalsLV.setItems(gls);
+			show = false;
+		}//End if
+		if(show)
+			showInformationAlert("Error",msg,null);
+	}//End addGoals
 	
 	@FXML
 	public void addCourseToScreen(){
@@ -313,6 +334,43 @@ public class MainWindowsController{
 		activateDay(d);
 	}//End addDay
 	
+	@FXML
+	public void createStudyPlan(){
+		String msg = new String();
+		if(!titleTxt.getText().isEmpty() && !descriptionTxt.getText().isEmpty() && 
+			dayCB.getValue() != null && courseCB.getValue() != null && !initTimeTxt.getText().isEmpty()
+			&& !finTimeTxt.getText().isEmpty()){
+			try{
+				Time init = new Time(initTimeTxt.getText());
+				Time fin = new Time(finTimeTxt.getText());
+				ArrayList<String> goals = getGoalsAsArrayList(goalsLV.getItems());
+				academicSchedule.getCurrentUser().getAcademicSchedule().addStudyPlan(titleTxt.getText(),
+						descriptionTxt.getText(),goals,dayCB.getValue(),init,fin,courseCB.getValue());
+				titleTxt.setText("");
+				descriptionTxt.setText("");
+				dayCB.setValue(null);
+				courseCB.setValue(null);
+				initTimeTxt.setText("");
+				finTimeTxt.setText("");
+				msg = "Se ha agregado el plan de estudio correctamenta";
+			}catch(OutOfTimeRangeException e){
+				msg = "La hora asignada esta fuera de rango";
+			}catch(InvalidTimeFormatException e){
+				msg = "El formato ingresado en la hora es incorrecto";
+			}//End try..catch
+		}else
+			msg = "Llena todos los campos";
+		showInformationAlert("Info",msg,null);
+	}//End createStudyPlan
+	
+	private ArrayList<String> getGoalsAsArrayList(ObservableList<String> goal){
+		ArrayList<String> goals = new ArrayList<String>();
+		for(int i = 0; i < goal.size();i++){
+			goals.add(goal.get(i));
+		}//End for
+		return goals;
+	}//End getGoalsAsArrayList
+	
 	public void activateDay(String day){
 		switch(day){
 		case "Lunes":
@@ -384,6 +442,34 @@ public class MainWindowsController{
 			showInformationAlert("Campos vacíos","Deben llenarse todos los campos",null);
 		}//End if/else
 	}//End registerUser
+	
+	private void initializeDayChoiceBox(){
+		ObservableList<String> status = FXCollections.observableArrayList();
+		status.add("Lunes");
+		status.add("Martes");
+		status.add("Miercoles");
+		status.add("Jueves");
+		status.add("Viernes");
+		status.add("Sabado");
+		dayCB.setItems(status);
+	}//initializeCourseStatus
+	
+	private void initializeCoursesChoiceBox(){
+		if(academicSchedule.getCurrentUser().getAcademicSchedule().getFirstCourse() != null){
+			ObservableList<Course> coursesList = FXCollections.observableArrayList();
+			coursesList.add(academicSchedule.getCurrentUser().getAcademicSchedule().getFirstCourse());
+			addCourseToChoiceBox(academicSchedule.getCurrentUser().getAcademicSchedule().
+					getFirstCourse().getNext(),coursesList);
+			courseCB.setItems(coursesList);
+		}//End if
+	}//initializeCourseStatus
+	
+	private void addCourseToChoiceBox(Course current, ObservableList<Course> coursesList){
+		if(current != academicSchedule.getCurrentUser().getAcademicSchedule().getFirstCourse()){
+			coursesList.add(current);
+			addCourseToChoiceBox(current.getNext(),coursesList);
+		}//End if
+	}//End addCourseToChoiceBox
 	
 	//********************** Events listeners *******************************************
 
