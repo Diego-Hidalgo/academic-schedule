@@ -353,11 +353,6 @@ public class MainWindowsController{
 			!creditsTxt.getText().isEmpty()){
 			try{
 				int credits = Integer.parseInt(creditsTxt.getText());
-				if(academicSchedule.getCurrentUser() == null){
-					System.out.println("Usuario nulo");
-				}else if(academicSchedule.getCurrentUser().getAcademicSchedule() == null) {
-					System.out.println("Academic schedule nulo");
-				}
 				academicSchedule.getCurrentUser().getAcademicSchedule().
 				addCourse(courseNameTxt.getText(), credits, days, initHour, finHour);
 				msg = "Curso agregado con exito";
