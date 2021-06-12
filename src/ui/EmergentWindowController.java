@@ -26,8 +26,6 @@ import exceptions.*;
 
 public class EmergentWindowController {
 
-	private AcademicScheduleUsersManager academicSchedule;
-
 	final private String FOLDER = "fxml/EmergentsWindows/";
 	
 	//******************** Day data **************************
@@ -63,8 +61,7 @@ public class EmergentWindowController {
 	@FXML private ListView<Goal> goalsLV;
 	private StudyPlan currenStudyPlan;
 
-	public EmergentWindowController(AcademicScheduleUsersManager as) {
-		academicSchedule = as;
+	public EmergentWindowController() {
 	}//End EmergentWindowController constructor
 	
 	public void showAddDay() throws IOException {

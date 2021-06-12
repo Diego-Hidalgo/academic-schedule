@@ -95,7 +95,7 @@ public class MainWindowsController{
 	
 	public MainWindowsController(AcademicScheduleUsersManager as){
 		this.academicSchedule = as;
-		ewc = new EmergentWindowController(as);
+		ewc = new EmergentWindowController();
 		days = new ArrayList<String>();
 		initHour = new ArrayList<Time>();
 		finHour = new ArrayList<Time>();
